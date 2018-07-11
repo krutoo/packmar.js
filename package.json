@@ -1,0 +1,19 @@
+{
+  "name": "compo",
+  "version": "1.0.0",
+  "description": "Simplest vanilla JavaScript library for create components-based UI (no JSX, VDOM)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krutoo/compo.git"
+  },
+  "author": "Dmitry Petrov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/krutoo/compo/issues"
+  },
+  "homepage": "https://github.com/krutoo/compo#readme"
+}
