@@ -1,3 +1,5 @@
+$main-color: #19b5fe;
+
 * {
 	margin: 0;
 	padding: 0;
@@ -5,10 +7,6 @@
 	outline: 0;
 	vertical-align: baseline;
 	box-sizing: border-box;
-}
-
-:root {
-	--main-color: #7af;
 }
 
 html,
@@ -50,19 +48,18 @@ textarea {
 input:focus,
 button:focus,
 textarea:focus {
-	border-color: var(--main-color);
+	border-color: $main-color;
 }
 
 button {
 	color: #fff;
-	background-color: var(--main-color);
-	border-color: var(--main-color);
+	background-color: $main-color;
+	border-color: $main-color;
 	font-weight: bold;
-}
-
-button:disabled {
-	background-color: #aaa;
-	border-color: #aaa;
+	&:disabled {
+		background-color: #aaa;
+		border-color: #aaa;
+	}
 }
 
 .warning {
@@ -77,14 +74,12 @@ button:disabled {
 
 .field-wrapper {
 	margin-top: 1rem;
-}
-
-.field-wrapper > label {
-	display: block;
-	font-size: .8rem;
-	margin-bottom: .5rem;
-}
-
-.field-wrapper > input {
-	width: 100%;
+	label {
+		display: block;
+		font-size: .8rem;
+		margin-bottom: .5rem;
+	}
+	input {
+		width: 100%;
+	}
 }
