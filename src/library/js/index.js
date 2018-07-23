@@ -1,5 +1,5 @@
-import Component from './Compo';
 import * as templator from './templator';
+import * as renderer from './renderer';
 
-export default Component;
-export const html = templator.html;
+export const compo = templator.compo;
+export const render = renderer.render;
