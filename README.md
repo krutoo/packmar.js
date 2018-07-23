@@ -32,7 +32,7 @@ render(Heading('Hello, world'), document.body);
 
 ## 🤘🏾 Next?
 
-Many awesome purposes:
+Ideas:
 
 - use with **Web Components** (for nesting templates beautiful);
 - patching DOM (ractive UI).
