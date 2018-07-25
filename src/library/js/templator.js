@@ -1,23 +1,26 @@
+/**
+ * Tag for template literals. Return the compo-element.
+ * @param  {Array} strings String part of template literal.
+ * @param  {...*} values Values part.
+ * @return {Object} Compo-element.
+ */
 export function compo (strings, ...values) {
-	const valuesBuffer = {};
-	const htmlString = getBaseTemplate(strings, values, valuesBuffer);
-	return { htmlString, valuesBuffer };
-}
-
-function getBaseTemplate (strings, values, valuesBuffer) {
 	const parts = [];
+	const valuesMap = {};
 	for (let i = 0; i < strings.length; i++) {
 		parts.push(strings[i]);
 		if (values.hasOwnProperty(i)) {
-			parts.push(processValue(values[i], valuesBuffer));
+			const substituteValue = processValue(valuesMap);
+			valuesMap[substituteValue] = values[i];
+			parts.push(substituteValue);
 		}
 	}
-	return parts.join('').trim();
+	const htmlString = parts.join('').trim();
+	return { htmlString, valuesMap };
 }
 
-function processValue (value, valuesBuffer) {
-	const length = Object.keys(valuesBuffer).length;
+function processValue (valuesMap) {
+	const length = Object.keys(valuesMap).length;
 	const substituteValue = `<!--{{${length}}}-->`;
-	valuesBuffer[substituteValue] = value;
 	return substituteValue;
 }
