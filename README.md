@@ -13,6 +13,8 @@ This **experiment** shows:
 
 *Compo* uses native Web API's and tagged template literals for define templates.
 
+![compo under the hood](./public/compo_under-the-hood.png)
+
 ## 💪🏾 How?
 
 ```javascript
