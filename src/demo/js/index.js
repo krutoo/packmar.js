@@ -23,10 +23,6 @@ function initialize () {
 	window.addEventListener('keydown', windowKeyDown);
 }
 
-function saveToLocalStorage () {
-	localStorage.setItem('state', JSON.stringify(state));
-}
-
 function windowKeyDown ({ key }) {
 	const isPrintable = key.length === 1;
 	if (isPrintable) {
@@ -35,6 +31,14 @@ function windowKeyDown ({ key }) {
 			field.focus();
 		}
 	}
+}
+
+function saveToLocalStorage () {
+	localStorage.setItem('state', JSON.stringify(state));
+}
+
+function typeNote ({ target }) {
+	state.currentText = target.value;
 }
 
 function addNote () {
@@ -52,14 +56,23 @@ function addNote () {
 	}
 }
 
-function removeNote (noteId) {
-	state.notes = state.notes.filter(note => note.id !== noteId);
-	renderApp();
-}
-
 function checkNote (noteId) {
 	const targetNote = state.notes.find(note => note.id === noteId);
 	targetNote.checked = !targetNote.checked;
+	renderApp();
+}
+
+function removeNote (noteId) {
+	state.notes = state.notes.filter(note => note.id !== noteId);
+	if (state.notes.length === 0) {
+		selectFilter(FILTERS[0].name);
+	} else {
+		renderApp();
+	}
+}
+
+function selectFilter (filterName) {
+	state.currentFilterName = filterName;
 	renderApp();
 }
 
@@ -77,13 +90,4 @@ function renderApp () {
 		selectFilter,
 	});
 	render(app, document.body);
-}
-
-function selectFilter (filterName) {
-	state.currentFilterName = filterName;
-	renderApp();
-}
-
-function typeNote ({ target }) {
-	state.currentText = target.value;
 }
