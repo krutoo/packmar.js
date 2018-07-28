@@ -1,37 +1,89 @@
-import { compo, render } from 'compo';
+import { render } from 'compo';
+import App from './components/App';
 
-const field = Field({
-	id: 'name-field',
-	value: Greeting('John Doe'),
-	labelText: 'Your name',
-	onInput: ({ target }) => console.log(target.value),
-});
+let state = {
+	currentFilterName: 'All',
+	currentText: '',
+	notes: [],
+};
 
-const list = List([1,2,3,4,5,6,7,8,9,0]);
+const FILTERS = [
+	{ name: 'All', checkNote: note => true },
+	{ name: 'Active', checkNote: note => !note.checked },
+	{ name: 'Completed', checkNote: note => note.checked },
+];
 
-const greeting = Greeting('John Doe');
+window.addEventListener('DOMContentLoaded', initialize);
+window.addEventListener('beforeunload', saveToLocalStorage);
 
-render(greeting, document.body);
-render(list, document.body);
-render(field, document.body);
-
-function Greeting (name) {
-	return compo`Hello, ${name}!`;
+function initialize () {
+	const initialState = JSON.parse(localStorage.getItem('state'));
+	state = { ...state, ...initialState };
+	renderApp();
+	window.addEventListener('keydown', windowKeyDown);
 }
 
-function Field ({ type = 'text', value, id, labelText, onInput }) {
-	return compo`
-		<div class="field-wrapper">
-			<label for="${id}">${labelText}</label>
-			<input type="${type}" id="${id}" value="${value}" input="${onInput}" />
-		</div>
-	`;
+function saveToLocalStorage () {
+	localStorage.setItem('state', JSON.stringify(state));
 }
 
-function List (items) {
-	return compo`
-		<ul>
-			${items.map(item => compo`<li>${item}</li>`)}
-		</ul>
-	`;
+function windowKeyDown ({ key }) {
+	const isPrintable = key.length === 1;
+	if (isPrintable) {
+		const field = document.querySelector('.main-field');
+		if (field) {
+			field.focus();
+		}
+	}
+}
+
+function addNote () {
+	const hasText = state.currentText.replace(/\s*/g, '').length;
+	if (hasText) {
+		state.notes.unshift({
+			id: Math.random().toString(16).slice(2),
+			text: state.currentText,
+			checked: false,
+		});
+		state.currentText = '';
+		renderApp();
+	} else {
+		document.querySelector('.main-field').focus();
+	}
+}
+
+function removeNote (noteId) {
+	state.notes = state.notes.filter(note => note.id !== noteId);
+	renderApp();
+}
+
+function checkNote (noteId) {
+	const targetNote = state.notes.find(note => note.id === noteId);
+	targetNote.checked = !targetNote.checked;
+	renderApp();
+}
+
+function renderApp () {
+	const app = App({
+		title: '📝 To Do App',
+		currentText: state.currentText,
+		currentFilterName: state.currentFilterName,
+		notes: state.notes,
+		filters: FILTERS,
+		typeNote,
+		addNote,
+		checkNote,
+		removeNote,
+		selectFilter,
+	});
+	render(app, document.body);
+}
+
+function selectFilter (filterName) {
+	state.currentFilterName = filterName;
+	renderApp();
+}
+
+function typeNote ({ target }) {
+	state.currentText = target.value;
 }
