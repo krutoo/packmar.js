@@ -1,0 +1,42 @@
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+	margin-bottom: 1rem;
+}
+
+a {
+	color: $main-color;
+	text-decoration: underline;
+}
+
+b {
+	font-weight: bold;
+}
+
+input,
+button,
+textarea {
+	font-size: inherit;
+	border-radius: $main-border-radius;
+	border: .1rem solid #ddd;
+	padding: .5rem;
+	font-family: inherit;
+	font-size: inherit;
+}
+
+input:focus,
+button:focus,
+textarea:focus {
+	border-color: $main-color;
+	box-shadow: 0 0 0 $main-border-width $main-color;
+}
+
+button {
+	color: #fff;
+	background-color: $main-color;
+	border-color: $main-color;
+	font-weight: bold;
+	&:disabled {
+		background-color: #aaa;
+		border-color: #aaa;
+	}
+}
