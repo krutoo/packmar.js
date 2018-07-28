@@ -17,7 +17,6 @@ const getConfiguration = (env, options) => {
 		output: {
 			path: path.resolve(__dirname, 'build'),
 			filename: 'js/[name].js',
-			libraryTarget: 'umd',
 		},
 		module: {
 			rules: [
