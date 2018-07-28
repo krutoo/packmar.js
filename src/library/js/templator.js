@@ -21,6 +21,6 @@ export function compo (strings, ...values) {
 
 function processValue (valuesMap) {
 	const length = Object.keys(valuesMap).length;
-	const substituteValue = `<!--{{${length}}}-->`;
+	const substituteValue = `<!--{%${length}%}-->`;
 	return substituteValue;
 }

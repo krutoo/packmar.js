@@ -10,21 +10,23 @@ const baseNodes = new Map();
  * @return {Element} Template element.
  */
 export function render ({ htmlString, valuesMap }, rootElement, needKeepContent) {
+	if (!isCompo(arguments[0])) {
+		throw new TypeError('First argument must be compo-element');
+	}
 	const element = getTemplateElement(htmlString);
 	processNode(element, valuesMap);
+	if (element.children.length !== 1) {
+		throw new RangeError('Template must contains only one element');
+	}
 	if (rootElement instanceof Element) {
 		if (!needKeepContent) {
 			rootElement.innerHTML = '';
 		}
 		if (element.children.length) {
-			[...element.children].forEach(child => {
-				rootElement.insertAdjacentElement('beforeEnd', child);
-			});
-		} else if (element.hasChildNodes()) {
-			rootElement.insertAdjacentText('beforeEnd', element.textContent);
+			rootElement.insertAdjacentElement('beforeEnd', element.children[0]);
 		}
 	}
-	return element;
+	return element.children[0];
 }
 
 function getTemplateElement (template) {
@@ -44,45 +46,76 @@ function processNode (node, valuesMap) {
 	}
 	if (node instanceof Element) {
 		processAttributes(node, valuesMap);
-	} else if (node instanceof Comment) {
-		const key = `<!--${node.nodeValue}-->`;
-		if (valuesMap.hasOwnProperty(key)) {
-			const value = valuesMap[key];
-			switch (classOf(value)) {
-				case 'Boolean':
-				case 'Number':
-				case 'String': {
-					const newNode = createTemplateElement(String(value), true);
-					if (newNode.hasChildNodes()) {
-						node.replaceWith(newNode.firstChild);
-					}
-					break;
-				}
-				case 'Array': {
-					value.forEach(item => {
-						if (isCompo(item)) {
-							render(item, node.parentNode, true);
-						}
-						// @todo бросить ошибку в противно случае
-					});
-					node.remove();
-					break;
-				}
-				default: {
-					if (isCompo(value)) {
-						render(value, node.parentNode);
-					}
-				}
-			}
+	} else {
+		if (node instanceof Comment) {
+			processComment(node, valuesMap);
+		} else if (node instanceof Text) {
+			processText(node, valuesMap);
 		}
 	}
 }
 
+function processComment (commentNode, valuesMap) {
+	const key = `<!--${commentNode.nodeValue}-->`;
+	if (valuesMap.hasOwnProperty(key)) {
+		const value = valuesMap[key];
+		switch (classOf(value)) {
+			case 'Boolean':
+			case 'Number':
+			case 'String': {
+				const newElement = createTemplateElement(String(value), true);
+				commentNode.replaceWith(newElement.firstChild);
+				break;
+			}
+			case 'Array': {
+				value.forEach(item => {
+					if (isCompo(item)) {
+						commentNode.parentNode.insertBefore(render(item), commentNode);
+					} else {
+						throw new TypeError('Only the compo-objects can be in the arrays');
+					}
+				});
+				break;
+			}
+			default: {
+				if (isCompo(value)) {
+					commentNode.parentNode.insertBefore(render(value), commentNode);
+				}
+			}
+		}
+		commentNode.remove();
+	}
+}
+
+function processText (textNode, valuesMap) {
+	const newNodeValue = textNode.nodeValue.replace(/<!--{%\d*%}-->/g, (match) => {
+		let result = '';
+		if (valuesMap.hasOwnProperty(match)) {
+			const value = valuesMap[match];
+			switch (classOf(value)) {
+				case 'Boolean':
+				case 'Number':
+				case 'String': {
+					result = String(value);
+					break;
+				}
+				default: {
+					if (isCompo(value)) {
+						result = render(value).innerHTML;
+					}
+				}
+			}
+		}
+		return result;
+	});
+	textNode.nodeValue = newNodeValue;
+}
+
 function processAttributes (element, valuesMap) {
 	[...element.attributes].forEach(({ name, value }) => {
-		if (valuesMap.hasOwnProperty(value)) {
+		if (valuesMap.hasOwnProperty(value.trim())) {
 			element.valuesMap = element.valuesMap || {};
-			const targetValue = valuesMap[value];
+			const targetValue = valuesMap[value.trim()];
 			switch (classOf(targetValue)) {
 				case 'Number':
 				case 'String': {
@@ -104,12 +137,14 @@ function processAttributes (element, valuesMap) {
 				}
 				default: {
 					if (isCompo(targetValue)) {
-						element.setAttribute(name, render(targetValue).textContent);
+						element.setAttribute(name, render(targetValue).innerHTML);
 					} else {
 						element.removeAttribute(name);
 					}
 				}
 			}
+		} else if (value.match(/<!--{%\d*%}-->/)) {
+			throw new SyntaxError(`In "${name}" attribute: Only one string or one expression must be in value`);
 		}
 	});
 }
