@@ -1,4 +1,4 @@
-import { compo } from 'compo';
+import compo from 'compo';
 import Field from './Field';
 import Note from './Note';
 import Footer from './Footer';
@@ -17,8 +17,9 @@ export default function App (options) {
 		removeNote,
 		selectFilter,
 	} = options;
+	const defaultCheck = () => true;
 	const currentFilter = filters.find(filter => filter.name === currentFilterName) || {};
-	const needShowNote = currentFilter.checkNote || (() => true);
+	const needShowNote = currentFilter.check || defaultCheck;
 	return compo`
 		<div class="app-wrapper display_flex width_100percent">
 			<div class="main-content">

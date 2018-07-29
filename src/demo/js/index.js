@@ -1,36 +1,43 @@
 import { render } from 'compo';
 import App from './components/App';
 
+const FILTERS = [
+	{ name: 'All', check: note => true },
+	{ name: 'Active', check: note => !note.checked },
+	{ name: 'Completed', check: note => note.checked },
+];
+
+const pressedKeys = {};
+
 let state = {
-	currentFilterName: 'All',
+	currentFilterName: FILTERS[0].name,
 	currentText: '',
 	notes: [],
 };
 
-const FILTERS = [
-	{ name: 'All', checkNote: note => true },
-	{ name: 'Active', checkNote: note => !note.checked },
-	{ name: 'Completed', checkNote: note => note.checked },
-];
-
 window.addEventListener('DOMContentLoaded', initialize);
-window.addEventListener('beforeunload', saveToLocalStorage);
 
 function initialize () {
 	const initialState = JSON.parse(localStorage.getItem('state'));
 	state = { ...state, ...initialState };
 	renderApp();
-	window.addEventListener('keydown', windowKeyDown);
+	focusOnField();
+	window.addEventListener('beforeunload', saveToLocalStorage);
+	window.addEventListener('keydown', onKeyDown);
+	window.addEventListener('keyup', onKeyUp);
 }
 
-function windowKeyDown ({ key }) {
+function onKeyDown ({ key }) {
+	pressedKeys[key] = true;
 	const isPrintable = key.length === 1;
-	if (isPrintable) {
-		const field = document.querySelector('.main-field');
-		if (field) {
-			field.focus();
-		}
+	const isKeysCombination = Object.keys(pressedKeys).length > 1;
+	if (isPrintable && !isKeysCombination) {
+		focusOnField();
 	}
+}
+
+function onKeyUp ({ key }) {
+	delete pressedKeys[key];
 }
 
 function saveToLocalStorage () {
@@ -46,13 +53,20 @@ function addNote () {
 	if (hasText) {
 		state.notes.unshift({
 			id: Math.random().toString(16).slice(2),
-			text: state.currentText,
+			text: state.currentText.trim(),
 			checked: false,
 		});
 		state.currentText = '';
 		renderApp();
 	} else {
-		document.querySelector('.main-field').focus();
+		focusOnField();
+	}
+}
+
+function focusOnField () {
+	const field = document.querySelector('.main-field');
+	if (field) {
+		field.focus();
 	}
 }
 

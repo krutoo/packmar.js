@@ -1,4 +1,4 @@
-import { compo } from 'compo';
+import compo from 'compo';
 
 export default function Footer () {
 	return compo`

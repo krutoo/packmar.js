@@ -1,4 +1,4 @@
-import { render, compo } from 'compo';
+import compo from 'compo';
 
 export default function Note ({ noteText, isCompleted, onRemove, onCheck }) {
 	const textClasses = `text ${isCompleted ? 'text-decoration_line-through' : ''}`;
@@ -7,7 +7,6 @@ export default function Note ({ noteText, isCompleted, onRemove, onCheck }) {
 			${noteText.split('\n').map(part => compo`<span>${part}<br /></span>`)}
 		</div>
 	`;
-	// console.log(render(formattedText));
 	return compo`
 		<div class="note overflow_hidden">
 			<button class="button check-button overflow_hidden" click="${onCheck}">
