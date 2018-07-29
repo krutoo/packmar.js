@@ -1,4 +1,4 @@
-# 🍦 Сompo (draft)
+# 🍦 compo.js
 
 Simplest vanilla JavaScript nano library for create components-based UI.
 
@@ -13,27 +13,54 @@ This **experiment** shows:
 
 *Compo* uses native Web API's and tagged template literals for define templates.
 
-![compo under the hood](./public/compo_under-the-hood.png)
-
 ## 💪🏾 How?
 
+Use it almost like stateless React-components.
+
 ```javascript
-import { compo, render } from 'compo';
+import compo, { render } from 'compo';
 
 const Heading = text => compo`<h1 click="${() => {}}">${text}</h1>`;
 
 render(Heading('Hello, world'), document.body);
 ```
 
-*Compo* relies on values types, you passed in template attributes.
+*Compo* relies on values types, you passed in template:
 
-- **Strings** and **Numbers** will be passed as normal attributes;
-- **Function** will be added by `addEventListener`;
-- **Boolean** will be added or removed as attribute depending on the it truth.
+- **Strings** and **Numbers** will be passed as normal text;
+- **Functions** in attributes will be added by `addEventListener`;
+- **Booleans** will add or remove attribute depending on the it truth;
+
+#### Pass listeners
+
+For listeners write attributes names like event names:
+
+```javascript
+const button = compo`<button click="${() => alert('clicked!')}}">Click me!</button>`;
+```
+
+#### Pass arrays
+
+Arrays in templates must contains only compo-elements:
+
+```javascript
+const beatles = ['John Lennon', 'Ringo Starr', 'Paul McCartney', 'George Harrison'];
+
+const beatlesList = compo`
+    <ul>
+        ${beatles.map(name => compo`<li>${name}</li>`)}
+    </ul>
+`;
+```
+
+#### Features
+
+*Compo* caches elements for reusable templates.
+Because parse HTML from string slower than cloning nodes.
 
 ## 🤘🏾 Next?
 
 Ideas:
 
-- use with **Web Components** (for nesting templates beautiful);
-- patching DOM (for creating ractive UI).
+- integration with **Web Components** (for nesting templates beautiful);
+- classes with patching DOM (for creating ractive UI with MVVM data bindings).
