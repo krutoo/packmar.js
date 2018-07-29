@@ -10,17 +10,17 @@ export function compo (strings, ...values) {
 	for (let i = 0; i < strings.length; i++) {
 		parts.push(strings[i]);
 		if (values.hasOwnProperty(i)) {
-			const substituteValue = processValue(valuesMap);
-			valuesMap[substituteValue] = values[i];
-			parts.push(substituteValue);
+			const substitute = getSubstitute(valuesMap);
+			valuesMap[substitute] = values[i];
+			parts.push(substitute);
 		}
 	}
 	const htmlString = parts.join('').trim();
 	return { htmlString, valuesMap };
 }
 
-function processValue (valuesMap) {
+function getSubstitute (valuesMap) {
 	const length = Object.keys(valuesMap).length;
-	const substituteValue = `<!--{%${length}%}-->`;
-	return substituteValue;
+	const substitute = `<!--{%${length}%}-->`;
+	return substitute;
 }
