@@ -8,7 +8,6 @@ const getConfiguration = (env, options) => {
 	const isProduction = Boolean(options.mode === 'production');
 	const configuration = {
 		entry: {
-			compo: './src/library/js/index.js',
 			demo: [
 				'./src/demo/js/index.js',
 				'./src/demo/scss/index.scss',

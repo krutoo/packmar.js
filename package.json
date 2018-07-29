@@ -1,8 +1,8 @@
 {
   "name": "compo",
   "version": "1.0.0",
-  "description": "Simplest vanilla JavaScript library for create components-based UI (no JSX, VDOM)",
-  "main": "index.js",
+  "description": "Simplest vanilla JavaScript library for create components-based UI",
+  "main": "src/library/js/index.js",
   "scripts": {
     "build": "webpack --mode production",
     "watch": "webpack --watch --mode development"
