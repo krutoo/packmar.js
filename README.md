@@ -1,4 +1,4 @@
-# 🍦 compo.js
+# 🍦 Compo (draft)
 
 Simplest vanilla JavaScript nano library for create components-based UI.
 
@@ -20,7 +20,9 @@ Use it almost like stateless React-components.
 ```javascript
 import compo, { render } from 'compo';
 
-const Heading = text => compo`<h1 click="${() => {}}">${text}</h1>`;
+function Heading ({ text, onClick }) {
+    return compo`<h1 class="heading" click=${onClick}>${text}</h1>`;
+}
 
 render(Heading('Hello, world'), document.body);
 ```
@@ -36,7 +38,7 @@ render(Heading('Hello, world'), document.body);
 For listeners write attributes names like event names:
 
 ```javascript
-const button = compo`<button click="${() => alert('clicked!')}}">Click me!</button>`;
+const button = compo`<button click=${() => alert('clicked!')}}>Click me!</button>`;
 ```
 
 #### Pass arrays
@@ -46,11 +48,27 @@ Arrays in templates must contains only compo-elements:
 ```javascript
 const beatles = ['John Lennon', 'Ringo Starr', 'Paul McCartney', 'George Harrison'];
 
-const beatlesList = compo`
+const list = compo`
     <ul>
         ${beatles.map(name => compo`<li>${name}</li>`)}
     </ul>
 `;
+```
+
+#### Nested templates
+```javascript
+function Button ({ text }) {
+    return compo`<button>${text}</button>`;
+}
+
+function Form ({ onSubmit }) {
+    return compo`
+        <form submit=${onSubmit}
+            <input type="email" placeholder="Your email" />
+            ${Button({ text: 'Subscribe' })}
+        </form>
+    `;
+}
 ```
 
 #### Features
