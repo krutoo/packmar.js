@@ -1,43 +1,60 @@
 import { classOf } from './utils';
 
-const baseNodes = new Map();
+const templates = new Map();
+const anchorsRegex = /{%\d*%}/g;
 
 /**
  * Render compo in element.
  * @param {Object} compo Compo-element.
- * @param {Element} rootElement Element to place compo into.
- * @param {boolean} needKeepContent Need keep root element content?.
+ * @param {Element} [rootElement] Element to place compo into.
+ * @param {boolean} [needKeepContent] Need keep root element content?.
  * @return {Element} Template element.
  */
 export function render ({ htmlString, valuesMap }, rootElement, needKeepContent) {
 	if (!isCompo(arguments[0])) {
 		throw new TypeError('First argument must be compo-element');
 	}
-	const element = getTemplateElement(htmlString);
-	processNode(element, valuesMap);
-	if (element.children.length !== 1) {
+	const template = getTemplate(htmlString);
+	replaceAnchors(template);
+	processNode(template, valuesMap);
+	if (template.children.length !== 1) {
 		throw new RangeError('Template must contains only one element');
 	}
 	if (rootElement instanceof Element) {
 		if (!needKeepContent) {
 			rootElement.innerHTML = '';
 		}
-		if (element.children.length) {
-			rootElement.insertAdjacentElement('beforeEnd', element.children[0]);
+		if (template.children.length) {
+			rootElement.insertAdjacentElement('beforeEnd', template.children[0]);
 		}
 	}
-	return element.children[0];
+	return template.children[0];
 }
 
-function getTemplateElement (template) {
-	let baseNode;
-	if (baseNodes.has(template)) {
-		baseNode = baseNodes.get(template);
+function getTemplate (htmlString) {
+	let template;
+	if (templates.has(htmlString)) {
+		template = templates.get(htmlString);
 	} else {
-		baseNode = createTemplateElement(template);
-		baseNodes.set(template, baseNode);
+		template = createTemplate(htmlString);
+		templates.set(htmlString, template);
 	}
-	return baseNode.cloneNode(true);
+	return template.cloneNode(true);
+}
+
+function replaceAnchors (node) {
+	if (node instanceof Element) {
+		if (node.hasChildNodes()) {
+			[...node.childNodes].forEach(node => replaceAnchors(node));
+		}
+	} else if (anchorsRegex.test(node.nodeValue)) {
+		const templateString = node.nodeValue.replace(anchorsRegex, match => `<!--${match}-->`);
+		const template = getTemplate(templateString);
+		[...template.childNodes].forEach(childNode => {
+			node.parentNode.insertBefore(childNode, node);
+		});
+		node.remove();
+	}
 }
 
 function processNode (node, valuesMap) {
@@ -46,24 +63,20 @@ function processNode (node, valuesMap) {
 	}
 	if (node instanceof Element) {
 		processAttributes(node, valuesMap);
-	} else {
-		if (node instanceof Comment) {
-			processComment(node, valuesMap);
-		} else if (node instanceof Text) {
-			processText(node, valuesMap);
-		}
+	} else if (node instanceof Comment) {
+		processComment(node, valuesMap);
 	}
 }
 
 function processComment (commentNode, valuesMap) {
-	const key = `<!--${commentNode.nodeValue}-->`;
+	const key = commentNode.nodeValue;
 	if (valuesMap.hasOwnProperty(key)) {
 		const value = valuesMap[key];
 		switch (classOf(value)) {
 			case 'Boolean':
 			case 'Number':
 			case 'String': {
-				const newElement = createTemplateElement(String(value), true);
+				const newElement = createTemplate(String(value), true);
 				commentNode.replaceWith(newElement.firstChild);
 				break;
 			}
@@ -85,30 +98,6 @@ function processComment (commentNode, valuesMap) {
 		}
 		commentNode.remove();
 	}
-}
-
-function processText (textNode, valuesMap) {
-	const newNodeValue = textNode.nodeValue.replace(/<!--{%\d*%}-->/g, (match) => {
-		let result = '';
-		if (valuesMap.hasOwnProperty(match)) {
-			const value = valuesMap[match];
-			switch (classOf(value)) {
-				case 'Boolean':
-				case 'Number':
-				case 'String': {
-					result = String(value);
-					break;
-				}
-				default: {
-					if (isCompo(value)) {
-						result = render(value).innerHTML;
-					}
-				}
-			}
-		}
-		return result;
-	});
-	textNode.nodeValue = newNodeValue;
 }
 
 function processAttributes (element, valuesMap) {
@@ -143,19 +132,23 @@ function processAttributes (element, valuesMap) {
 					}
 				}
 			}
-		} else if (value.match(/<!--{%\d*%}-->/)) {
-			throw new SyntaxError(`In "${name}" attribute: Only one string or one expression must be in value`);
+		} else if (valuesMap.hasOwnProperty(name.trim())) {
+			const targetValue = valuesMap[name.trim()];
+			element.removeAttribute(name);
+			element.setAttribute(targetValue, true);
+		} else if (value.match(anchorsRegex)) {
+			throw new SyntaxError(`In "${name}" attribute: only one string or one expression must be in value`);
 		}
 	});
 }
 
-function createTemplateElement (htmlString, asText) {
-	const template = String(htmlString || '').trim();
+function createTemplate (htmlString, asText) {
+	htmlString = String(htmlString || '').trim();
 	const templateElement = document.createElement('div');
 	if (asText) {
-		templateElement.insertAdjacentText('afterBegin', template);
+		templateElement.insertAdjacentText('afterBegin', htmlString);
 	} else {
-		templateElement.insertAdjacentHTML('afterBegin', template);
+		templateElement.insertAdjacentHTML('afterBegin', htmlString);
 	}
 	return templateElement;
 }
