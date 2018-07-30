@@ -7,8 +7,8 @@ export default function Filters ({ filters, selectFilter, currentFilter }) {
 				const isActive = filter.name === currentFilter.name;
 				return compo`
 					<button
-						class="${`filter-button ${isActive ? 'active' : ''}`}"
-						click="${() => selectFilter(filter.name)}"
+						class=${`filter-button ${isActive ? 'active' : ''}`}
+						click=${() => selectFilter(filter.name)}
 					>
 						${filter.name}
 					</button>

@@ -5,8 +5,8 @@ export default function Field ({ value, placeholder, onInput }) {
 		<textarea
 			rows="5"
 			class="main-field display_block width_100percent"
-			placeholder="${placeholder}"
-			input="${onInput}"
+			placeholder=${placeholder}
+			input=${onInput}
 		>${value}</textarea>
 	`;
 }
