@@ -1,4 +1,4 @@
-import compo from 'compo';
+import { pack } from 'packmar';
 import Field from './Field';
 import Note from './Note';
 import Footer from './Footer';
@@ -20,7 +20,7 @@ export default function App (options) {
 	const defaultCheck = () => true;
 	const currentFilter = filters.find(filter => filter.name === currentFilterName) || {};
 	const needShowNote = currentFilter.check || defaultCheck;
-	return compo`
+	return pack`
 		<div class="app-wrapper display_flex width_100percent">
 			<div class="main-content">
 				<h1 class="main-title">${title}</h1>

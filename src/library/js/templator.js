@@ -1,10 +1,10 @@
 /**
- * Tag for template literals. Return the compo-element.
+ * Tag for template literals. Returns the packed element.
  * @param  {Array} strings String part of template literal.
  * @param  {...*} values Values part.
- * @return {Object} Compo-element.
+ * @return {Object} Packed element.
  */
-export function compo (strings, ...values) {
+export function pack (strings, ...values) {
 	const parts = [];
 	const valuesMap = {};
 	for (let i = 0; i < strings.length; i++) {

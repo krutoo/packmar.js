@@ -1,5 +1,5 @@
 {
-  "name": "compo",
+  "name": "packmar",
   "version": "1.0.0",
   "description": "Simplest vanilla JavaScript library for create components-based UI",
   "main": "src/library/js/index.js",

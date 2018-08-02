@@ -1,4 +1,4 @@
-import { render } from 'compo';
+import { render } from 'packmar';
 import App from './components/App';
 
 const FILTERS = [

@@ -4,15 +4,15 @@ const templates = new Map();
 const anchorsRegex = /{%\d*%}/g;
 
 /**
- * Render compo in element.
- * @param {Object} compo Compo-element.
- * @param {Element} [rootElement] Element to place compo into.
+ * Render packed element.
+ * @param {Object} pack Packed element.
+ * @param {Element} [rootElement] Element to place packed element into.
  * @param {boolean} [needKeepContent] Need keep root element content?.
- * @return {Element} Template element.
+ * @return {Element} unpacked element, normal dom node.
  */
 export function render ({ htmlString, valuesMap }, rootElement, needKeepContent) {
-	if (!isCompo(arguments[0])) {
-		throw new TypeError('First argument must be compo-element');
+	if (!isPack(arguments[0])) {
+		throw new TypeError('First argument must be packed element');
 	}
 	const template = getTemplate(htmlString);
 	replaceAnchors(template);
@@ -82,16 +82,16 @@ function processComment (commentNode, valuesMap) {
 			}
 			case 'Array': {
 				value.forEach(item => {
-					if (isCompo(item)) {
+					if (isPack(item)) {
 						commentNode.parentNode.insertBefore(render(item), commentNode);
 					} else {
-						throw new TypeError('Only the compo-objects can be in the arrays');
+						throw new TypeError('Only the packed elements can be in the arrays');
 					}
 				});
 				break;
 			}
 			default: {
-				if (isCompo(value)) {
+				if (isPack(value)) {
 					commentNode.parentNode.insertBefore(render(value), commentNode);
 				}
 			}
@@ -125,7 +125,7 @@ function processAttributes (element, valuesMap) {
 					break;
 				}
 				default: {
-					if (isCompo(targetValue)) {
+					if (isPack(targetValue)) {
 						element.setAttribute(name, render(targetValue).innerHTML);
 					} else {
 						element.removeAttribute(name);
@@ -153,7 +153,7 @@ function createTemplate (htmlString, asText) {
 	return templateElement;
 }
 
-function isCompo (value) {
+function isPack (value) {
 	value = value || {};
 	const hasTemplate = classOf(value.htmlString) === 'String';
 	const hasMap = classOf(value.valuesMap) === 'Object';

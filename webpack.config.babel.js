@@ -35,7 +35,7 @@ const getConfiguration = (env, options) => {
 		},
 		resolve: {
 			alias: {
-				'compo': path.join(__dirname, '/src/library/js/index.js'),
+				'packmar': path.join(__dirname, '/src/library/js/index.js'),
 			},
 		},
 		devtool: 'source-map',

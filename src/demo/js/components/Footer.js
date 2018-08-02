@@ -1,9 +1,9 @@
-import compo from 'compo';
+import { pack } from 'packmar';
 
 export default function Footer () {
-	return compo`
+	return pack`
 		<footer class="main-footer">
-			This SPA is <b>compo</b> library work demo.
+			This SPA is <b>packmar</b> library work demo.
 			Check it on <a href="https://github.com/krutoo/compo" target="_blank">GitHub</a>.
 		</footer>
 	`;

@@ -1,11 +1,11 @@
-import compo from 'compo';
+import { pack } from 'packmar';
 
 export default function Filters ({ filters, selectFilter, currentFilter }) {
-	return compo`
+	return pack`
 		<div class="filters display_flex">
 			${filters.map(filter => {
 				const isActive = filter.name === currentFilter.name;
-				return compo`
+				return pack`
 					<button
 						class=${`filter-button ${isActive ? 'active' : ''}`}
 						click=${() => selectFilter(filter.name)}

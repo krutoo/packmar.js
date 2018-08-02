@@ -1,8 +1,10 @@
-# 🍦 Compo (draft)
+# 🍦 packmar.js
+
+**Pack** your **mar**kup.
 
 Simplest vanilla JavaScript nano library for create components-based UI.
 
-## ✋🏾 What?
+## 👋🏾 What?
 
 In 2018+ you don't need an framework for create UI for web apps.
 
@@ -11,23 +13,29 @@ This **experiment** shows:
 - how use modern vanilla JS in UI creating (instead of React, Vue, Backbone, JSX, VDOM...);
 - how remain simple and lightweight at the same time.
 
-*Compo* uses native Web API's and tagged template literals for define templates.
+*Packmar* uses native Web API's and tagged template literals for define templates.
 
 ## 💪🏾 How?
 
 Use it almost like stateless React-components.
 
 ```javascript
-import compo, { render } from 'compo';
+import { pack, render } from 'pack';
 
+/**
+ * Return the packed element of heading.
+ * @param {String} options.text Heading text.
+ * @param {Function} options.onClick Click callback.
+ * @return {Object} packed element.
+ */
 function Heading ({ text, onClick }) {
-    return compo`<h1 class="heading" click=${onClick}>${text}</h1>`;
+    return pack`<h1 class="heading" click=${onClick}>${text}</h1>`;
 }
 
 render(Heading('Hello, world'), document.body);
 ```
 
-*Compo* relies on values types, you passed in template:
+*Packmar* relies on values types, you passed in template:
 
 - **Strings** and **Numbers** will be passed as normal text;
 - **Functions** in attributes will be added by `addEventListener`;
@@ -38,19 +46,19 @@ render(Heading('Hello, world'), document.body);
 For listeners write attributes names like event names:
 
 ```javascript
-const button = compo`<button click=${() => alert('clicked!')}}>Click me!</button>`;
+const button = pack`<button click=${() => alert('clicked!')}}>Click me!</button>`;
 ```
 
 #### Pass arrays
 
-Arrays in templates must contains only compo-elements:
+Arrays in templates must contains only pack-elements:
 
 ```javascript
 const beatles = ['John Lennon', 'Ringo Starr', 'Paul McCartney', 'George Harrison'];
 
-const list = compo`
+const list = pack`
     <ul>
-        ${beatles.map(name => compo`<li>${name}</li>`)}
+        ${beatles.map(name => pack`<li>${name}</li>`)}
     </ul>
 `;
 ```
@@ -58,11 +66,11 @@ const list = compo`
 #### Nested templates
 ```javascript
 function Button ({ text }) {
-    return compo`<button>${text}</button>`;
+    return pack`<button>${text}</button>`;
 }
 
 function Form ({ onSubmit }) {
-    return compo`
+    return pack`
         <form submit=${onSubmit}
             <input type="email" placeholder="Your email" />
             ${Button({ text: 'Subscribe' })}
@@ -73,7 +81,7 @@ function Form ({ onSubmit }) {
 
 #### Features
 
-*Compo* caches elements for reusable templates.
+*Packmar* caches elements for reusable templates.
 Because parse HTML from string slower than cloning nodes.
 
 ## 🤘🏾 Next?
