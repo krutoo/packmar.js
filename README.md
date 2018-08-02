@@ -15,6 +15,12 @@ This **experiment** shows:
 
 *Packmar* uses native Web API's and tagged template literals for define templates.
 
+## 🤙🏾 Use?
+Install with npm:
+```bash
+npm install --save packmar
+```
+
 ## 💪🏾 How?
 
 Use it almost like stateless React-components.

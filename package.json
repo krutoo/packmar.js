@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/krutoo/compo.git"
+    "url": "git+https://github.com/krutoo/packmar.js.git"
   },
   "author": "Dmitry Petrov",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/krutoo/compo/issues"
+    "url": "https://github.com/krutoo/packmar.js/issues"
   },
-  "homepage": "https://github.com/krutoo/compo#readme",
+  "homepage": "https://github.com/krutoo/packmar.js#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
