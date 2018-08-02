@@ -20,7 +20,7 @@ This **experiment** shows:
 Use it almost like stateless React-components.
 
 ```javascript
-import { pack, render } from 'pack';
+import { pack, render } from 'packmar';
 
 /**
  * Return the packed element of heading.
