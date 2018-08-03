@@ -30,7 +30,7 @@ export default function App (options) {
 					onInput: typeNote,
 				})}
 				<button class="width_100percent" click=${addNote}>To Do</button>
-				${Boolean(notes.length)
+				${notes.length
 					? Filters({
 						filters,
 						selectFilter,

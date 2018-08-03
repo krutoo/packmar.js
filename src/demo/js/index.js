@@ -2,7 +2,7 @@ import { render } from 'packmar';
 import App from './components/App';
 
 const FILTERS = [
-	{ name: 'All', check: note => true },
+	{ name: 'All', check: () => true },
 	{ name: 'Active', check: note => !note.checked },
 	{ name: 'Completed', check: note => note.checked },
 ];
