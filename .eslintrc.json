@@ -1,0 +1,111 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "rules": {
+        "eqeqeq": "error",
+        "no-var": "error",
+        "no-eval": "error",
+        "id-length": "error",
+        "no-new-func": "error",
+        "no-new-object": "error",
+        "no-multi-assign": "error",
+        "no-multi-spaces": "error",
+        "no-new-wrappers": "error",
+        "prefer-template": "error",
+        "no-nested-ternary": "error",
+        "no-mixed-operators": "error",
+        "no-unneeded-ternary": "error",
+        "no-array-constructor": "error",
+        "array-callback-return": "error",
+        "no-useless-constructor": "error",
+        "no-whitespace-before-property": "error",
+        "radix": [
+            "error",
+            "as-needed"
+        ],
+        "max-len": [
+            "error",
+            {
+                "code": 120,
+                "ignoreStrings": true
+            }
+        ],
+        "comma-dangle": [
+            "error",
+            "only-multiline"
+        ],
+        "space-in-parens": [
+            "error",
+            "never"
+        ],
+        "padded-blocks": [
+            "error",
+            "never"
+        ],
+        "spaced-comment": [
+            "error",
+            "always"
+        ],
+        "arrow-spacing": [
+            "error",
+            {
+                "before": true,
+                "after": true
+            }
+        ],
+        "quote-props": [
+            "error",
+            "as-needed"
+        ],
+        "space-before-function-paren": [
+            "error",
+            "always"
+        ],
+        "curly": [
+            "error",
+            "all"
+        ],
+        "arrow-body-style": [
+            "error",
+            "as-needed"
+        ],
+        "keyword-spacing": [
+            "error",
+            {
+                "before": true,
+                "after": true
+            }
+        ],
+        "arrow-parens": [
+            "error",
+            "as-needed"
+        ],
+        "indent": [
+            "error",
+            "tab",
+            {
+                "SwitchCase": 1,
+                "MemberExpression": 1,
+                "ObjectExpression": 1,
+                "ignoredNodes": [
+                    "TemplateLiteral *"
+                ]
+            }
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
+    }
+}
