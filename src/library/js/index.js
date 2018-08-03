@@ -1,5 +1,4 @@
-import * as templator from './templator';
-import * as renderer from './renderer';
+import pack from './pack';
+import render from './render';
 
-export const pack = templator.pack;
-export const render = renderer.render;
+export { pack, render };
