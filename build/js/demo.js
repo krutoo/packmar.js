@@ -1,2 +1,780 @@
-!function(t){var e={};function n(r){if(e[r])return e[r].exports;var o=e[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:r})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)n.d(r,o,function(e){return t[e]}.bind(null,o));return r},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=10)}([function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.render=e.pack=void 0;var r=i(n(8)),o=i(n(7));function i(t){return t&&t.__esModule?t:{default:t}}e.pack=r.default,e.render=o.default},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=a(['\n\t\t<div class="filters display_flex">\n\t\t\t',"\n\t\t</div>\n\t"],['\n\t\t<div class="filters display_flex">\n\t\t\t',"\n\t\t</div>\n\t"]),o=a(["\n\t\t\t\t\t<button\n\t\t\t\t\t\tclass=","\n\t\t\t\t\t\tclick=","\n\t\t\t\t\t>\n\t\t\t\t\t\t","\n\t\t\t\t\t</button>\n\t\t\t\t"],["\n\t\t\t\t\t<button\n\t\t\t\t\t\tclass=","\n\t\t\t\t\t\tclick=","\n\t\t\t\t\t>\n\t\t\t\t\t\t","\n\t\t\t\t\t</button>\n\t\t\t\t"]);e.default=function(t){var e=t.filters,n=t.selectFilter,a=t.currentFilter;return(0,i.pack)(r,e.map(function(t){var e=t.name===a.name;return(0,i.pack)(o,"filter-button "+(e?"active":""),function(){return n(t.name)},t.name)}))};var i=n(0);function a(t,e){return Object.freeze(Object.defineProperties(t,{raw:{value:Object.freeze(e)}}))}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=function(t,e){return Object.freeze(Object.defineProperties(t,{raw:{value:Object.freeze(e)}}))}(['\n\t\t<footer class="main-footer">\n\t\t\tThis SPA is <b>packmar</b> library work demo.\n\t\t\tCheck it on <a href="https://github.com/krutoo/packmar.js" target="_blank">GitHub</a>.\n\t\t</footer>\n\t'],['\n\t\t<footer class="main-footer">\n\t\t\tThis SPA is <b>packmar</b> library work demo.\n\t\t\tCheck it on <a href="https://github.com/krutoo/packmar.js" target="_blank">GitHub</a>.\n\t\t</footer>\n\t']);e.default=function(){return(0,o.pack)(r)};var o=n(0)},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=c(['\n\t\t<div class="formatted">\n\t\t\t',"\n\t\t</div>\n\t"],['\n\t\t<div class="formatted">\n\t\t\t',"\n\t\t</div>\n\t"]),o=c(["<span>","<br /></span>"],["<span>","<br /></span>"]),i=c(['\n\t\t<div class="note overflow_hidden">\n\t\t\t<button class="button check-button overflow_hidden" click="','">\n\t\t\t\t',"\n\t\t\t</button>\n\t\t\t<div class=",">\n\t\t\t\t",'\n\t\t\t</div>\n\t\t\t<button class="button remove-button overflow_hidden" click=',">\n\t\t\t\t❌\n\t\t\t</button>\n\t\t</div>\n\t"],['\n\t\t<div class="note overflow_hidden">\n\t\t\t<button class="button check-button overflow_hidden" click="','">\n\t\t\t\t',"\n\t\t\t</button>\n\t\t\t<div class=",">\n\t\t\t\t",'\n\t\t\t</div>\n\t\t\t<button class="button remove-button overflow_hidden" click=',">\n\t\t\t\t❌\n\t\t\t</button>\n\t\t</div>\n\t"]);e.default=function(t){var e=t.noteText,n=t.isCompleted,c=t.onRemove,u=t.onCheck,l="text "+(n?"text-decoration_line-through":""),s=(0,a.pack)(r,e.split("\n").map(function(t){return(0,a.pack)(o,t)}));return(0,a.pack)(i,u,n?"✔️":"",l,s,c)};var a=n(0);function c(t,e){return Object.freeze(Object.defineProperties(t,{raw:{value:Object.freeze(e)}}))}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=function(t,e){return Object.freeze(Object.defineProperties(t,{raw:{value:Object.freeze(e)}}))}(['\n\t\t<textarea\n\t\t\trows="5"\n\t\t\tclass="main-field display_block width_100percent"\n\t\t\tplaceholder=',"\n\t\t\tinput=","\n\t\t>","</textarea>\n\t"],['\n\t\t<textarea\n\t\t\trows="5"\n\t\t\tclass="main-field display_block width_100percent"\n\t\t\tplaceholder=',"\n\t\t\tinput=","\n\t\t>","</textarea>\n\t"]);e.default=function(t){var e=t.value,n=t.placeholder,i=t.onInput;return(0,o.pack)(r,n,i,e)};var o=n(0)},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=function(t,e){return Object.freeze(Object.defineProperties(t,{raw:{value:Object.freeze(e)}}))}(['\n\t\t<div class="app-wrapper display_flex width_100percent">\n\t\t\t<div class="main-content">\n\t\t\t\t<h1 class="main-title">',"</h1>\n\t\t\t\t",'\n\t\t\t\t<button class="width_100percent" click=',">To Do</button>\n\t\t\t\t",'\n\t\t\t\t<div class="notes-list">\n\t\t\t\t\t',"\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t","\n\t\t</div>\n\t"],['\n\t\t<div class="app-wrapper display_flex width_100percent">\n\t\t\t<div class="main-content">\n\t\t\t\t<h1 class="main-title">',"</h1>\n\t\t\t\t",'\n\t\t\t\t<button class="width_100percent" click=',">To Do</button>\n\t\t\t\t",'\n\t\t\t\t<div class="notes-list">\n\t\t\t\t\t',"\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t","\n\t\t</div>\n\t"]);e.default=function(t){var e=t.title,n=t.currentText,l=t.currentFilterName,s=t.notes,f=t.filters,d=t.typeNote,v=t.addNote,p=t.checkNote,b=t.removeNote,h=t.selectFilter,m=f.find(function(t){return t.name===l})||{},k=m.check||function(){return!0};return(0,o.pack)(r,e,(0,i.default)({placeholder:"Just start typing...",value:n,onInput:d}),v,s.length?(0,u.default)({filters:f,selectFilter:h,currentFilter:m}):"",s.filter(k).map(function(t){return(0,a.default)({noteText:t.text,isCompleted:t.checked,onCheck:function(){return p(t.id)},onRemove:function(){return b(t.id)}})}),(0,c.default)())};var o=n(0),i=l(n(4)),a=l(n(3)),c=l(n(2)),u=l(n(1));function l(t){return t&&t.__esModule?t:{default:t}}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});e.classOf=function(t){return Object.prototype.toString.call(t).slice(8,-1)}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=c;var r=n(6);function o(t){if(Array.isArray(t)){for(var e=0,n=Array(t.length);e<t.length;e++)n[e]=t[e];return n}return Array.from(t)}var i=new Map,a=/{%\d*%}/g;function c(t,e,n){var i=t.htmlString,f=t.valuesMap;if(!s(arguments[0]))throw new TypeError("First argument must be packed element");var d=u(i);if(function t(e){if(e instanceof Element)e.hasChildNodes()&&[].concat(o(e.childNodes)).forEach(function(e){return t(e)});else if(a.test(e.nodeValue)){var n=e.nodeValue.replace(a,function(t){return"\x3c!--"+t+"--\x3e"}),r=u(n);[].concat(o(r.childNodes)).forEach(function(t){e.parentNode.insertBefore(t,e)}),e.remove()}}(d),function t(e,n){e.hasChildNodes()&&[].concat(o(e.childNodes)).forEach(function(e){return t(e,n)});e instanceof Element?function(t,e){[].concat(o(t.attributes)).forEach(function(n){var o=n.name,i=n.value;if(e.hasOwnProperty(i.trim())){t.valuesMap=t.valuesMap||{};var u=e[i.trim()];switch((0,r.classOf)(u)){case"Number":case"String":t.setAttribute(o,u);break;case"Boolean":u?t.setAttribute(o,""):t.removeAttribute(o);break;case"Function":t.removeAttribute(o),t.addEventListener(o,u);break;default:s(u)?t.setAttribute(o,c(u).innerHTML):t.removeAttribute(o)}}else if(e.hasOwnProperty(o.trim())){var l=e[o.trim()];t.removeAttribute(o),t.setAttribute(l,!0)}else if(i.match(a))throw new SyntaxError('In "'+o+'" attribute: only one string or one expression must be in value')})}(e,n):e instanceof Comment&&function(t,e){var n=t.nodeValue;if(e.hasOwnProperty(n)){var o=e[n];switch((0,r.classOf)(o)){case"Boolean":case"Number":case"String":var i=l(String(o),!0);t.replaceWith(i.firstChild);break;case"Array":o.forEach(function(e){if(!s(e))throw new TypeError("Only the packed elements can be in the arrays");t.parentNode.insertBefore(c(e),t)});break;default:s(o)&&t.parentNode.insertBefore(c(o),t)}t.remove()}}(e,n)}(d,f),1!==d.children.length)throw new RangeError("Template must contains only one element");return e instanceof Element&&(n||(e.innerHTML=""),d.children.length&&e.insertAdjacentElement("beforeEnd",d.children[0])),d.children[0]}function u(t){var e=void 0;return i.has(t)?e=i.get(t):(e=l(t),i.set(t,e)),e.cloneNode(!0)}function l(t,e){t=String(t||"").trim();var n=document.createElement("div");return e?n.insertAdjacentText("afterBegin",t):n.insertAdjacentHTML("afterBegin",t),n}function s(t){t=t||{};var e="String"===(0,r.classOf)(t.htmlString),n="Object"===(0,r.classOf)(t.valuesMap);return e&&n}},function(t,e,n){"use strict";function r(t){return"{%"+Object.keys(t).length+"%}"}Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(t){for(var e=[],n={},o=arguments.length,i=Array(o>1?o-1:0),a=1;a<o;a++)i[a-1]=arguments[a];for(var c=0;c<t.length;c++)if(e.push(t[c]),i.hasOwnProperty(c)){var u=r(n);n[u]=i[c],e.push(u)}return{htmlString:e.join("").trim(),valuesMap:n}}},function(t,e,n){"use strict";var r=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(t[r]=n[r])}return t},o=n(0),i=function(t){return t&&t.__esModule?t:{default:t}}(n(5));var a=[{name:"All",check:function(){return!0}},{name:"Active",check:function(t){return!t.checked}},{name:"Completed",check:function(t){return t.checked}}],c={},u={currentFilterName:a[0].name,currentText:"",notes:[]};function l(t){var e=t.key;c[e]=!0;var n=1===e.length,r=Object.keys(c).length>1;n&&!r&&p()}function s(t){var e=t.key;delete c[e]}function f(){localStorage.setItem("state",JSON.stringify(u))}function d(t){var e=t.target;u.currentText=e.value}function v(){u.currentText.replace(/\s*/g,"").length?(u.notes.unshift({id:Math.random().toString(16).slice(2),text:u.currentText.trim(),checked:!1}),u.currentText="",k()):p()}function p(){var t=document.querySelector(".main-field");t&&t.focus()}function b(t){var e=u.notes.find(function(e){return e.id===t});e.checked=!e.checked,k()}function h(t){u.notes=u.notes.filter(function(e){return e.id!==t}),0===u.notes.length?m(a[0].name):k()}function m(t){u.currentFilterName=t,k()}function k(){var t=(0,i.default)({title:"📝 To Do App",currentText:u.currentText,currentFilterName:u.currentFilterName,notes:u.notes,filters:a,typeNote:d,addNote:v,checkNote:b,removeNote:h,selectFilter:m});(0,o.render)(t,document.body)}window.addEventListener("DOMContentLoaded",function(){var t=JSON.parse(localStorage.getItem("state"));u=r({},u,t),k(),p(),window.addEventListener("beforeunload",f),window.addEventListener("keydown",l),window.addEventListener("keyup",s)})},function(t,e,n){n(9),t.exports=n(15)},,,,,function(t,e){}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/demo/js/components/App.js":
+/*!***************************************!*\
+  !*** ./src/demo/js/components/App.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _templateObject = _taggedTemplateLiteral(['\n\t\t<div class="app-wrapper display_flex width_100percent">\n\t\t\t<div class="main-content">\n\t\t\t\t<h1 class="main-title">', '</h1>\n\t\t\t\t', '\n\t\t\t\t<button class="width_100percent create-note-button" click=', '>To Do</button>\n\t\t\t\t', '\n\t\t\t\t<div class="notes-list">\n\t\t\t\t\t', '\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t', '\n\t\t</div>\n\t'], ['\n\t\t<div class="app-wrapper display_flex width_100percent">\n\t\t\t<div class="main-content">\n\t\t\t\t<h1 class="main-title">', '</h1>\n\t\t\t\t', '\n\t\t\t\t<button class="width_100percent create-note-button" click=', '>To Do</button>\n\t\t\t\t', '\n\t\t\t\t<div class="notes-list">\n\t\t\t\t\t', '\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t', '\n\t\t</div>\n\t']);
+
+exports.default = App;
+
+var _packmar = __webpack_require__(/*! packmar */ "./src/library/js/index.js");
+
+var _Field = __webpack_require__(/*! ./Field */ "./src/demo/js/components/Field.js");
+
+var _Field2 = _interopRequireDefault(_Field);
+
+var _Note = __webpack_require__(/*! ./Note */ "./src/demo/js/components/Note.js");
+
+var _Note2 = _interopRequireDefault(_Note);
+
+var _Footer = __webpack_require__(/*! ./Footer */ "./src/demo/js/components/Footer.js");
+
+var _Footer2 = _interopRequireDefault(_Footer);
+
+var _Filters = __webpack_require__(/*! ./Filters */ "./src/demo/js/components/Filters.js");
+
+var _Filters2 = _interopRequireDefault(_Filters);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function App(options) {
+	var title = options.title,
+	    currentText = options.currentText,
+	    currentFilterName = options.currentFilterName,
+	    notes = options.notes,
+	    filters = options.filters,
+	    typeNote = options.typeNote,
+	    addNote = options.addNote,
+	    checkNote = options.checkNote,
+	    removeNote = options.removeNote,
+	    selectFilter = options.selectFilter;
+
+	var defaultCheck = function defaultCheck() {
+		return true;
+	};
+	var currentFilter = filters.find(function (filter) {
+		return filter.name === currentFilterName;
+	}) || {};
+	var needShowNote = currentFilter.check || defaultCheck;
+	return (0, _packmar.pack)(_templateObject, title, (0, _Field2.default)({
+		placeholder: 'Just start typing...',
+		value: currentText,
+		onInput: typeNote
+	}), addNote, notes.length ? (0, _Filters2.default)({
+		filters: filters,
+		selectFilter: selectFilter,
+		currentFilter: currentFilter
+	}) : '', notes.filter(needShowNote).map(function (note) {
+		return (0, _Note2.default)({
+			noteText: note.text,
+			isCompleted: note.checked,
+			onCheck: function onCheck() {
+				return checkNote(note.id);
+			},
+			onRemove: function onRemove() {
+				return removeNote(note.id);
+			}
+		});
+	}), (0, _Footer2.default)());
+}
+
+/***/ }),
+
+/***/ "./src/demo/js/components/Field.js":
+/*!*****************************************!*\
+  !*** ./src/demo/js/components/Field.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _templateObject = _taggedTemplateLiteral(['\n\t\t<textarea\n\t\t\trows="5"\n\t\t\tclass="main-field display_block width_100percent"\n\t\t\tplaceholder=', '\n\t\t\tinput=', '\n\t\t>', '</textarea>\n\t'], ['\n\t\t<textarea\n\t\t\trows="5"\n\t\t\tclass="main-field display_block width_100percent"\n\t\t\tplaceholder=', '\n\t\t\tinput=', '\n\t\t>', '</textarea>\n\t']);
+
+exports.default = Field;
+
+var _packmar = __webpack_require__(/*! packmar */ "./src/library/js/index.js");
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function Field(_ref) {
+	var value = _ref.value,
+	    placeholder = _ref.placeholder,
+	    onInput = _ref.onInput;
+
+	return (0, _packmar.pack)(_templateObject, placeholder, onInput, value);
+}
+
+/***/ }),
+
+/***/ "./src/demo/js/components/Filters.js":
+/*!*******************************************!*\
+  !*** ./src/demo/js/components/Filters.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _templateObject = _taggedTemplateLiteral(['\n\t\t<div class="filters display_flex">\n\t\t\t', '\n\t\t</div>\n\t'], ['\n\t\t<div class="filters display_flex">\n\t\t\t', '\n\t\t</div>\n\t']),
+    _templateObject2 = _taggedTemplateLiteral(['\n\t\t\t\t\t<button\n\t\t\t\t\t\tclass=', '\n\t\t\t\t\t\tclick=', '\n\t\t\t\t\t>\n\t\t\t\t\t\t', '\n\t\t\t\t\t</button>\n\t\t\t\t'], ['\n\t\t\t\t\t<button\n\t\t\t\t\t\tclass=', '\n\t\t\t\t\t\tclick=', '\n\t\t\t\t\t>\n\t\t\t\t\t\t', '\n\t\t\t\t\t</button>\n\t\t\t\t']);
+
+exports.default = Filters;
+
+var _packmar = __webpack_require__(/*! packmar */ "./src/library/js/index.js");
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function Filters(_ref) {
+	var filters = _ref.filters,
+	    selectFilter = _ref.selectFilter,
+	    currentFilter = _ref.currentFilter;
+
+	return (0, _packmar.pack)(_templateObject, filters.map(function (filter) {
+		var isActive = filter.name === currentFilter.name;
+		return (0, _packmar.pack)(_templateObject2, 'filter-button ' + (isActive ? 'active' : ''), function () {
+			return selectFilter(filter.name);
+		}, filter.name);
+	}));
+}
+
+/***/ }),
+
+/***/ "./src/demo/js/components/Footer.js":
+/*!******************************************!*\
+  !*** ./src/demo/js/components/Footer.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _templateObject = _taggedTemplateLiteral(['\n\t\t<footer class="main-footer">\n\t\t\tThis SPA is <b>packmar</b> library work demo.\n\t\t\tCheck it on <a href="https://github.com/krutoo/packmar.js" target="_blank">GitHub</a>.\n\t\t</footer>\n\t'], ['\n\t\t<footer class="main-footer">\n\t\t\tThis SPA is <b>packmar</b> library work demo.\n\t\t\tCheck it on <a href="https://github.com/krutoo/packmar.js" target="_blank">GitHub</a>.\n\t\t</footer>\n\t']);
+
+exports.default = Footer;
+
+var _packmar = __webpack_require__(/*! packmar */ "./src/library/js/index.js");
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function Footer() {
+	return (0, _packmar.pack)(_templateObject);
+}
+
+/***/ }),
+
+/***/ "./src/demo/js/components/Note.js":
+/*!****************************************!*\
+  !*** ./src/demo/js/components/Note.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _templateObject = _taggedTemplateLiteral(['\n\t\t<div class="formatted">\n\t\t\t', '\n\t\t</div>\n\t'], ['\n\t\t<div class="formatted">\n\t\t\t', '\n\t\t</div>\n\t']),
+    _templateObject2 = _taggedTemplateLiteral(['<span>', '<br /></span>'], ['<span>', '<br /></span>']),
+    _templateObject3 = _taggedTemplateLiteral(['\n\t\t<div class="note overflow_hidden">\n\t\t\t<button class="button check-button overflow_hidden" click="', '">\n\t\t\t\t', '\n\t\t\t</button>\n\t\t\t<div class=', '>\n\t\t\t\t', '\n\t\t\t</div>\n\t\t\t<button class="button remove-button overflow_hidden" click=', '>\n\t\t\t\t\u274C\n\t\t\t</button>\n\t\t</div>\n\t'], ['\n\t\t<div class="note overflow_hidden">\n\t\t\t<button class="button check-button overflow_hidden" click="', '">\n\t\t\t\t', '\n\t\t\t</button>\n\t\t\t<div class=', '>\n\t\t\t\t', '\n\t\t\t</div>\n\t\t\t<button class="button remove-button overflow_hidden" click=', '>\n\t\t\t\t\u274C\n\t\t\t</button>\n\t\t</div>\n\t']);
+
+exports.default = Note;
+
+var _packmar = __webpack_require__(/*! packmar */ "./src/library/js/index.js");
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function Note(_ref) {
+	var noteText = _ref.noteText,
+	    isCompleted = _ref.isCompleted,
+	    onRemove = _ref.onRemove,
+	    onCheck = _ref.onCheck;
+
+	var textClasses = 'text ' + (isCompleted ? 'text-decoration_line-through' : '');
+	var formattedText = (0, _packmar.pack)(_templateObject, noteText.split('\n').map(function (part) {
+		return (0, _packmar.pack)(_templateObject2, part);
+	}));
+	return (0, _packmar.pack)(_templateObject3, onCheck, isCompleted ? '✔️' : '', textClasses, formattedText, onRemove);
+}
+
+/***/ }),
+
+/***/ "./src/demo/js/index.js":
+/*!******************************!*\
+  !*** ./src/demo/js/index.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _packmar = __webpack_require__(/*! packmar */ "./src/library/js/index.js");
+
+var _App = __webpack_require__(/*! ./components/App */ "./src/demo/js/components/App.js");
+
+var _App2 = _interopRequireDefault(_App);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FILTERS = Object.freeze([{ name: 'All', check: function check() {
+		return true;
+	} }, { name: 'Active', check: function check(note) {
+		return !note.checked;
+	} }, { name: 'Completed', check: function check(note) {
+		return note.checked;
+	} }]);
+
+var DEFAULT_STATE = Object.freeze({
+	currentFilterName: FILTERS[0].name,
+	currentText: '',
+	notes: [{ id: 1, text: 'Check the packmar.js demo', checked: true }, { id: 2, text: 'Create new note', checked: false }, { id: 3, text: 'mark any note as done ', checked: false }, { id: 4, text: 'Delete any note', checked: false }]
+});
+
+var pressedKeys = {};
+
+var state = void 0;
+
+window.addEventListener('DOMContentLoaded', initialize);
+
+function initialize() {
+	var initialState = JSON.parse(localStorage.getItem('state'));
+	state = _extends({}, DEFAULT_STATE, initialState);
+	renderApp();
+	focusOnField();
+	window.addEventListener('beforeunload', saveToLocalStorage);
+	window.addEventListener('keydown', onKeyDown);
+	window.addEventListener('keyup', onKeyUp);
+}
+
+function onKeyDown(_ref) {
+	var key = _ref.key;
+
+	pressedKeys[key] = true;
+	var isPrintable = key.length === 1;
+	var isKeysCombination = Object.keys(pressedKeys).length > 1;
+	if (isPrintable && !isKeysCombination) {
+		focusOnField();
+	}
+}
+
+function onKeyUp(_ref2) {
+	var key = _ref2.key;
+
+	delete pressedKeys[key];
+}
+
+function saveToLocalStorage() {
+	localStorage.setItem('state', JSON.stringify(state));
+}
+
+function typeNote(_ref3) {
+	var target = _ref3.target;
+
+	state.currentText = target.value;
+}
+
+function addNote() {
+	var hasText = state.currentText.replace(/\s*/g, '').length;
+	if (hasText) {
+		state.notes.unshift({
+			id: Date.now(),
+			text: state.currentText.trim(),
+			checked: false
+		});
+		state.currentText = '';
+		renderApp();
+	} else {
+		focusOnField();
+	}
+}
+
+function focusOnField() {
+	var field = document.querySelector('.main-field');
+	if (field) {
+		field.focus();
+	}
+}
+
+function checkNote(noteId) {
+	var targetNote = state.notes.find(function (note) {
+		return note.id === noteId;
+	});
+	targetNote.checked = !targetNote.checked;
+	renderApp();
+}
+
+function removeNote(noteId) {
+	state.notes = state.notes.filter(function (note) {
+		return note.id !== noteId;
+	});
+	if (state.notes.length === 0) {
+		selectFilter(FILTERS[0].name);
+	} else {
+		renderApp();
+	}
+}
+
+function selectFilter(filterName) {
+	state.currentFilterName = filterName;
+	renderApp();
+}
+
+function renderApp() {
+	var app = (0, _App2.default)({
+		title: '📝 To Do App',
+		currentText: state.currentText,
+		currentFilterName: state.currentFilterName,
+		notes: state.notes,
+		filters: FILTERS,
+		typeNote: typeNote,
+		addNote: addNote,
+		checkNote: checkNote,
+		removeNote: removeNote,
+		selectFilter: selectFilter
+	});
+	(0, _packmar.render)(app, document.body);
+}
+
+/***/ }),
+
+/***/ "./src/demo/scss/index.scss":
+/*!**********************************!*\
+  !*** ./src/demo/scss/index.scss ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./src/library/js/index.js":
+/*!*********************************!*\
+  !*** ./src/library/js/index.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.render = exports.pack = undefined;
+
+var _pack = __webpack_require__(/*! ./pack */ "./src/library/js/pack.js");
+
+var _pack2 = _interopRequireDefault(_pack);
+
+var _render = __webpack_require__(/*! ./render */ "./src/library/js/render.js");
+
+var _render2 = _interopRequireDefault(_render);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.pack = _pack2.default;
+exports.render = _render2.default;
+
+/***/ }),
+
+/***/ "./src/library/js/pack.js":
+/*!********************************!*\
+  !*** ./src/library/js/pack.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = pack;
+/**
+ * Tag for template literals. Returns the packed element.
+ * @param {Array} strings String part of template literal.
+ * @param {...*} values Values part.
+ * @return {Object} Packed element.
+ */
+function pack(strings) {
+	var parts = [];
+	var valuesMap = {};
+
+	for (var _len = arguments.length, values = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+		values[_key - 1] = arguments[_key];
+	}
+
+	for (var index = 0; index < strings.length; index++) {
+		parts.push(strings[index]);
+		if (values.hasOwnProperty(index)) {
+			var anchor = getAnchor(valuesMap);
+			valuesMap[anchor] = values[index];
+			parts.push(anchor);
+		}
+	}
+	var htmlString = parts.join('').trim();
+	return Object.freeze({ htmlString: htmlString, valuesMap: valuesMap });
+}
+
+function getAnchor(valuesMap) {
+	var length = Object.keys(valuesMap).length;
+	var anchor = '{%' + length + '%}';
+	return anchor;
+}
+
+/***/ }),
+
+/***/ "./src/library/js/render.js":
+/*!**********************************!*\
+  !*** ./src/library/js/render.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.default = render;
+
+var _utils = __webpack_require__(/*! ./utils */ "./src/library/js/utils.js");
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var templates = new Map();
+var anchorsRegex = /{%\d*%}/g;
+
+/**
+ * Render packed element.
+ * @param {Object} pack Packed element.
+ * @param {Element} [rootElement] Element to place packed element into.
+ * @param {boolean} [needKeepContent] Need keep root element content?.
+ * @return {Element} unpacked element, normal dom node.
+ */
+function render(_ref, rootElement, needKeepContent) {
+	var htmlString = _ref.htmlString,
+	    valuesMap = _ref.valuesMap;
+
+	if (!isPack(arguments[0])) {
+		throw new TypeError('First argument must be packed element');
+	}
+	var template = getTemplate(htmlString);
+	replaceAnchors(template);
+	processNode(template, valuesMap);
+	if (template.children.length !== 1) {
+		throw new RangeError('Template must contains only one element');
+	}
+	if (rootElement instanceof Element) {
+		if (!needKeepContent) {
+			rootElement.innerHTML = '';
+		}
+		if (template.children.length) {
+			rootElement.insertAdjacentElement('beforeEnd', template.children[0]);
+		}
+	}
+	return template.children[0];
+}
+
+function getTemplate(htmlString) {
+	var template = void 0;
+	if (templates.has(htmlString)) {
+		template = templates.get(htmlString);
+	} else {
+		template = createTemplate(htmlString);
+		templates.set(htmlString, template);
+	}
+	return template.cloneNode(true);
+}
+
+function replaceAnchors(node) {
+	if (node instanceof Element) {
+		if (node.hasChildNodes()) {
+			[].concat(_toConsumableArray(node.childNodes)).forEach(function (node) {
+				return replaceAnchors(node);
+			});
+		}
+	} else if (anchorsRegex.test(node.nodeValue)) {
+		var templateString = node.nodeValue.replace(anchorsRegex, function (match) {
+			return '<!--' + match + '-->';
+		});
+		var template = getTemplate(templateString);
+		[].concat(_toConsumableArray(template.childNodes)).forEach(function (childNode) {
+			node.parentNode.insertBefore(childNode, node);
+		});
+		node.remove();
+	}
+}
+
+function processNode(node, valuesMap) {
+	if (node.hasChildNodes()) {
+		[].concat(_toConsumableArray(node.childNodes)).forEach(function (child) {
+			return processNode(child, valuesMap);
+		});
+	}
+	if (node instanceof Element) {
+		processAttributes(node, valuesMap);
+	} else if (node instanceof Comment) {
+		processComment(node, valuesMap);
+	}
+}
+
+function processComment(commentNode, valuesMap) {
+	var key = commentNode.nodeValue;
+	if (valuesMap.hasOwnProperty(key)) {
+		var value = valuesMap[key];
+		switch ((0, _utils.classOf)(value)) {
+			case 'Boolean':
+			case 'Number':
+			case 'String':
+				{
+					var newElement = createTemplate(String(value), true);
+					commentNode.replaceWith(newElement.firstChild);
+					break;
+				}
+			case 'Array':
+				{
+					value.forEach(function (item) {
+						if (isPack(item)) {
+							commentNode.parentNode.insertBefore(render(item), commentNode);
+						} else {
+							throw new TypeError('Only the packed elements can be in the arrays');
+						}
+					});
+					break;
+				}
+			default:
+				{
+					if (isPack(value)) {
+						commentNode.parentNode.insertBefore(render(value), commentNode);
+					}
+				}
+		}
+		commentNode.remove();
+	}
+}
+
+function processAttributes(element, valuesMap) {
+	[].concat(_toConsumableArray(element.attributes)).forEach(function (_ref2) {
+		var name = _ref2.name,
+		    value = _ref2.value;
+
+		if (valuesMap.hasOwnProperty(value.trim())) {
+			element.valuesMap = element.valuesMap || {};
+			var targetValue = valuesMap[value.trim()];
+			switch ((0, _utils.classOf)(targetValue)) {
+				case 'Number':
+				case 'String':
+					{
+						element.setAttribute(name, targetValue);
+						break;
+					}
+				case 'Boolean':
+					{
+						if (targetValue) {
+							element.setAttribute(name, '');
+						} else {
+							element.removeAttribute(name);
+						}
+						break;
+					}
+				case 'Function':
+					{
+						element.removeAttribute(name);
+						element.addEventListener(name, targetValue);
+						break;
+					}
+				default:
+					{
+						if (isPack(targetValue)) {
+							element.setAttribute(name, render(targetValue).innerHTML);
+						} else {
+							element.removeAttribute(name);
+						}
+					}
+			}
+		} else if (valuesMap.hasOwnProperty(name.trim())) {
+			var _targetValue = valuesMap[name.trim()];
+			element.removeAttribute(name);
+			element.setAttribute(_targetValue, true);
+		} else if (value.match(anchorsRegex)) {
+			throw new SyntaxError('In "' + name + '" attribute: only one string or one expression must be in value');
+		}
+	});
+}
+
+function createTemplate(htmlString, asText) {
+	var template = String(htmlString || '').trim();
+	var templateElement = document.createElement('div');
+	if (asText) {
+		templateElement.insertAdjacentText('afterBegin', template);
+	} else {
+		templateElement.insertAdjacentHTML('afterBegin', template);
+	}
+	return templateElement;
+}
+
+function isPack(value) {
+	var content = _extends({}, value);
+	var hasTemplate = (0, _utils.classOf)(content.htmlString) === 'String';
+	var hasMap = (0, _utils.classOf)(content.valuesMap) === 'Object';
+	return hasTemplate && hasMap;
+}
+
+/***/ }),
+
+/***/ "./src/library/js/utils.js":
+/*!*********************************!*\
+  !*** ./src/library/js/utils.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * Return a class name of input value (true way to get it).
+ * @param {*} value Value to define it class.
+ * @return {string} Name of class.
+ */
+var classOf = exports.classOf = function classOf(value) {
+  return Object.prototype.toString.call(value).slice(8, -1);
+};
+
+/***/ }),
+
+/***/ 0:
+/*!***************************************************************!*\
+  !*** multi ./src/demo/js/index.js ./src/demo/scss/index.scss ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ./src/demo/js/index.js */"./src/demo/js/index.js");
+module.exports = __webpack_require__(/*! ./src/demo/scss/index.scss */"./src/demo/scss/index.scss");
+
+
+/***/ })
+
+/******/ });
 //# sourceMappingURL=demo.js.map

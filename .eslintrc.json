@@ -1,6 +1,7 @@
 {
     "env": {
         "browser": true,
+        "node": true,
         "es6": true
     },
     "extends": "eslint:recommended",
@@ -12,7 +13,7 @@
         "eqeqeq": "error",
         "no-var": "error",
         "no-eval": "error",
-        "id-length": "error",
+        "no-undef": "error",
         "no-new-func": "error",
         "no-new-object": "error",
         "no-multi-assign": "error",
@@ -20,9 +21,13 @@
         "no-new-wrappers": "error",
         "prefer-template": "error",
         "no-nested-ternary": "error",
+        "no-useless-return": "error",
+        "no-trailing-spaces": "error",
         "no-mixed-operators": "error",
         "no-unneeded-ternary": "error",
+        "no-implicit-coercion": "error",
         "no-array-constructor": "error",
+        "no-extra-boolean-cast": "error",
         "array-callback-return": "error",
         "no-useless-constructor": "error",
         "no-whitespace-before-property": "error",
@@ -39,7 +44,13 @@
         ],
         "comma-dangle": [
             "error",
-            "only-multiline"
+            {
+                "arrays": "always-multiline",
+                "objects": "always-multiline",
+                "imports": "always-multiline",
+                "exports": "always-multiline",
+                "functions": "always-multiline"
+            }
         ],
         "space-in-parens": [
             "error",
@@ -60,6 +71,14 @@
                 "after": true
             }
         ],
+        "arrow-body-style": [
+            "error",
+            "as-needed"
+        ],
+        "arrow-parens": [
+            "error",
+            "as-needed"
+        ],
         "quote-props": [
             "error",
             "as-needed"
@@ -72,20 +91,12 @@
             "error",
             "all"
         ],
-        "arrow-body-style": [
-            "error",
-            "as-needed"
-        ],
         "keyword-spacing": [
             "error",
             {
                 "before": true,
                 "after": true
             }
-        ],
-        "arrow-parens": [
-            "error",
-            "as-needed"
         ],
         "indent": [
             "error",
@@ -106,6 +117,51 @@
         "semi": [
             "error",
             "always"
+        ],
+        "valid-jsdoc": [
+            "error",
+            {
+                "prefer": {
+                    "arg": "param",
+                    "argument": "param",
+                    "class": "constructor",
+                    "virtual": "abstract",
+                    "returns": "return"
+                },
+                "preferType": {
+                    "any": "*",
+                    "Null": "null",
+                    "Undefined": "undefined",
+                    "Boolean": "boolean",
+                    "Number": "number",
+                    "int": "number",
+                    "integer": "number",
+                    "float": "number",
+                    "String": "string",
+                    "Symbol": "symbol",
+                    "object": "Object",
+                    "array": "Array",
+                    "function": "Function"
+                },
+                "requireReturn": false,
+                "requireReturnType": true,
+                "requireParamType": true,
+                "matchDescription": ".+",
+                "requireParamDescription": true,
+                "requireReturnDescription": true
+            }
+        ],
+        "require-jsdoc": [
+            "error",
+            {
+                "require": {
+                    "FunctionDeclaration": false,
+                    "MethodDefinition": false,
+                    "ClassDeclaration": false,
+                    "ArrowFunctionExpression": false,
+                    "FunctionExpression": false
+                }
+            }
         ]
     }
 }

@@ -1,7 +1,7 @@
 /**
  * Tag for template literals. Returns the packed element.
- * @param  {Array} strings String part of template literal.
- * @param  {...*} values Values part.
+ * @param {Array} strings String part of template literal.
+ * @param {...*} values Values part.
  * @return {Object} Packed element.
  */
 export default function pack (strings, ...values) {
@@ -16,9 +16,14 @@ export default function pack (strings, ...values) {
 		}
 	}
 	const htmlString = parts.join('').trim();
-	return { htmlString, valuesMap };
+	return Object.freeze({ htmlString, valuesMap });
 }
 
+/**
+ * Returns anchor.
+ * @param {Object} valuesMap Values map.
+ * @return {string} Anchor for template.
+ */
 function getAnchor (valuesMap) {
 	const length = Object.keys(valuesMap).length;
 	const anchor = `{%${length}%}`;

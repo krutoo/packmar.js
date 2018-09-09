@@ -1,9 +1,10 @@
 {
   "name": "packmar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simplest vanilla JavaScript library for create components-based UI",
   "main": "src/library/js/index.js",
   "scripts": {
+    "lint": "eslint src",
     "build": "webpack --mode production",
     "watch": "webpack --watch --mode development"
   },

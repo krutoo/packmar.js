@@ -29,7 +29,7 @@ export default function App (options) {
 					value: currentText,
 					onInput: typeNote,
 				})}
-				<button class="width_100percent" click=${addNote}>To Do</button>
+				<button class="width_100percent create-note-button" click=${addNote}>To Do</button>
 				${notes.length
 					? Filters({
 						filters,

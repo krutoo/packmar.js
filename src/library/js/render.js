@@ -31,6 +31,11 @@ export default function render ({ htmlString, valuesMap }, rootElement, needKeep
 	return template.children[0];
 }
 
+/**
+ * Returns template element for HTML-string.
+ * @param {string} htmlString HTML string.
+ * @return {Element} Template element.
+ */
 function getTemplate (htmlString) {
 	let template;
 	if (templates.has(htmlString)) {
@@ -42,6 +47,10 @@ function getTemplate (htmlString) {
 	return template.cloneNode(true);
 }
 
+/**
+ * Replaces anchors by anchor-comments in element.
+ * @param {Node} node Node to replace anchors in it.
+ */
 function replaceAnchors (node) {
 	if (node instanceof Element) {
 		if (node.hasChildNodes()) {
@@ -57,6 +66,11 @@ function replaceAnchors (node) {
 	}
 }
 
+/**
+ * Processes node. Inserts values from map instead of anchor-comments.
+ * @param {Node} node Node to process.
+ * @param {Object} valuesMap Values map.
+ */
 function processNode (node, valuesMap) {
 	if (node.hasChildNodes()) {
 		[...node.childNodes].forEach(child => processNode(child, valuesMap));
@@ -68,6 +82,11 @@ function processNode (node, valuesMap) {
 	}
 }
 
+/**
+ * Processes anchor-comment. Inserts value from map instead of comment.
+ * @param {Node} commentNode Comment node to process.
+ * @param {Object} valuesMap Values map.
+ */
 function processComment (commentNode, valuesMap) {
 	const key = commentNode.nodeValue;
 	if (valuesMap.hasOwnProperty(key)) {
@@ -100,6 +119,11 @@ function processComment (commentNode, valuesMap) {
 	}
 }
 
+/**
+ * Processes attributes of element. Inserts value from map instead of anchors.
+ * @param {Element} element Element for processing its attributes.
+ * @param {Object} valuesMap Values map.
+ */
 function processAttributes (element, valuesMap) {
 	[...element.attributes].forEach(({ name, value }) => {
 		if (valuesMap.hasOwnProperty(value.trim())) {
@@ -142,20 +166,31 @@ function processAttributes (element, valuesMap) {
 	});
 }
 
+/**
+ * Returns new DIV element with content from HTML string.
+ * @param {string} htmlString HTML string.
+ * @param {boolean} asText Need parse string as simple text?
+ * @return {Element} New DIV element.
+ */
 function createTemplate (htmlString, asText) {
-	htmlString = String(htmlString || '').trim();
+	const template = String(htmlString || '').trim();
 	const templateElement = document.createElement('div');
 	if (asText) {
-		templateElement.insertAdjacentText('afterBegin', htmlString);
+		templateElement.insertAdjacentText('afterBegin', template);
 	} else {
-		templateElement.insertAdjacentHTML('afterBegin', htmlString);
+		templateElement.insertAdjacentHTML('afterBegin', template);
 	}
 	return templateElement;
 }
 
+/**
+ * Verifies that value is a markup package.
+ * @param {*} value Checked value.
+ * @return {boolean} Value is a valid package?
+ */
 function isPack (value) {
-	value = value || {};
-	const hasTemplate = classOf(value.htmlString) === 'String';
-	const hasMap = classOf(value.valuesMap) === 'Object';
+	const content = { ...value };
+	const hasTemplate = classOf(content.htmlString) === 'String';
+	const hasMap = classOf(content.valuesMap) === 'Object';
 	return hasTemplate && hasMap;
 }
