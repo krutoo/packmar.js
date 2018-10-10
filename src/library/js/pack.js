@@ -26,6 +26,5 @@ export default function pack (strings, ...values) {
  */
 function getAnchor (valuesMap) {
 	const length = Object.keys(valuesMap).length;
-	const anchor = `{%${length}%}`;
-	return anchor;
+	return `{%${length}%}`;
 }
