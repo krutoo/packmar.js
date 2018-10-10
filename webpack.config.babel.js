@@ -1,5 +1,4 @@
 import path from 'path';
-import webpack from 'webpack';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
@@ -12,6 +11,7 @@ const getConfiguration = (env, options) => {
 				'./src/demo/js/index.js',
 				'./src/demo/scss/index.scss',
 			],
+			packmar: './src/library/js/index.js',
 		},
 		output: {
 			path: path.resolve(__dirname, 'build'),
@@ -48,6 +48,15 @@ const getConfiguration = (env, options) => {
 					sourceMap: true,
 				}),
 			],
+			splitChunks: {
+				cacheGroups: {
+					packmar: {
+						test: /src\/library/,
+						name: 'packmar',
+						chunks: 'all',
+					},
+				},
+			},
 		},
 		plugins: [
 			new ExtractTextPlugin('css/[name].css', {
