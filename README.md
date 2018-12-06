@@ -32,13 +32,13 @@ import { pack, render } from 'packmar';
  * Return the packed element of heading.
  * @param {String} options.text Heading text.
  * @param {Function} options.onClick Click callback.
- * @return {Object} packed element.
+ * @return {Object} Packed element.
  */
 function Heading ({ text, onClick }) {
     return pack`<h1 class="heading" click=${onClick}>${text}</h1>`;
 }
 
-render(Heading('Hello, world'), document.body);
+render(Heading({ text: 'Hello, world' }), document.body);
 ```
 
 *Packmar* relies on values types, you passed in template:
@@ -89,6 +89,7 @@ function Form ({ onSubmit }) {
 
 *Packmar* caches elements for reusable templates.
 Because parse HTML from string slower than cloning nodes.
+*Packmar* has no simple XSS vulnerabilities. HTML nodes creates without values from expressions.
 
 ## 🤘🏾 Next?
 

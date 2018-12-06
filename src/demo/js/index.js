@@ -1,25 +1,32 @@
 import { render } from 'packmar';
 import App from './components/App';
 
-const FILTERS = [
-	{ name: 'All', check: note => true },
+const FILTERS = Object.freeze([
+	{ name: 'All', check: () => true },
 	{ name: 'Active', check: note => !note.checked },
 	{ name: 'Completed', check: note => note.checked },
-];
+]);
+
+const DEFAULT_STATE = Object.freeze({
+	currentFilterName: FILTERS[0].name,
+	currentText: '',
+	notes: [
+		{ id: 1, text: 'Check the packmar.js demo', checked: true },
+		{ id: 2, text: 'Create new note', checked: false },
+		{ id: 3, text: 'mark any note as done ', checked: false },
+		{ id: 4, text: 'Delete any note', checked: false },
+	],
+});
 
 const pressedKeys = {};
 
-let state = {
-	currentFilterName: FILTERS[0].name,
-	currentText: '',
-	notes: [],
-};
+let state;
 
 window.addEventListener('DOMContentLoaded', initialize);
 
 function initialize () {
 	const initialState = JSON.parse(localStorage.getItem('state'));
-	state = { ...state, ...initialState };
+	state = { ...DEFAULT_STATE, ...initialState };
 	renderApp();
 	focusOnField();
 	window.addEventListener('beforeunload', saveToLocalStorage);
@@ -52,7 +59,7 @@ function addNote () {
 	const hasText = state.currentText.replace(/\s*/g, '').length;
 	if (hasText) {
 		state.notes.unshift({
-			id: Math.random().toString(16).slice(2),
+			id: Date.now(),
 			text: state.currentText.trim(),
 			checked: false,
 		});

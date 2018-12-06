@@ -1,5 +1,4 @@
 import path from 'path';
-import webpack from 'webpack';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
@@ -12,6 +11,7 @@ const getConfiguration = (env, options) => {
 				'./src/demo/js/index.js',
 				'./src/demo/scss/index.scss',
 			],
+			packmar: './src/library/js/index.js',
 		},
 		output: {
 			path: path.resolve(__dirname, 'build'),
@@ -35,7 +35,7 @@ const getConfiguration = (env, options) => {
 		},
 		resolve: {
 			alias: {
-				'packmar': path.join(__dirname, '/src/library/js/index.js'),
+				packmar: path.join(__dirname, '/src/library/js/index.js'),
 			},
 		},
 		devtool: 'source-map',
@@ -46,8 +46,17 @@ const getConfiguration = (env, options) => {
 					cache: true,
 					parallel: true,
 					sourceMap: true,
-				})
+				}),
 			],
+			splitChunks: {
+				cacheGroups: {
+					packmar: {
+						test: /src\/library/,
+						name: 'packmar',
+						chunks: 'all',
+					},
+				},
+			},
 		},
 		plugins: [
 			new ExtractTextPlugin('css/[name].css', {

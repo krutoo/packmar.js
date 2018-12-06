@@ -1,9 +1,10 @@
 {
   "name": "packmar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simplest vanilla JavaScript library for create components-based UI",
   "main": "src/library/js/index.js",
   "scripts": {
+    "lint": "eslint src",
     "build": "webpack --mode production",
     "watch": "webpack --watch --mode development"
   },
@@ -25,6 +26,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "css-loader": "^1.0.0",
+    "eslint": "^5.2.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "node-sass": "^4.9.2",
     "optimize-css-assets-webpack-plugin": "^5.0.0",
