@@ -38,7 +38,7 @@ function Heading ({ text, onClick }) {
     return pack`<h1 class="heading" click=${onClick}>${text}</h1>`;
 }
 
-render(Heading('Hello, world'), document.body);
+render(Heading({ text: 'Hello, world' }), document.body);
 ```
 
 *Packmar* relies on values types, you passed in template:
