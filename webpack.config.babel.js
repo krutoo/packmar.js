@@ -3,7 +3,13 @@ import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 
-const getConfiguration = (env, options) => {
+/**
+ * Returns a webpack configuration of project.
+ * @param {Object} env Environment.
+ * @param {Object} options Options.
+ * @return {Object} Configuration.
+ */
+export default function getConfiguration (env, options) {
 	const isProduction = Boolean(options.mode === 'production');
 	const configuration = {
 		entry: {
@@ -70,6 +76,4 @@ const getConfiguration = (env, options) => {
 		);
 	}
 	return configuration;
-};
-
-export default getConfiguration;
+}

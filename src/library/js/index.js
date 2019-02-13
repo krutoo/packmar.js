@@ -1,4 +1,4 @@
-import pack from './pack';
-import render from './render';
+import pack from './pack.js';
+import render from './render.js';
 
 export { pack, render };

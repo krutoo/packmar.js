@@ -1,5 +1,5 @@
 import { render } from 'packmar';
-import App from './components/App';
+import App from './components/App.js';
 
 const FILTERS = Object.freeze([
 	{ name: 'All', check: () => true },

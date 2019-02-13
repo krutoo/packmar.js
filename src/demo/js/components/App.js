@@ -1,8 +1,8 @@
 import { pack } from 'packmar';
-import Field from './Field';
-import Note from './Note';
-import Footer from './Footer';
-import Filters from './Filters';
+import Field from './Field.js';
+import Note from './Note.js';
+import Footer from './Footer.js';
+import Filters from './Filters.js';
 
 export default function App (options) {
 	const {

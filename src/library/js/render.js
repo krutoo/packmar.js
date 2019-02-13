@@ -1,4 +1,4 @@
-import { classOf } from './utils';
+import { classOf } from './utils.js';
 
 const templates = new Map();
 const anchorsRegex = /{%\d*%}/g;
