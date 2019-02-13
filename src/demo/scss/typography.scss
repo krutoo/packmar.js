@@ -1,4 +1,9 @@
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 	font-weight: bold;
 	margin-bottom: 1rem;
 }
@@ -20,14 +25,6 @@ textarea {
 	border: .1rem solid #ddd;
 	padding: .5rem;
 	font-family: inherit;
-	font-size: inherit;
-}
-
-input:focus,
-button:focus,
-textarea:focus {
-	border-color: $main-color;
-	box-shadow: 0 0 0 $main-border-width $main-color;
 }
 
 button {
@@ -39,4 +36,11 @@ button {
 		background-color: #aaa;
 		border-color: #aaa;
 	}
+}
+
+input:focus,
+button:focus,
+textarea:focus {
+	border-color: $main-color;
+	box-shadow: 0 0 0 $main-border-width $main-color;
 }

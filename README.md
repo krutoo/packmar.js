@@ -1,4 +1,4 @@
-# 🍦 packmar.js
+# 🍦 Packmar.js
 
 **Pack** your **mar**kup.
 
@@ -10,7 +10,7 @@ In 2018+ you don't need an framework for create UI for web apps.
 
 This **experiment** shows:
 
-- how use modern vanilla JS in UI creating (instead of React, Vue, Backbone, JSX, VDOM...);
+- how use modern vanilla JS in UI creating (instead of React, Vue, Backbone, JSX...);
 - how remain simple and lightweight at the same time.
 
 *Packmar* uses native Web API's and tagged template literals for define templates.
@@ -43,8 +43,8 @@ render(Heading({ text: 'Hello, world' }), document.body);
 
 *Packmar* relies on values types, you passed in template:
 
-- **Strings** and **Numbers** will be passed as normal text;
-- **Functions** in attributes will be added by `addEventListener`;
+- **Strings** and **Numbers** will be passed as normal children/attributes;
+- **Functions** in attributes will be added as listeners;
 - **Booleans** will add or remove attribute depending on the it truth;
 
 #### Pass listeners
@@ -69,12 +69,8 @@ const list = pack`
 `;
 ```
 
-#### Nested templates
+#### Nested components
 ```javascript
-function Button ({ text }) {
-    return pack`<button>${text}</button>`;
-}
-
 function Form ({ onSubmit }) {
     return pack`
         <form submit=${onSubmit}
@@ -83,17 +79,25 @@ function Form ({ onSubmit }) {
         </form>
     `;
 }
+
+function Button ({ text }) {
+    return pack`<button>${text}</button>`;
+}
 ```
 
 #### Features
 
 *Packmar* caches elements for reusable templates.
 Because parse HTML from string slower than cloning nodes.
-*Packmar* has no simple XSS vulnerabilities. HTML nodes creates without values from expressions.
+*Packmar* prevents simple XSS vulnerabilities. HTML nodes creates without values from expressions.
+
+#### Dependencies
+
+None.
 
 ## 🤘🏾 Next?
 
 Ideas:
 
-- integration with **Web Components** (for nesting templates beautiful);
-- classes with patching DOM (for creating ractive UI with MVVM data bindings).
+- ~~integration with **Web Components** (for nesting templates beautiful)~~;
+- ~~classes with patching DOM (for creating reactive UI with MVVM data bindings)~~.
