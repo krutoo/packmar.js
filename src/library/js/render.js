@@ -10,25 +10,25 @@ const anchorsRegex = /{%\d*%}/g;
  * @param {boolean} [needKeepContent] Need keep root element content?.
  * @return {Element} unpacked element, normal dom node.
  */
-export default function render ({ htmlString, valuesMap }, rootElement, needKeepContent) {
+export default function render ({ template, values }, rootElement, needKeepContent) {
 	if (!isPack(arguments[0])) {
 		throw new TypeError('First argument must be packed element');
 	}
-	const template = getTemplate(htmlString);
-	replaceAnchors(template);
-	processNode(template, valuesMap);
-	if (template.children.length !== 1) {
+	const $container = getTemplate(template);
+	replaceAnchors($container);
+	processNode($container, values);
+	if ($container.children.length !== 1) {
 		throw new RangeError('Template must contains only one element');
 	}
 	if (rootElement instanceof Element) {
 		if (!needKeepContent) {
 			rootElement.innerHTML = '';
 		}
-		if (template.children.length) {
-			rootElement.insertAdjacentElement('beforeEnd', template.children[0]);
+		if ($container.children.length) {
+			rootElement.insertAdjacentElement('beforeEnd', $container.children[0]);
 		}
 	}
-	return template.children[0];
+	return $container.children[0];
 }
 
 /**
@@ -69,28 +69,28 @@ function replaceAnchors (node) {
 /**
  * Processes node. Inserts values from map instead of anchor-comments.
  * @param {Node} node Node to process.
- * @param {Object} valuesMap Values map.
+ * @param {Object} values Values map.
  */
-function processNode (node, valuesMap) {
+function processNode (node, values) {
 	if (node.hasChildNodes()) {
-		[...node.childNodes].forEach(child => processNode(child, valuesMap));
+		[...node.childNodes].forEach(child => processNode(child, values));
 	}
 	if (node instanceof Element) {
-		processAttributes(node, valuesMap);
+		processAttributes(node, values);
 	} else if (node instanceof Comment) {
-		processComment(node, valuesMap);
+		processComment(node, values);
 	}
 }
 
 /**
  * Processes anchor-comment. Inserts value from map instead of comment.
  * @param {Node} commentNode Comment node to process.
- * @param {Object} valuesMap Values map.
+ * @param {Object} values Values map.
  */
-function processComment (commentNode, valuesMap) {
+function processComment (commentNode, values) {
 	const key = commentNode.nodeValue;
-	if (valuesMap.hasOwnProperty(key)) {
-		const value = valuesMap[key];
+	if (values.hasOwnProperty(key)) {
+		const value = values[key];
 		switch (classOf(value)) {
 			case 'Boolean':
 			case 'Number':
@@ -122,13 +122,13 @@ function processComment (commentNode, valuesMap) {
 /**
  * Processes attributes of element. Inserts value from map instead of anchors.
  * @param {Element} element Element for processing its attributes.
- * @param {Object} valuesMap Values map.
+ * @param {Object} values Values map.
  */
-function processAttributes (element, valuesMap) {
+function processAttributes (element, values) {
 	[...element.attributes].forEach(({ name, value }) => {
-		if (valuesMap.hasOwnProperty(value.trim())) {
-			element.valuesMap = element.valuesMap || {};
-			const targetValue = valuesMap[value.trim()];
+		if (values.hasOwnProperty(value.trim())) {
+			element.values = element.values || {};
+			const targetValue = values[value.trim()];
 			switch (classOf(targetValue)) {
 				case 'Number':
 				case 'String': {
@@ -156,8 +156,8 @@ function processAttributes (element, valuesMap) {
 					}
 				}
 			}
-		} else if (valuesMap.hasOwnProperty(name.trim())) {
-			const targetValue = valuesMap[name.trim()];
+		} else if (values.hasOwnProperty(name.trim())) {
+			const targetValue = values[name.trim()];
 			element.removeAttribute(name);
 			element.setAttribute(targetValue, true);
 		} else if (value.match(anchorsRegex)) {
@@ -190,7 +190,7 @@ function createTemplate (htmlString, asText) {
  */
 function isPack (value) {
 	const content = { ...value };
-	const hasTemplate = classOf(content.htmlString) === 'String';
-	const hasMap = classOf(content.valuesMap) === 'Object';
+	const hasTemplate = classOf(content.template) === 'String';
+	const hasMap = classOf(content.values) === 'Object';
 	return hasTemplate && hasMap;
 }

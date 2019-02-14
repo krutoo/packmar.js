@@ -7,24 +7,16 @@
 export default function pack (strings, ...values) {
 	const parts = [];
 	const valuesMap = {};
+	let valuesMapLength = 0;
 	for (let index = 0; index < strings.length; index++) {
 		parts.push(strings[index]);
-		if (values.hasOwnProperty(index)) {
-			const anchor = getAnchor(valuesMap);
+		if (index < values.length) {
+			const anchor = `{%${valuesMapLength}%}`;
+			valuesMapLength += 1;
 			valuesMap[anchor] = values[index];
 			parts.push(anchor);
 		}
 	}
-	const htmlString = parts.join('').trim();
-	return Object.freeze({ htmlString, valuesMap });
-}
-
-/**
- * Returns anchor.
- * @param {Object} valuesMap Values map.
- * @return {string} Anchor for template.
- */
-function getAnchor (valuesMap) {
-	const length = Object.keys(valuesMap).length;
-	return `{%${length}%}`;
+	const template = parts.join('').trim().replace(/\s+/g, ' ');
+	return { template, values: valuesMap };
 }

@@ -1,13 +1,13 @@
-import { pack } from 'packmar';
+import { html } from 'packmar';
 
 export default function Note ({ noteText, isCompleted, onRemove, onCheck }) {
 	const textClasses = `text ${isCompleted ? 'text-decoration_line-through' : ''}`;
-	const formattedText = pack`
+	const formattedText = html`
 		<div class="formatted">
-			${noteText.split('\n').map(part => pack`<span>${part}<br /></span>`)}
+			${noteText.split('\n').map(part => html`<span>${part}<br /></span>`)}
 		</div>
 	`;
-	return pack`
+	return html`
 		<div class="note overflow_hidden">
 			<button class="button check-button overflow_hidden" click="${onCheck}">
 				${isCompleted ? '✔️' : ''}

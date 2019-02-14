@@ -1,4 +1,4 @@
-import { pack } from 'packmar';
+import { html } from 'packmar';
 import Field from './Field.js';
 import Note from './Note.js';
 import Footer from './Footer.js';
@@ -20,7 +20,7 @@ export default function App (options) {
 	const defaultCheck = () => true;
 	const currentFilter = filters.find(filter => filter.name === currentFilterName) || {};
 	const needShowNote = currentFilter.check || defaultCheck;
-	return pack`
+	return html`
 		<div class="app-wrapper display_flex width_100percent">
 			<div class="main-content">
 				<h1 class="main-title">${title}</h1>
