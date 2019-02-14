@@ -1,8 +1,14 @@
 /**
+ * @typedef {Object} Pack Packed element.
+ * @property {string} template HTML template with passed values replaced by anchors.
+ * @property {Object} values values for anchors in template.
+ */
+
+/**
  * Tag for template literals. Returns the packed element.
  * @param {Array} strings String part of template literal.
  * @param {...*} values Values part.
- * @return {Object} Packed element.
+ * @return {Pack} Packed element.
  */
 export default function pack (strings, ...values) {
 	const parts = [];

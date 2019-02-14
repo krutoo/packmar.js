@@ -147,6 +147,11 @@
 			"error",
 			"always"
 		],
+		"no-restricted-globals": [
+			"error",
+			"name",
+			"event"
+		],
 		"valid-jsdoc": [
 			"error",
 			{
