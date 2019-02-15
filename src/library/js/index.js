@@ -1,4 +1,4 @@
-import pack from './pack.js';
-import render from './render.js';
+import html from './html.js';
+import { updateNode } from './virtualDom.js';
 
-export { pack as html, render };
+export { html, updateNode as render };

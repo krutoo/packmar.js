@@ -1,27 +1,7 @@
 import { isVirtualNode, createVirtualNode } from './virtualDom.js';
-import pack from './pack.js';
 
 const templates = new Map();
-const virtualNodes = new Map();
 const anchorsRegex = /{%\d*%}/;
-
-/**
- * Template literal tag. Returns a virtual DOM node by html string.
- * @param {Array} strings String part of template literal.
- * @param {...*} values Values part.
- * @return {VirtualNode} Virtual DOM node.
- */
-export function html (...args) {
-	const { template: key, values } = pack(...args);
-	let virtualNode;
-	if (virtualNodes.has(key)) {
-		virtualNode = virtualNodes.get(key);
-	} else {
-		virtualNode = convertToVirtualNode(getTemplate(key).firstChild);
-		virtualNodes.set(key, virtualNode);
-	}
-	return passValues(cloneVirtualNode(virtualNode), values);
-}
 
 /**
  * Returns a template by html string. Caches the result.
