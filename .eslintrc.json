@@ -10,7 +10,8 @@
 		"sourceType": "module"
 	},
 	"plugins": [
-		"import"
+		"import",
+		"jsdoc"
 	],
 	"rules": {
 		"eqeqeq": "error",
@@ -152,6 +153,13 @@
 			"name",
 			"event"
 		],
+		"import/extensions": [
+			"error",
+			"always",
+			{
+				"ignorePackages": true
+			}
+		],
 		"valid-jsdoc": [
 			"error",
 			{
@@ -198,12 +206,28 @@
 				}
 			}
 		],
-		"import/extensions": [
+		"jsdoc/require-description-complete-sentence": [
 			"error",
-			"always",
-			{
-				"ignorePackages": true
-			}
+			"always"
+		],
+		"jsdoc/valid-types": [
+			"error",
+			"always"
+		],
+		"jsdoc/newline-after-description": [
+			"error",
+			"never"
 		]
-	}
+	},
+	"settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+				"arg": "param",
+				"argument": "param",
+				"class": "constructor",
+				"virtual": "abstract",
+				"returns": "return"
+            }
+        }
+    }
 }

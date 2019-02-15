@@ -12,7 +12,7 @@ import { isPrimitive, isBoolean, isFunction } from './utils.js';
  * @param {Element} $parent Parent DOM element.
  * @param {VirtualNode} newNode New version of virtual DOM node.
  * @param {VirtualNode} oldNode Old version of virtual DOM node.
- * @param {number} [index=0] index of target node in parent list of child nodes.
+ * @param {number} [index=0] Index of target node in parent list of child nodes.
  */
 export function updateNode ($parent, newNode, oldNode, index = 0) {
 	if ($parent instanceof Element) {

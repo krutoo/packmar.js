@@ -7,8 +7,8 @@ const anchorsRegex = /{%\d*%}/g;
  * Render packed element.
  * @param {Object} pack Packed element.
  * @param {Element} [rootElement] Element to place packed element into.
- * @param {boolean} [needKeepContent] Need keep root element content?.
- * @return {Element} unpacked element, normal dom node.
+ * @param {boolean} [needKeepContent] Need keep root element content?
+ * @return {Element} Unpacked element, normal dom node.
  */
 export default function render ({ template, values }, rootElement, needKeepContent) {
 	if (!isPack(arguments[0])) {
