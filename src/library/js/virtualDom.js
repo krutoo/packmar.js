@@ -146,7 +146,7 @@ export function createNode (virtualNode) {
  */
 export function setProps ($target, virtualNode) {
 	if ($target instanceof Element && isVirtualNode(virtualNode)) {
-		// maybe change to for loop
+		// @todo maybe change to for loop
 		Object.entries(virtualNode.props).forEach(entry => {
 			const [name, value] = entry;
 			setProp($target, name, value);
@@ -193,7 +193,8 @@ export function createVirtualNode (type, props, ...children) {
  * @return {boolean} Is it a displayed primitive?
  */
 export function isDisplayedPrimitive (value) {
-	return isPrimitive(value) && ![false, undefined, null].includes(value); // need check that value is not a symbol!
+	// @todo need check that value is not a symbol!
+	return isPrimitive(value) && ![false, undefined, null].includes(value);
 }
 
 /**
