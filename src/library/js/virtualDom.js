@@ -2,7 +2,7 @@ import { isPrimitive, isBoolean, isFunction } from './utils.js';
 
 /**
  * @typedef {Object} VirtualNode Virtual DOM node.
- * @property {(string|Function)} type String (e.g. 'div', 'span') or function that returns virtual nnode.
+ * @property {(string|Function)} type String (e.g. 'div', 'span') or function that returns virtual node.
  * @property {Object} props Properties.
  * @property {Array} children Children.
  */

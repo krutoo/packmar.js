@@ -5,10 +5,15 @@
   "main": "src/library/js/index.js",
   "scripts": {
     "lint": "npm run lint-scripts && npm run lint-styles",
-    "lint-scripts": "eslint ./src",
+    "lint-scripts": "eslint .",
     "lint-styles": "stylelint ./src/**/*.scss --config=.stylelintrc.json",
     "build": "webpack --mode=production",
     "watch": "webpack --watch --mode=development"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   },
   "repository": {
     "type": "git",
@@ -31,6 +36,7 @@
     "eslint": "^5.2.0",
     "eslint-plugin-import": "^2.16.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "husky": "^1.3.1",
     "node-sass": "^4.9.2",
     "optimize-css-assets-webpack-plugin": "^5.0.0",
     "sass-loader": "^7.0.3",
