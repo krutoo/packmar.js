@@ -26,7 +26,7 @@ npm install --save packmar
 Use it almost like stateless React-components.
 
 ```javascript
-import { pack, render } from 'packmar';
+import { html, render } from 'packmar';
 
 /**
  * Return the packed element of heading.
@@ -35,7 +35,7 @@ import { pack, render } from 'packmar';
  * @return {Object} Packed element.
  */
 function Heading ({ text, onClick }) {
-    return pack`<h1 class="heading" click=${onClick}>${text}</h1>`;
+    return html`<h1 class="heading" click=${onClick}>${text}</h1>`;
 }
 
 render(Heading({ text: 'Hello, world' }), document.body);
@@ -52,7 +52,7 @@ render(Heading({ text: 'Hello, world' }), document.body);
 For listeners write attributes names like event names:
 
 ```javascript
-const button = pack`<button click=${() => alert('clicked!')}}>Click me!</button>`;
+const button = html`<button click=${() => alert('clicked!')}}>Click me!</button>`;
 ```
 
 #### Pass arrays
@@ -62,9 +62,9 @@ Arrays in templates must contains only pack-elements:
 ```javascript
 const beatles = ['John Lennon', 'Ringo Starr', 'Paul McCartney', 'George Harrison'];
 
-const list = pack`
+const list = html`
     <ul>
-        ${beatles.map(name => pack`<li>${name}</li>`)}
+        ${beatles.map(name => html`<li>${name}</li>`)}
     </ul>
 `;
 ```
@@ -72,7 +72,7 @@ const list = pack`
 #### Nested components
 ```javascript
 function Form ({ onSubmit }) {
-    return pack`
+    return html`
         <form submit=${onSubmit}
             <input type="email" placeholder="Your email" />
             ${Button({ text: 'Subscribe' })}
@@ -81,7 +81,7 @@ function Form ({ onSubmit }) {
 }
 
 function Button ({ text }) {
-    return pack`<button>${text}</button>`;
+    return html`<button>${text}</button>`;
 }
 ```
 
