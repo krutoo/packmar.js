@@ -11,7 +11,7 @@ import { isPrimitive, isBoolean, isFunction } from './utils.js';
  * Updates a real DOM element according to old and new versions of it virtual copy.
  * @param {Element} $parent Parent DOM element.
  * @param {VirtualNode} newNode New version of virtual DOM node.
- * @param {VirtualNode} oldNode Old version of virtual DOM node.
+ * @param {VirtualNode} [oldNode] Old version of virtual DOM node.
  * @param {number} [index=0] Index of target node in parent list of child nodes.
  */
 export function updateNode ($parent, newNode, oldNode, index = 0) {
@@ -184,7 +184,11 @@ export function setProp ($target, name, value) {
  * @return {VirtualNode} New virtual DOM node.
  */
 export function createVirtualNode (type, props, ...children) {
-	return { type, props: { ...props }, children };
+	return {
+		type: isFunction(type) ? type : String(type),
+		props: { ...props },
+		children,
+	};
 }
 
 /**

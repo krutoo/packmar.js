@@ -9,13 +9,13 @@ export default function Note ({ noteText, isCompleted, onRemove, onCheck }) {
 	`;
 	return html`
 		<div class="note overflow_hidden">
-			<button class="button check-button overflow_hidden" click="${onCheck}">
+			<button class="button check-button overflow_hidden" onclick="${onCheck}">
 				${isCompleted ? '✔️' : ''}
 			</button>
 			<div class=${textClasses}>
 				${formattedText}
 			</div>
-			<button class="button remove-button overflow_hidden" click=${onRemove}>
+			<button class="button remove-button overflow_hidden" onclick=${onRemove}>
 				❌
 			</button>
 		</div>

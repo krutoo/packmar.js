@@ -21,17 +21,21 @@ const DEFAULT_STATE = Object.freeze({
 const pressedKeys = {};
 
 let state;
+let renderApp;
 
 window.addEventListener('DOMContentLoaded', initialize);
 
 function initialize () {
 	const initialState = JSON.parse(localStorage.getItem('state'));
+	const container = document.createElement('div');
+	document.body.appendChild(container);
 	state = { ...DEFAULT_STATE, ...initialState };
-	renderApp();
-	focusOnField();
+	renderApp = bind(App, container);
 	window.addEventListener('beforeunload', saveToLocalStorage);
 	window.addEventListener('keydown', onKeyDown);
 	window.addEventListener('keyup', onKeyUp);
+	renderApp(createProps(state));
+	focusOnField();
 }
 
 function onKeyDown ({ key }) {
@@ -53,6 +57,7 @@ function saveToLocalStorage () {
 
 function typeNote ({ target }) {
 	state.currentText = target.value;
+	renderApp(createProps(state));
 }
 
 function addNote () {
@@ -64,7 +69,7 @@ function addNote () {
 			checked: false,
 		});
 		state.currentText = '';
-		renderApp();
+		renderApp(createProps(state));
 	} else {
 		focusOnField();
 	}
@@ -80,7 +85,7 @@ function focusOnField () {
 function checkNote (noteId) {
 	const targetNote = state.notes.find(note => note.id === noteId);
 	targetNote.checked = !targetNote.checked;
-	renderApp();
+	renderApp(createProps(state));
 }
 
 function removeNote (noteId) {
@@ -88,17 +93,17 @@ function removeNote (noteId) {
 	if (state.notes.length === 0) {
 		selectFilter(FILTERS[0].name);
 	} else {
-		renderApp();
+		renderApp(createProps(state));
 	}
 }
 
 function selectFilter (filterName) {
 	state.currentFilterName = filterName;
-	renderApp();
+	renderApp(createProps(state));
 }
 
-function renderApp () {
-	const app = App({
+function createProps (state = {}) {
+	return {
 		title: '📝 To Do App',
 		currentText: state.currentText,
 		currentFilterName: state.currentFilterName,
@@ -109,6 +114,14 @@ function renderApp () {
 		checkNote,
 		removeNote,
 		selectFilter,
-	});
-	render(app, document.body);
+	};
+}
+
+function bind (creator, container) {
+	let component;
+	return (...args) => {
+		const oldComponent = component;
+		component = creator(...args);
+		render(container, component, oldComponent);
+	};
 }

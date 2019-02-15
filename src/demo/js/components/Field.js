@@ -6,7 +6,7 @@ export default function Field ({ value, placeholder, onInput }) {
 			rows="5"
 			class="main-field display_block width_100percent"
 			placeholder=${placeholder}
-			input=${onInput}
+			oninput=${onInput}
 		>${value}</textarea>
 	`;
 }

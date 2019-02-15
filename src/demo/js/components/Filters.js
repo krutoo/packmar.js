@@ -8,7 +8,7 @@ export default function Filters ({ filters, selectFilter, currentFilter }) {
 				return html`
 					<button
 						class=${`filter-button ${isActive ? 'active' : ''}`}
-						click=${() => selectFilter(filter.name)}
+						onclick=${() => selectFilter(filter.name)}
 					>
 						${filter.name}
 					</button>
