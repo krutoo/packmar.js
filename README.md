@@ -73,7 +73,7 @@ const list = html`
 ```javascript
 function Form ({ onSubmit }) {
     return html`
-        <form submit=${onSubmit}
+        <form submit=${onSubmit}>
             <input type="email" placeholder="Your email" />
             ${Button({ text: 'Subscribe' })}
         </form>
@@ -91,7 +91,7 @@ function Button ({ text }) {
 Because parse HTML from string slower than cloning nodes.
 *Packmar* prevents simple XSS vulnerabilities. HTML nodes creates without values from expressions.
 
-#### Dependencies
+## 📦 Dependencies?
 
 None.
 
