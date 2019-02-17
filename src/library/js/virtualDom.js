@@ -215,7 +215,7 @@ export function isDisplayedPrimitive (value) {
 export function isSameVirtualNodes (first, second) {
 	const values = [first, second];
 	return (values.every(isVirtualNode) && first.type === second.type)
-		|| (values.every(isPrimitive) && first === second);
+		|| (values.every(isPrimitive) && String(first) === String(second));
 }
 
 /**
