@@ -137,7 +137,8 @@ export function createNode (virtualNode) {
 			});
 		}
 	} else if (isDisplayedPrimitive(virtualNode)) {
-		$node = document.createTextNode(virtualNode);
+		// String() needs here to prevent Uncaught TypeError with symbol type values
+		$node = document.createTextNode(String(virtualNode));
 	} else {
 		$node = document.createComment('empty');
 	}
@@ -202,7 +203,6 @@ export function createVirtualNode (type, props, ...children) {
  * @return {boolean} Is it a displayed primitive?
  */
 export function isDisplayedPrimitive (value) {
-	// @todo need check that value is not a symbol!
 	return isPrimitive(value) && ![false, undefined, null].includes(value);
 }
 
