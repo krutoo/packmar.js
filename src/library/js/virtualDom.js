@@ -12,11 +12,13 @@ import { isPrimitive, isBoolean, isFunction } from './utils.js';
  * @param {Element} $parent Parent DOM element.
  * @param {VirtualNode} newNode New version of virtual DOM node.
  * @param {VirtualNode} [oldNode] Old version of virtual DOM node.
+ * @param {number} [$children] List of $parent children.
  * @param {number} [index=0] Index of target node in parent list of child nodes.
  */
-export function updateNode ($parent, newNode, oldNode, index = 0) {
+export function updateElement ($parent, newNode, oldNode, $children, index = 0) {
 	if ($parent instanceof Element) {
-		const $target = $parent.childNodes[index];
+		$children = $children || $parent.childNodes;
+		const $target = $children[index];
 		if (!oldNode && newNode) {
 			if ($target) {
 				$parent.replaceChild(createNode(newNode), $target);
@@ -101,11 +103,14 @@ export function updateChildren ($parent, newChildren, oldChildren) {
 	if (Array.isArray(newChildren) && Array.isArray(oldChildren)) {
 		const maxLength = Math.max(newChildren.length, oldChildren.length);
 		if (maxLength > 0) {
+			// need create array here, because operations with $parent mutates "childNodes"
+			const $children = $parent ? [...$parent.childNodes] : null;
 			for (let childIndex = 0; childIndex < maxLength; childIndex++) {
-				updateNode(
+				updateElement(
 					$parent,
 					newChildren[childIndex],
 					oldChildren[childIndex],
+					$children,
 					childIndex,
 				);
 			}

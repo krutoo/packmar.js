@@ -65,7 +65,7 @@ export function createTemplate (html) {
 export function convertToVirtualNode ($node) {
 	let result = '';
 	if ($node instanceof Element) {
-		const virtualNode = createVirtualNode($node.nodeName);
+		const virtualNode = createVirtualNode($node.nodeName.toLowerCase());
 		if ($node.childNodes.length > 0) {
 			for (const $child of $node.childNodes) {
 				if ($child instanceof Element) {
@@ -111,7 +111,7 @@ export function cloneVirtualNode (virtualNode) {
  */
 export function passValues (virtualNode, values) {
 	if (isVirtualNode(virtualNode) && values) {
-		const { props, children } = virtualNode;
+		let { props, children } = virtualNode;
 		for (const propName in props) {
 			const propValue = props[propName];
 			if (hasAnchors(propValue)) {
@@ -125,9 +125,16 @@ export function passValues (virtualNode, values) {
 			} else if (hasAnchors(child)) {
 				const value = values[child];
 				if (Array.isArray(value)) {
-					children.splice(index, 1, ...value.map(item => passValues(item, values)));
-				} else {
+					children.splice(
+						index,
+						1,
+						...value.map(item => passValues(item, values)).filter(Boolean),
+					);
+				} else if (value) {
 					children.splice(index, 1, value);
+				} else {
+					children.splice(index, 1);
+					index -= 1;
 				}
 			}
 		}

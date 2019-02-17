@@ -1,4 +1,4 @@
 import html from './html.js';
-import { updateNode } from './virtualDom.js';
+import { updateElement } from './virtualDom.js';
 
-export { html, updateNode as render };
+export { html, updateElement as render };
