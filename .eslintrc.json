@@ -1,5 +1,6 @@
 {
 	"env": {
+		"jest/globals": true,
 		"browser": true,
 		"node": true,
 		"es6": true
@@ -10,6 +11,7 @@
 		"sourceType": "module"
 	},
 	"plugins": [
+		"jest",
 		"import",
 		"jsdoc"
 	],
@@ -224,7 +226,11 @@
 		"jsdoc/newline-after-description": [
 			"error",
 			"never"
-		]
+		],
+		"jest/no-disabled-tests": "error",
+		"jest/no-focused-tests": "error",
+		"jest/no-identical-title": "error",
+		"jest/valid-expect": "error"
 	},
 	"settings": {
         "jsdoc": {
