@@ -6,11 +6,11 @@ Simplest vanilla JavaScript nano library for create components-based UI.
 
 ## 👋🏾 What?
 
-In 2018+ you don't need an framework for create UI for web apps.
+In 2018+ you don't need an giant framework for create UI for web apps.
 
 This **experiment** shows:
 
-- how use modern vanilla JS in UI creating (instead of React, Vue, Backbone, JSX...);
+- how use modern vanilla JS in UI creating (instead of React, Vue, Angular, Backbone, JSX etc.);
 - how remain simple and lightweight at the same time.
 
 *Packmar* uses native Web API's and tagged template literals for define templates.
@@ -29,16 +29,16 @@ Use it almost like stateless React-components.
 import { html, render } from 'packmar';
 
 /**
- * Return the packed element of heading.
- * @param {String} options.text Heading text.
+ * Return virtual DOM element of heading.
+ * @param {string} options.text Heading text.
  * @param {Function} options.onClick Click callback.
- * @return {Object} Packed element.
+ * @return {VirtualNode} Virtual element.
  */
 function Heading ({ text, onClick }) {
     return html`<h1 class="heading" onclick=${onClick}>${text}</h1>`;
 }
 
-render(Heading({ text: 'Hello, world' }), document.body);
+render(document.body, Heading({ text: 'Hello, world' }));
 ```
 
 *Packmar* relies on values types, you passed in template:
@@ -49,7 +49,7 @@ render(Heading({ text: 'Hello, world' }), document.body);
 
 #### Pass listeners
 
-For listeners write attributes names like event names:
+For listeners write attributes names like:
 
 ```javascript
 const button = html`<button onclick=${() => alert('clicked!')}}>Click me!</button>`;
@@ -57,7 +57,7 @@ const button = html`<button onclick=${() => alert('clicked!')}}>Click me!</butto
 
 #### Pass arrays
 
-Arrays in templates must contains only pack-elements:
+lists can be represented as:
 
 ```javascript
 const beatles = ['John Lennon', 'Ringo Starr', 'Paul McCartney', 'George Harrison'];
@@ -87,8 +87,7 @@ function Button ({ text }) {
 
 #### Features
 
-*Packmar* caches elements for reusable templates.
-Because parse HTML from string slower than cloning nodes.
+*Packmar* caches elements for reusable templates. Because parse HTML from string slower than cloning nodes.
 *Packmar* prevents simple XSS vulnerabilities. HTML nodes creates without values from expressions.
 
 ## 📦 Dependencies?
