@@ -35,7 +35,7 @@ import { html, render } from 'packmar';
  * @return {Object} Packed element.
  */
 function Heading ({ text, onClick }) {
-    return html`<h1 class="heading" click=${onClick}>${text}</h1>`;
+    return html`<h1 class="heading" onclick=${onClick}>${text}</h1>`;
 }
 
 render(Heading({ text: 'Hello, world' }), document.body);
@@ -52,7 +52,7 @@ render(Heading({ text: 'Hello, world' }), document.body);
 For listeners write attributes names like event names:
 
 ```javascript
-const button = html`<button click=${() => alert('clicked!')}}>Click me!</button>`;
+const button = html`<button onclick=${() => alert('clicked!')}}>Click me!</button>`;
 ```
 
 #### Pass arrays
@@ -73,7 +73,7 @@ const list = html`
 ```javascript
 function Form ({ onSubmit }) {
     return html`
-        <form submit=${onSubmit}>
+        <form onsubmit=${onSubmit}>
             <input type="email" placeholder="Your email" />
             ${Button({ text: 'Subscribe' })}
         </form>
