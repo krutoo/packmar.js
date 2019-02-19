@@ -1,4 +1,9 @@
-import { createVirtualNode, isVirtualNode, isSameVirtualNodes } from '../virtualDom.js';
+import {
+	createVirtualNode,
+	isVirtualNode,
+	isSameVirtualNodes,
+	isDisplayedPrimitive,
+} from '../virtualDom.js';
 
 describe('createVirtualNode()', () => {
 	it('should return new empty virtual div', () => {
@@ -52,5 +57,23 @@ describe('isSameVirtualNodes()', () => {
 		expect(isSameVirtualNodes(span, span)).toBe(true);
 		expect(isSameVirtualNodes(div1, div2)).toBe(true);
 		expect(isSameVirtualNodes(div1, span)).toBe(false);
+	});
+});
+
+describe('isDisplayedPrimitive()', () => {
+	it('should return true for strings, numbers, true, symbols', () => {
+		[true, 1, 0, '1', Symbol('test')].forEach(primitive => {
+			expect(isDisplayedPrimitive(primitive)).toBe(true);
+		});
+	});
+	it('should return false for null, false, undefined', () => {
+		[false, null, undefined].forEach(primitive => {
+			expect(isDisplayedPrimitive(primitive)).toBe(false);
+		});
+	});
+	it('should return false for non primitives', () => {
+		[{}, [], Function, /test/g].forEach(value => {
+			expect(isDisplayedPrimitive(value)).toBe(false);
+		});
 	});
 });

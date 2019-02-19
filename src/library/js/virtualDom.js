@@ -151,12 +151,12 @@ export function createNode (virtualNode) {
  * @param {VirtualNode} virtualNode Virtual DOM node.
  */
 export function setProps ($target, virtualNode) {
-	if ($target instanceof Element && isVirtualNode(virtualNode)) {
-		// @todo maybe change to for loop
-		Object.entries(virtualNode.props).forEach(entry => {
-			const [name, value] = entry;
+	if (isVirtualNode(virtualNode)) {
+		const { props } = virtualNode;
+		for (const name in props) {
+			const value = props[name];
 			setProp($target, name, value);
-		});
+		}
 	}
 }
 

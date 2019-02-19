@@ -14,7 +14,7 @@ export function getTemplate (html) {
 	if (templates.has(html)) {
 		template = templates.get(html);
 	} else {
-		// @todo maybe need prepare anchors in virtual nodes...
+		// @todo maybe need prepare anchors in virtual nodes (for speed up)...
 		template = prepareAnchors(createTemplate(html));
 		templates.set(html, template);
 	}
