@@ -4,6 +4,7 @@ node_js:
 script:
 	npm run build
 deploy:
+	target-branch: gh-pages
 	provider: pages
 	skip-cleanup: true
 	github-token: $GITHUB_TOKEN
