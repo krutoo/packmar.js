@@ -1,10 +1,10 @@
 language: node_js
 node_js:
-	- stable
+  - stable
 script:
-	npm run build
+  npm run build
 deploy:
-	target-branch: gh-pages
-	provider: pages
-	skip-cleanup: true
-	github-token: $GITHUB_TOKEN
+  target-branch: gh-pages
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
