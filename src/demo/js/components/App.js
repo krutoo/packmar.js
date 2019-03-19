@@ -21,7 +21,7 @@ export default function App (options) {
 	const currentFilter = filters.find(filter => filter.name === currentFilterName) || {};
 	const needShowNote = currentFilter.check || defaultCheck;
 	return html`
-		<div class="app-wrapper display_flex width_100percent">
+		<div class="app-wrapper display--flex width--100percent">
 			<div class="main-content">
 				<h1 class="main-title">${title}</h1>
 				${Field({
@@ -29,7 +29,7 @@ export default function App (options) {
 					value: currentText,
 					onInput: typeNote,
 				})}
-				<button class="width_100percent create-note-button" onclick=${addNote}>To Do</button>
+				<button class="width--100percent create-note-button" onclick=${addNote}>To Do</button>
 				${notes.length
 					? Filters({
 						filters,
