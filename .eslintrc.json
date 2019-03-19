@@ -40,6 +40,7 @@
 		"space-before-blocks": "error",
 		"space-infix-ops": "error",
 		"brace-style": "error",
+		"no-param-reassign": "error",
 		"eol-last": [
 			"error",
 			"always"
@@ -233,14 +234,14 @@
 		"jest/valid-expect": "error"
 	},
 	"settings": {
-        "jsdoc": {
-            "tagNamePreference": {
+		"jsdoc": {
+			"tagNamePreference": {
 				"arg": "param",
 				"argument": "param",
 				"class": "constructor",
 				"virtual": "abstract",
 				"returns": "return"
-            }
-        }
-    }
+			}
+		}
+	}
 }

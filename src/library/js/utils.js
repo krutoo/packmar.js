@@ -15,7 +15,7 @@ const functionTags = Object.freeze([
  * @return {boolean} Is it a function?
  */
 export function isFunction (value) {
-	return functionTags.includes(classOf(value));
+	return functionTags.includes(getTag(value));
 }
 
 /**
@@ -24,7 +24,7 @@ export function isFunction (value) {
  * @return {boolean} Is it boolean?
  */
 export function isBoolean (value) {
-	return classOf(value) === 'Boolean';
+	return getTag(value) === 'Boolean';
 }
 
 /**
@@ -37,10 +37,10 @@ export function isPrimitive (value) {
 }
 
 /**
- * Return a class of input value (true way to get it).
+ * Return a tag of input value.
  * @param  {*} value Value to define it class.
  * @return {string} Name of class.
  */
-export function classOf (value) {
+export function getTag (value) {
 	return Object.prototype.toString.call(value).slice(8, -1);
 }

@@ -1,4 +1,10 @@
-import { isPrimitive, isBoolean, isFunction } from './utils.js';
+import { isPrimitive, isBoolean, isFunction, getTag } from './utils.js';
+
+/**
+ * Tag of virtual nodes.
+ * @type {string}
+ */
+export const virtualNodeTag = 'VirtualNode';
 
 /**
  * @typedef {Object} VirtualNode Virtual DOM node.
@@ -17,8 +23,7 @@ import { isPrimitive, isBoolean, isFunction } from './utils.js';
  */
 export function updateElement ($parent, newNode, oldNode, $children, index = 0) {
 	if ($parent instanceof Element) {
-		$children = $children || $parent.childNodes;
-		const $target = $children[index];
+		const $target = $children ? $children[index] : $parent.childNodes;
 		if (!oldNode && newNode) {
 			if ($target) {
 				$parent.replaceChild(createNode(newNode), $target);
@@ -51,10 +56,8 @@ export function updateElement ($parent, newNode, oldNode, $children, index = 0) 
  * @param {Object} newProps Old properties.
  * @param {Object} oldProps New properties.
  */
-export function updateProps ($target, newProps, oldProps) {
-	if ($target instanceof Element) {
-		newProps = newProps || {};
-		oldProps = oldProps || {};
+export function updateProps ($target, newProps = {}, oldProps = {}) {
+	if ($target instanceof Element && newProps && oldProps) {
 		const props = { ...oldProps, ...newProps };
 		for (const propName in props) {
 			const newValue = newProps[propName];
@@ -191,6 +194,7 @@ export function setProp ($target, name, value) {
  */
 export function createVirtualNode (type, props, ...children) {
 	return {
+		[Symbol.toStringTag]: virtualNodeTag,
 		type: isFunction(type) ? type : String(type),
 		props: { ...props },
 		children,
@@ -224,5 +228,5 @@ export function isSameVirtualNodes (first, second) {
  * @return {boolean} Is it a virtual node?
  */
 export function isVirtualNode (value) {
-	return Boolean(value && value.type && value.props) && Array.isArray(value.children);
+	return getTag(value) === virtualNodeTag;
 }

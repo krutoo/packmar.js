@@ -9,14 +9,14 @@ const anchorsRegex = /{%\d*%}/;
  * @return {HTMLDivElement} Template with content created from html string.
  */
 export function getTemplate (html) {
-	html = String(html).trim();
+	const cacheKey = String(html).trim();
 	let template;
-	if (templates.has(html)) {
-		template = templates.get(html);
+	if (templates.has(cacheKey)) {
+		template = templates.get(cacheKey);
 	} else {
 		// @todo maybe need prepare anchors in virtual nodes (for speed up)...
-		template = prepareAnchors(createTemplate(html));
-		templates.set(html, template);
+		template = prepareAnchors(createTemplate(cacheKey));
+		templates.set(cacheKey, template);
 	}
 	return template;
 }
@@ -51,9 +51,9 @@ export function prepareAnchors ($node) {
  * @return {HTMLDivElement} Template.
  */
 export function createTemplate (html) {
-	html = String(html || '').trim().replace(/\s+/g, ' ');
+	const readyHTML = String(html || '').trim().replace(/\s+/g, ' ');
 	const template = document.createElement('div');
-	template.insertAdjacentHTML('afterBegin', html);
+	template.insertAdjacentHTML('afterBegin', readyHTML);
 	return template;
 }
 
