@@ -1,17 +1,6 @@
-import { isPrimitive, isBoolean, isFunction, getTag } from './utils.js';
-
-/**
- * Tag of virtual nodes.
- * @type {string}
- */
-export const virtualNodeTag = 'VirtualNode';
-
-/**
- * @typedef {Object} VirtualNode Virtual DOM node.
- * @property {(string|Function)} type String (e.g. 'div', 'span') or function that returns virtual node.
- * @property {Object} props Properties.
- * @property {Array} children Children.
- */
+import { isPrimitive, isBoolean, isFunction } from './utils.js';
+import { isComponent } from './component.js';
+import { isVirtualNode } from './create-virtual-node.js';
 
 /**
  * Updates a real DOM element according to old and new versions of it virtual copy.
@@ -21,18 +10,22 @@ export const virtualNodeTag = 'VirtualNode';
  * @param {number} [$children] List of $parent children.
  * @param {number} [index=0] Index of target node in parent list of child nodes.
  */
-export function updateElement ($parent, newNode, oldNode, $children, index = 0) {
+export default function updateElement ($parent, newNode, oldNode, $children, index = 0) {
 	if ($parent instanceof Element) {
-		const $target = $children ? $children[index] : $parent.childNodes;
+		const $target = $children ? $children[index] : $parent.childNodes[index];
 		if (!oldNode && newNode) {
 			if ($target) {
-				$parent.replaceChild(createNode(newNode), $target);
+				$parent.replaceChild(createNode(newNode, $parent, index), $target);
 			} else {
-				$parent.appendChild(createNode(newNode));
+				$parent.appendChild(createNode(newNode, $parent, index));
 			}
 		} else if (!newNode && oldNode) {
 			if ($target) {
-				$parent.removeChild($target);
+				if (oldNode.props && 'key' in oldNode.props) {
+					$parent.removeChild($target);
+				} else {
+					$parent.replaceChild(createNode(null), $target);
+				}
 
 				// also for <textarea> need to remove value
 				if ($parent instanceof HTMLTextAreaElement) {
@@ -41,11 +34,17 @@ export function updateElement ($parent, newNode, oldNode, $children, index = 0) 
 			}
 		} else if (!isSameVirtualNodes(newNode, oldNode)) {
 			if ($target) {
-				$parent.replaceChild(createNode(newNode), $target);
+				$parent.replaceChild(createNode(newNode, $parent, index), $target);
 			}
 		} else if (isVirtualNode(newNode)) {
-			updateProps($target, newNode.props, oldNode.props);
-			updateChildren($target, newNode.children, oldNode.children);
+			if (isComponent(oldNode.component)) {
+				// move link on component into new virtual DOM node version and update
+				newNode.component = oldNode.component;
+				newNode.component.setProps(newNode.props);
+			} else {
+				updateProps($target, newNode.props, oldNode.props);
+				updateChildren($target, newNode.children, oldNode.children);
+			}
 		}
 	}
 }
@@ -83,20 +82,6 @@ export function updateProp ($target, propName, newValue, oldValue) {
 }
 
 /**
- * Removes property of real DOM element by name.
- * @param {Element} $target Target element.
- * @param {string} propName Name of property.
- * @param {*} value Removed value.
- */
-export function removeProp ($target, propName, value) {
-	if (isFunction(value)) {
-		$target[propName] = null;
-	} else {
-		$target.removeAttribute(propName);
-	}
-}
-
-/**
  * Updates children of real DOM element by new and old versions of virtual node children.
  * @param {Element} $parent Parent element.
  * @param {Array} newChildren New version of virtual DOM node children.
@@ -124,19 +109,32 @@ export function updateChildren ($parent, newChildren, oldChildren) {
 /**
  * Creates a real DOM node.
  * @param {*} virtualNode Virtual DOM node.
+ * @param {HTMLElement} $parent Parent element to save in component.
+ * @param {number} index Position in parent to save in component.
  * @return {Node} Real DOM node.
  */
-export function createNode (virtualNode) {
+export function createNode (virtualNode, $parent, index = 0) {
 	let $node;
 	if (isVirtualNode(virtualNode)) {
 		const { type, props, children } = virtualNode;
-		if (isFunction(type)) {
-			$node = createNode(type({ ...props, children }));
+
+		// @todo add isComponentClass() helper to use here
+		if (type && type.prototype && type.prototype.render) {
+			// @todo move out instance creating logic from createNode()
+			const instance = new type(props);
+			instance.bound($parent, index);
+			instance.previousVNode = instance.render();
+			virtualNode.component = instance;
+			$node = createNode(instance.previousVNode, $parent, index);
+		} else if (isFunction(type)) {
+			$node = createNode(type({ ...props, children }), $parent, index);
 		} else {
 			$node = document.createElement(type);
 			setProps($node, virtualNode);
-			children.forEach(virtualChild => {
-				$node.appendChild(createNode(virtualChild));
+
+			// @todo replace on for of loop
+			children.forEach((virtualChild, childIndex) => {
+				$node.appendChild(createNode(virtualChild, $node, childIndex));
 			});
 		}
 	} else if (isDisplayedPrimitive(virtualNode)) {
@@ -146,6 +144,30 @@ export function createNode (virtualNode) {
 		$node = document.createComment('empty');
 	}
 	return $node;
+}
+
+/**
+ * Check that value is a displayed primitive (should be visible in markup).
+ * @param {*} value Checked value.
+ * @return {boolean} Is it a displayed primitive?
+ */
+export function isDisplayedPrimitive (value) {
+	return isPrimitive(value)
+		&& value !== null
+		&& value !== false
+		&& value !== undefined;
+}
+
+/**
+ * Check that both arguments is same virtual nodes or primitives.
+ * @param {*} first First checked value.
+ * @param {*} second Second checked value.
+ * @return {boolean} Are they the same virtual nodes?
+ */
+export function isSameVirtualNodes (first, second) {
+	const values = [first, second];
+	return (values.every(isVirtualNode) && first.type === second.type)
+		|| (values.every(isPrimitive) && String(first) === String(second));
 }
 
 /**
@@ -176,57 +198,30 @@ export function setProp ($target, name, value) {
 		} else if (isBoolean(value)) {
 			if (value) {
 				$target.setAttribute(name, '');
+				$target[name] = true;
 			} else {
 				removeProp($target, name, value);
+				$target[name] = false;
 			}
 		} else {
-			$target.setAttribute(name, value);
+			if (name !== 'key') {
+				$target.setAttribute(name, value);
+				$target[name] = value;
+			}
 		}
 	}
 }
 
 /**
- * Returns a new virtual DOM node.
- * @param {(string|Function)} type Type.
- * @param {Object} props Properties.
- * @param  {...*} children Children.
- * @return {VirtualNode} New virtual DOM node.
+ * Removes property of real DOM element by name.
+ * @param {Element} $target Target element.
+ * @param {string} propName Name of property.
+ * @param {*} value Removed value.
  */
-export function createVirtualNode (type, props, ...children) {
-	return {
-		[Symbol.toStringTag]: virtualNodeTag,
-		type: isFunction(type) ? type : String(type),
-		props: { ...props },
-		children,
-	};
-}
-
-/**
- * Check that value is a displayed primitive (should be visible in markup).
- * @param {*} value Checked value.
- * @return {boolean} Is it a displayed primitive?
- */
-export function isDisplayedPrimitive (value) {
-	return isPrimitive(value) && ![false, undefined, null].includes(value);
-}
-
-/**
- * Check that both arguments is same virtual nodes or primitives.
- * @param {*} first First checked value.
- * @param {*} second Second checked value.
- * @return {boolean} Are they the same virtual nodes?
- */
-export function isSameVirtualNodes (first, second) {
-	const values = [first, second];
-	return (values.every(isVirtualNode) && first.type === second.type)
-		|| (values.every(isPrimitive) && String(first) === String(second));
-}
-
-/**
- * Check that value is a virtual node.
- * @param {*} value Checked value.
- * @return {boolean} Is it a virtual node?
- */
-export function isVirtualNode (value) {
-	return getTag(value) === virtualNodeTag;
+export function removeProp ($target, propName, value) {
+	if (isFunction(value)) {
+		$target[propName] = null;
+	} else {
+		$target.removeAttribute(propName);
+	}
 }

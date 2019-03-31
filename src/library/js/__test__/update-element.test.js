@@ -1,48 +1,5 @@
-import {
-	virtualNodeTag,
-	createVirtualNode,
-	isVirtualNode,
-	isSameVirtualNodes,
-	isDisplayedPrimitive,
-} from '../virtualDom.js';
-
-describe('createVirtualNode()', () => {
-	it('should return new empty virtual div', () => {
-		expect(createVirtualNode('div')).toEqual({
-			[Symbol.toStringTag]: virtualNodeTag,
-			type: 'div',
-			props: {},
-			children: [],
-		});
-	});
-	it('should return new virtual p with text content', () => {
-		expect(createVirtualNode('p', null, 'With great power', 'comes great responsibility')).toEqual({
-			[Symbol.toStringTag]: virtualNodeTag,
-			type: 'p',
-			props: {},
-			children: ['With great power', 'comes great responsibility'],
-		});
-	});
-	it('should return new virtual div with class and id', () => {
-		expect(createVirtualNode('span', { class: 'test-class', id: 'test-id' })).toEqual({
-			[Symbol.toStringTag]: virtualNodeTag,
-			type: 'span',
-			props: { class: 'test-class', id: 'test-id' },
-			children: [],
-		});
-	});
-});
-
-describe('isVirtualNode()', () => {
-	it('should return true for virtual node', () => {
-		expect(isVirtualNode(createVirtualNode('h1'))).toBe(true);
-	});
-	it('should return false for non virtual nodes', () => {
-		[false, 1, '1', null, undefined, {}, [], () => {}].forEach(value => {
-			expect(isVirtualNode(value)).toBe(false);
-		});
-	});
-});
+import createVirtualNode from '../create-virtual-node.js';
+import { isSameVirtualNodes, isDisplayedPrimitive } from '../update-element.js';
 
 describe('isSameVirtualNodes()', () => {
 	it('should return true for same primitives', () => {

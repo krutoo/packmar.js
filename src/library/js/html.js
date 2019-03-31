@@ -24,7 +24,7 @@ export default function html (...args) {
 	if (virtualNodes.has(key)) {
 		virtualNode = virtualNodes.get(key);
 	} else {
-		virtualNode = convertToVirtualNode(getTemplate(key).firstChild);
+		virtualNode = convertToVirtualNode(getTemplate(key).firstElementChild);
 		virtualNodes.set(key, virtualNode);
 	}
 	return passValues(cloneVirtualNode(virtualNode), values);

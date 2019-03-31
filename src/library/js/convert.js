@@ -1,7 +1,17 @@
-import { isVirtualNode, createVirtualNode } from './virtualDom.js';
+import { registry } from './define-component.js';
+import createVirtualNode, { isVirtualNode } from './create-virtual-node.js';
 
+/**
+ * Cache of created DOM elements. Map keys is html markup.
+ * @type {Map}
+ */
 const templates = new Map();
-const anchorsRegex = /{%\d*%}/;
+
+/**
+ * Regex for search anchors in markup.
+ * @type {string}
+ */
+const anchorsRegex = /{%\d*%}/g;
 
 /**
  * Returns a template by html string. Caches the result.
@@ -32,10 +42,11 @@ export function prepareAnchors ($node) {
 			Array.from($node.childNodes).forEach($child => prepareAnchors($child));
 		}
 	} else if ($node instanceof Node && hasAnchors($node.nodeValue)) {
-		const templateString = $node.nodeValue.replace(anchorsRegex, match => `<!--${match}-->`);
+		const templateString = $node.nodeValue.replace(anchorsRegex, makeCommentHTML);
 		const $template = createTemplate(templateString);
 		if ($node.parentNode) {
 			// need make array here, because insertBefore mutates "childNodes"
+			// @todo refactor with for loop (with update index before insertBefore() call)
 			for (const $child of [...$template.childNodes]) {
 				$node.parentNode.insertBefore($child, $node);
 			}
@@ -43,6 +54,15 @@ export function prepareAnchors ($node) {
 		}
 	}
 	return $node;
+}
+
+/**
+ * Returns comment HTML markup string.
+ * @param {string} content Comment text.
+ * @return {string} Comment HTML markup string.
+ */
+export function makeCommentHTML (content) {
+	return `<!--${content}-->`;
 }
 
 /**
@@ -65,12 +85,12 @@ export function createTemplate (html) {
 export function convertToVirtualNode ($node) {
 	let result = '';
 	if ($node instanceof Element) {
-		const virtualNode = createVirtualNode($node.nodeName.toLowerCase());
+		const virtualNode = createVirtualNode(getVirtualType($node.nodeName));
 		if ($node.childNodes.length > 0) {
 			for (const $child of $node.childNodes) {
 				if ($child instanceof Element) {
 					virtualNode.children.push(convertToVirtualNode($child));
-				} else if ($child instanceof Node && $child.nodeValue.trim()) {
+				} else if ($child instanceof Node) {
 					virtualNode.children.push($child.nodeValue);
 				}
 			}
@@ -89,18 +109,31 @@ export function convertToVirtualNode ($node) {
 }
 
 /**
+ * Returns a virtual DOM node type (defined components classes or functions).
+ * @param {string} typeName Type name.
+ * @return {(string|Function)} Virtual DOM node type.
+ */
+export function getVirtualType (typeName) {
+	let result = typeName;
+	if (registry.has(typeName)) {
+		result = registry.get(typeName);
+	}
+	return result;
+}
+
+/**
  * Returns a simple copy of virtual node. Don't clone props deeply.
  * @param {VirtualNode} virtualNode Virtual DOM node.
  * @return {VirtualNode} New Virtual DOM node.
  */
 export function cloneVirtualNode (virtualNode) {
-	let result = virtualNode;
+	let clone = virtualNode;
 	if (isVirtualNode(virtualNode)) {
 		const { type, props, children } = virtualNode;
 		const newNode = createVirtualNode(type, props, ...children.map(cloneVirtualNode));
-		result = newNode;
+		clone = newNode;
 	}
-	return result;
+	return clone;
 }
 
 /**
@@ -111,7 +144,19 @@ export function cloneVirtualNode (virtualNode) {
  */
 export function passValues (virtualNode, values) {
 	if (isVirtualNode(virtualNode) && values) {
-		let { props, children } = virtualNode;
+		/**
+		 * Bound passValues().
+		 * @param {*} item Item of list.
+		 * @param {*} index Index in list.
+		 * @return {*} Mutated virtual DOM node.
+		 */
+		const boundPassValues = (item, index) => {
+			if (item.props) {
+				item.props.key = index;
+			}
+			return passValues(item, values);
+		};
+		const { props, children } = virtualNode;
 		for (const propName in props) {
 			const propValue = props[propName];
 			if (hasAnchors(propValue)) {
@@ -121,21 +166,16 @@ export function passValues (virtualNode, values) {
 		for (let index = 0; index < children.length; index++) {
 			const child = children[index];
 			if (isVirtualNode(child)) {
-				children.splice(index, 1, passValues(child, values));
+				passValues(child, values);
 			} else if (hasAnchors(child)) {
-				const value = values[child];
+				const value = values[child.trim()];
 				if (Array.isArray(value)) {
-					children.splice(
-						index,
-						1,
-						...value.map(item => passValues(item, values)).filter(Boolean),
-					);
-				} else if (value) {
-					children.splice(index, 1, value);
+					children.splice(index, 1, ...value.map(boundPassValues));
 				} else {
-					children.splice(index, 1);
-					index -= 1;
+					children.splice(index, 1, value);
 				}
+			} else {
+				children.splice(index, 1, child);
 			}
 		}
 	}
@@ -148,5 +188,6 @@ export function passValues (virtualNode, values) {
  * @return {boolean} True if string contains anchors.
  */
 export function hasAnchors (value) {
-	return anchorsRegex.test(value);
+	// do not use anchorsRegex.test here (because with global search it save lastIndex)
+	return Boolean(String(value).match(anchorsRegex));
 }
