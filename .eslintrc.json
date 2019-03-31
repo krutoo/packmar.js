@@ -170,6 +170,17 @@
 				"ignorePackages": true
 			}
 		],
+		"object-curly-spacing": [
+			"error",
+			"always"
+		],
+		"generator-star-spacing": [
+			"error",
+			{
+				"before": false,
+				"after": true
+			}
+		],
 		"valid-jsdoc": [
 			"error",
 			{
@@ -199,7 +210,6 @@
 				"requireReturn": false,
 				"requireReturnType": true,
 				"requireParamType": true,
-				"matchDescription": ".+",
 				"requireParamDescription": true,
 				"requireReturnDescription": true
 			}
@@ -240,7 +250,8 @@
 				"argument": "param",
 				"class": "constructor",
 				"virtual": "abstract",
-				"returns": "return"
+				"returns": "return",
+				"inheritdoc": "inheritDoc"
 			}
 		}
 	}
