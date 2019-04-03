@@ -198,10 +198,8 @@ export function setProp ($target, name, value) {
 				$target[name] = false;
 			}
 		} else {
-			if (name !== 'key') {
-				$target.setAttribute(name, value);
-				$target[name] = value;
-			}
+			$target.setAttribute(name, value);
+			$target[name] = value;
 		}
 	}
 }
