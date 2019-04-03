@@ -25,8 +25,8 @@
 				flex-shrink: 1;
 				margin: 0 .5rem;
 				&:not(.active) {
-					background-color: #ddd;
-					border-color: #ddd;
+					background-color: $color-gray;
+					border-color: $color-gray;
 					color: #323232;
 				}
 				@media screen and (max-width: 480px) {
@@ -39,7 +39,7 @@
 			.note {
 				display: flex;
 				padding: 1rem;
-				border: $main-border-width solid #ddd;
+				border: $main-border-width solid $color-gray;
 				border-radius: $main-border-radius;
 				margin-top: 1rem;
 				.text {
@@ -58,7 +58,7 @@
 					padding: 0;
 					vertical-align: middle;
 					background-color: transparent;
-					border-color: #ddd;
+					border-color: $color-gray;
 					color: inherit;
 					&:hover,
 					&:focus {

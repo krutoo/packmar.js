@@ -2,6 +2,7 @@ import path from 'path';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import HTMLPlugin from 'html-webpack-plugin';
 
 /**
  * Returns a webpack configuration of project.
@@ -9,15 +10,18 @@ import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
  * @param {Object} options Options.
  * @return {Object} Configuration.
  */
-export default function getConfiguration (env, options) {
+export default function getConfiguration (env, options = {}) {
 	const isProduction = Boolean(options.mode === 'production');
 	const configuration = {
 		entry: {
+			packmar: './src/library/js/index.js',
 			demo: [
 				'./src/demo/js/index.js',
 				'./src/demo/scss/index.scss',
 			],
-			packmar: './src/library/js/index.js',
+			landing: [
+				'./src/landing/scss/index.scss',
+			],
 		},
 		output: {
 			path: path.resolve(__dirname, 'build'),
@@ -44,7 +48,7 @@ export default function getConfiguration (env, options) {
 				packmar: path.join(__dirname, '/src/library/js/index.js'),
 			},
 		},
-		devtool: 'source-map',
+		devtool: 'eval-source-map',
 		optimization: {
 			minimize: isProduction,
 			minimizer: [
@@ -67,6 +71,17 @@ export default function getConfiguration (env, options) {
 		plugins: [
 			new ExtractTextPlugin('css/[name].css', {
 				allChunks: true,
+			}),
+			new HTMLPlugin({
+				template: './src/landing/index.html',
+				minify: isProduction,
+				excludeChunks: ['packmar'],
+				filename: 'index.html',
+			}),
+			new HTMLPlugin({
+				template: './src/demo/index.html',
+				minify: isProduction,
+				filename: 'todo.html',
 			}),
 		],
 	};

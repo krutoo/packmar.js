@@ -4,8 +4,10 @@ h3,
 h4,
 h5,
 h6 {
+	line-height: 1.2;
 	font-weight: bold;
 	margin-bottom: 1rem;
+	color: #000;
 }
 
 h1 {
@@ -34,11 +36,35 @@ h6 {
 
 a {
 	color: #1e8bc3;
-	text-decoration: underline;
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
 }
 
 b {
 	font-weight: bold;
+}
+
+p {
+	line-height: 1.5;
+}
+
+body pre {
+	font-family: 'Roboto Mono', monospace;
+	background-color: #f5f6fa;
+	color: #353b48;
+	border-radius: $main-border-radius;
+	padding: 1rem;
+	overflow-x: auto;
+	line-height: 1.2;
+	&.prettyprint {
+		border: 0;
+		padding: 1rem;
+		* {
+			transition: color .5s ease-in-out;
+		}
+	}
 }
 
 input,
@@ -46,7 +72,7 @@ button,
 textarea {
 	font-size: inherit;
 	border-radius: $main-border-radius;
-	border: .1rem solid #ddd;
+	border: .1rem solid $color-gray;
 	padding: .5rem;
 	font-family: inherit;
 	transition: box-shadow .2s;
