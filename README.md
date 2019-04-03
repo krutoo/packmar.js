@@ -38,7 +38,7 @@ function Heading ({ text, onClick }) {
     return html`<h1 class="heading" onclick=${onClick}>${text}</h1>`;
 }
 
-render(document.body, Heading({ text: 'Hello, world' }));
+render(Heading({ text: 'Hello, world' }), document.body);
 ```
 
 *Packmar* relies on values types, you passed in template:
@@ -100,3 +100,7 @@ Ideas:
 
 - ~~integration with **Web Components** (for nesting templates beautiful)~~;
 - ~~classes with patching DOM (for creating reactive UI with MVVM data bindings)~~.
+
+## License
+
+MIT

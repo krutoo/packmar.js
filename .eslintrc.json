@@ -181,6 +181,10 @@
 				"after": true
 			}
 		],
+		"array-bracket-spacing": [
+			"error",
+			"never"
+		],
 		"valid-jsdoc": [
 			"error",
 			{
