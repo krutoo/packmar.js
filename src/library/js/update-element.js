@@ -90,13 +90,6 @@ export function updateChildren ($parent, newChildren, oldChildren) {
 			// need create array here, because operations with $parent mutates "childNodes"
 			const $children = [...$parent.childNodes];
 			for (let childIndex = 0; childIndex < maxLength; childIndex++) {
-				if ($parent.hasAttribute('debug')) {
-					// console.log(' ');
-					// console.log('diff');
-					// console.log('old: ', oldChildren[childIndex]);
-					// console.log('new: ', newChildren[childIndex]);
-					// console.log(' ');
-				}
 				updateElement(
 					$parent,
 					newChildren[childIndex],
