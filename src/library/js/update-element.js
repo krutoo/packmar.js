@@ -11,21 +11,13 @@ import { isVirtualNode } from './create-virtual-node.js';
  * @param {number} [index=0] Index of target node in parent list of child nodes.
  */
 export default function updateElement ($parent, newNode, oldNode, $children, index = 0) {
-	if ($parent instanceof Element) {
+	if ($parent instanceof HTMLElement) {
 		const $target = $children ? $children[index] : $parent.childNodes[index];
 		if (!oldNode && newNode) {
-			if ($target) {
-				$parent.replaceChild(createNode(newNode, $parent, index), $target);
-			} else {
-				$parent.appendChild(createNode(newNode, $parent, index));
-			}
+			$parent.appendChild(createNode(newNode, $parent, index));
 		} else if (!newNode && oldNode) {
 			if ($target) {
-				if (oldNode.props && 'key' in oldNode.props) {
-					$parent.removeChild($target);
-				} else {
-					$parent.replaceChild(createNode(null), $target);
-				}
+				$parent.removeChild($target);
 
 				// also for <textarea> need to remove value
 				if ($parent instanceof HTMLTextAreaElement) {
@@ -56,7 +48,7 @@ export default function updateElement ($parent, newNode, oldNode, $children, ind
  * @param {Object} oldProps New properties.
  */
 export function updateProps ($target, newProps = {}, oldProps = {}) {
-	if ($target instanceof Element && newProps && oldProps) {
+	if ($target instanceof HTMLElement && newProps && oldProps) {
 		const props = { ...oldProps, ...newProps };
 		for (const propName in props) {
 			const newValue = newProps[propName];
@@ -68,7 +60,7 @@ export function updateProps ($target, newProps = {}, oldProps = {}) {
 
 /**
  * Updates changed property of real DOM element by old and new versions.
- * @param {Element} $target Target element.
+ * @param {HTMLElement} $target Target element.
  * @param {string} propName Name of property.
  * @param {*} newValue New property version.
  * @param {*} oldValue Old property version.
@@ -83,17 +75,28 @@ export function updateProp ($target, propName, newValue, oldValue) {
 
 /**
  * Updates children of real DOM element by new and old versions of virtual node children.
- * @param {Element} $parent Parent element.
+ * @param {HTMLElement} $parent Parent element.
  * @param {Array} newChildren New version of virtual DOM node children.
  * @param {Array} oldChildren Old version of virtual DOM node children.
  */
 export function updateChildren ($parent, newChildren, oldChildren) {
-	if (Array.isArray(newChildren) && Array.isArray(oldChildren)) {
+	if (
+		$parent instanceof HTMLElement
+		&& Array.isArray(newChildren)
+		&& Array.isArray(oldChildren)
+	) {
 		const maxLength = Math.max(newChildren.length, oldChildren.length);
 		if (maxLength > 0) {
 			// need create array here, because operations with $parent mutates "childNodes"
-			const $children = $parent ? [...$parent.childNodes] : null;
+			const $children = [...$parent.childNodes];
 			for (let childIndex = 0; childIndex < maxLength; childIndex++) {
+				if ($parent.hasAttribute('debug')) {
+					// console.log(' ');
+					// console.log('diff');
+					// console.log('old: ', oldChildren[childIndex]);
+					// console.log('new: ', newChildren[childIndex]);
+					// console.log(' ');
+				}
 				updateElement(
 					$parent,
 					newChildren[childIndex],
@@ -126,14 +129,12 @@ export function createNode (virtualNode, $parent, index = 0) {
 			instance.previousVNode = instance.render();
 			virtualNode.component = instance;
 			$node = createNode(instance.previousVNode, $parent, index);
-		} else if (isFunction(type)) {
-			$node = createNode(type({ ...props, children }), $parent, index);
 		} else {
 			$node = document.createElement(type);
 			setProps($node, virtualNode);
 
-			// @todo replace on for of loop
-			children.forEach((virtualChild, childIndex) => {
+			// @todo replace on for of loop (for speed up)
+			children.filter(Boolean).forEach((virtualChild, childIndex) => {
 				$node.appendChild(createNode(virtualChild, $node, childIndex));
 			});
 		}
@@ -172,7 +173,7 @@ export function isSameVirtualNodes (first, second) {
 
 /**
  * Set properties to real DOM element by virtual DOM node.
- * @param {Element} $target Target element.
+ * @param {HTMLElement} $target Target element.
  * @param {VirtualNode} virtualNode Virtual DOM node.
  */
 export function setProps ($target, virtualNode) {
@@ -187,12 +188,12 @@ export function setProps ($target, virtualNode) {
 
 /**
  * Set a property to real DOM element by name and value.
- * @param {Element} $target Target element.
+ * @param {HTMLElement} $target Target element.
  * @param {string} name Property name.
  * @param {*} value Property value.
  */
 export function setProp ($target, name, value) {
-	if ($target instanceof Element) {
+	if ($target instanceof HTMLElement) {
 		if (isFunction(value)) {
 			$target[name] = value;
 		} else if (isBoolean(value)) {
@@ -214,14 +215,16 @@ export function setProp ($target, name, value) {
 
 /**
  * Removes property of real DOM element by name.
- * @param {Element} $target Target element.
+ * @param {HTMLElement} $target Target element.
  * @param {string} propName Name of property.
  * @param {*} value Removed value.
  */
 export function removeProp ($target, propName, value) {
-	if (isFunction(value)) {
-		$target[propName] = null;
-	} else {
-		$target.removeAttribute(propName);
+	if ($target instanceof HTMLElement) {
+		if (isFunction(value)) {
+			$target[propName] = null;
+		} else {
+			$target.removeAttribute(propName);
+		}
 	}
 }

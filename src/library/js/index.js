@@ -20,6 +20,6 @@ export {
 	html,
 	render,
 	Component,
-	defineComponent,
+	defineComponent as define,
 	createVirtualNode,
 };

@@ -1,4 +1,5 @@
 import { registry } from './define-component.js';
+import { hasAnchors, replaceAnchors } from './pack.js';
 import createVirtualNode, { isVirtualNode } from './create-virtual-node.js';
 
 /**
@@ -6,12 +7,6 @@ import createVirtualNode, { isVirtualNode } from './create-virtual-node.js';
  * @type {Map}
  */
 const templates = new Map();
-
-/**
- * Regex for search anchors in markup.
- * @type {string}
- */
-const anchorsRegex = /{%\d*%}/g;
 
 /**
  * Returns a template by html string. Caches the result.
@@ -42,7 +37,7 @@ export function prepareAnchors ($node) {
 			Array.from($node.childNodes).forEach($child => prepareAnchors($child));
 		}
 	} else if ($node instanceof Node && hasAnchors($node.nodeValue)) {
-		const templateString = $node.nodeValue.replace(anchorsRegex, makeCommentHTML);
+		const templateString = replaceAnchors($node.nodeValue, makeCommentHTML);
 		const $template = createTemplate(templateString);
 		if ($node.parentNode) {
 			// need make array here, because insertBefore mutates "childNodes"
@@ -84,21 +79,30 @@ export function createTemplate (html) {
  */
 export function convertToVirtualNode ($node) {
 	let result = '';
-	if ($node instanceof Element) {
+	if ($node instanceof HTMLElement) {
 		const virtualNode = createVirtualNode(getVirtualType($node.nodeName));
 		if ($node.childNodes.length > 0) {
-			for (const $child of $node.childNodes) {
-				if ($child instanceof Element) {
+			for (let childIndex = 0; childIndex < $node.childNodes.length; childIndex++) {
+				const $child = $node.childNodes[childIndex];
+				if ($child instanceof HTMLElement) {
 					virtualNode.children.push(convertToVirtualNode($child));
 				} else if ($child instanceof Node) {
-					virtualNode.children.push($child.nodeValue);
+					// prevent pass of first or last whitespace-only child
+					const isFirstChild = childIndex === 0;
+					const isLastChild = childIndex === $node.childNodes.length - 1;
+					const isEmptyChild = !$child.nodeValue.trim();
+					if (!isEmptyChild || isFirstChild || isLastChild) {
+						virtualNode.children.push($child.nodeValue);
+					}
 				}
 			}
 		}
 		if ($node.attributes.length > 0) {
 			for (const attribute of $node.attributes) {
 				const { name, value } = attribute;
-				virtualNode.props[name] = value;
+
+				// for defined boolean attributes need to save true
+				virtualNode.props[name] = value === '' ? true : value;
 			}
 		}
 		result = virtualNode;
@@ -150,12 +154,7 @@ export function passValues (virtualNode, values) {
 		 * @param {*} index Index in list.
 		 * @return {*} Mutated virtual DOM node.
 		 */
-		const boundPassValues = (item, index) => {
-			if (item.props) {
-				item.props.key = index;
-			}
-			return passValues(item, values);
-		};
+		const boundPassValues = item => passValues(item, values);
 		const { props, children } = virtualNode;
 		for (const propName in props) {
 			const propValue = props[propName];
@@ -170,24 +169,18 @@ export function passValues (virtualNode, values) {
 			} else if (hasAnchors(child)) {
 				const value = values[child.trim()];
 				if (Array.isArray(value)) {
-					children.splice(index, 1, ...value.map(boundPassValues));
-				} else {
+					// @todo replace on for loop (for speed up)
+					const childrenPart = value.filter(Boolean).map(boundPassValues);
+					children.splice(index, 1, ...childrenPart);
+					index += childrenPart.length;
+				} else if (value) {
 					children.splice(index, 1, value);
+				} else {
+					children.splice(index, 1);
+					index--;
 				}
-			} else {
-				children.splice(index, 1, child);
 			}
 		}
 	}
 	return virtualNode;
-}
-
-/**
- * Check that string contains anchors (e.g. '{%2%}').
- * @param {string} value String to check it.
- * @return {boolean} True if string contains anchors.
- */
-export function hasAnchors (value) {
-	// do not use anchorsRegex.test here (because with global search it save lastIndex)
-	return Boolean(String(value).match(anchorsRegex));
 }
