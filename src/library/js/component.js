@@ -88,3 +88,12 @@ export function updateComponentElement () {
 export function isComponent (value) {
 	return getTag(value) === TAG_NAME;
 }
+
+/**
+ * Check that value is a component class.
+ * @param {*} value Checked value.
+ * @return {boolean} Is it component class?
+ */
+export function isComponentClass (value) {
+	return value && value.prototype && value.prototype.render;
+}

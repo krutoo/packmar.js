@@ -44,3 +44,23 @@ export function isPrimitive (value) {
 export function getTag (value) {
 	return Object.prototype.toString.call(value).slice(8, -1);
 }
+
+/**
+ * Returns a new array from two input.
+ * @param {Array} target Target array to insert part.
+ * @param {Array} part Part array.
+ * @param {number} [position=0] Position to insertion.
+ * @param {boolean} [withReplace=false] Need replace item in insert position?
+ * @return {Array} New array.
+ */
+export function insert (target = [], part = [], position = 0, withReplace = false) {
+	const readyPosition = Number(position) || 0;
+	let result = [];
+	if (Array.isArray(target) && Array.isArray(part)) {
+		result = target.slice(0, readyPosition).concat(
+			part,
+			target.slice(readyPosition + (withReplace ? 1 : 0)),
+		);
+	}
+	return result;
+}

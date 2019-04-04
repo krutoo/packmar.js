@@ -1,5 +1,5 @@
 import { isPrimitive, isBoolean, isFunction } from './utils.js';
-import { isComponent } from './component.js';
+import { isComponent, isComponentClass } from './component.js';
 import { isVirtualNode } from './create-virtual-node.js';
 
 /**
@@ -12,9 +12,15 @@ import { isVirtualNode } from './create-virtual-node.js';
  */
 export default function updateElement ($parent, newNode, oldNode, $children, index = 0) {
 	if ($parent instanceof HTMLElement) {
+		/** @inheritDoc */
+		const createRealNode = () => createNode(newNode, $parent, index);
 		const $target = $children ? $children[index] : $parent.childNodes[index];
 		if (!oldNode && newNode) {
-			$parent.appendChild(createNode(newNode, $parent, index));
+			if ($target) { // update real dom for non actual virtual dom version
+				$parent.replaceChild(createRealNode(), $target);
+			} else {
+				$parent.appendChild(createRealNode());
+			}
 		} else if (!newNode && oldNode) {
 			if ($target) {
 				$parent.removeChild($target);
@@ -26,16 +32,22 @@ export default function updateElement ($parent, newNode, oldNode, $children, ind
 			}
 		} else if (!isSameVirtualNodes(newNode, oldNode)) {
 			if ($target) {
-				$parent.replaceChild(createNode(newNode, $parent, index), $target);
+				$parent.replaceChild(createRealNode(), $target);
+			} else { // update real dom for non actual virtual dom version
+				$parent.appendChild(createRealNode());
 			}
 		} else if (isVirtualNode(newNode)) {
-			if (isComponent(oldNode.component)) {
-				// move link on component into new virtual DOM node version and update
-				newNode.component = oldNode.component;
-				newNode.component.setProps(newNode.props);
+			if (!$target) { // update real dom for non actual virtual dom version
+				$parent.appendChild(createRealNode());
 			} else {
-				updateProps($target, newNode.props, oldNode.props);
-				updateChildren($target, newNode.children, oldNode.children);
+				if (isComponent(oldNode.component)) {
+					// move component link into new virtual node version and update props
+					newNode.component = oldNode.component;
+					newNode.component.setProps(newNode.props);
+				} else {
+					updateProps($target, newNode.props, oldNode.props);
+					updateChildren($target, newNode.children, oldNode.children);
+				}
 			}
 		}
 	}
@@ -113,10 +125,8 @@ export function createNode (virtualNode, $parent, index = 0) {
 	let $node;
 	if (isVirtualNode(virtualNode)) {
 		const { type, props, children } = virtualNode;
-
-		// @todo add isComponentClass() helper to use here
-		if (type && type.prototype && type.prototype.render) {
-			// @todo move out instance creating logic from createNode()
+		if (isComponentClass(type)) {
+			// @todo move out instance creating logic from createNode() (instantiate(virtualNode))
 			const instance = new type(props);
 			instance.bound($parent, index);
 			instance.previousVNode = instance.render();
@@ -125,11 +135,13 @@ export function createNode (virtualNode, $parent, index = 0) {
 		} else {
 			$node = document.createElement(type);
 			setProps($node, virtualNode);
-
-			// @todo replace on for of loop (for speed up)
-			children.filter(Boolean).forEach((virtualChild, childIndex) => {
-				$node.appendChild(createNode(virtualChild, $node, childIndex));
-			});
+			for (let childIndex = 0, realIndex = 0; childIndex < children.length; childIndex++) {
+				const virtualChild = children[childIndex];
+				if (virtualChild) {
+					$node.appendChild(createNode(virtualChild, $node, realIndex));
+					realIndex++;
+				}
+			}
 		}
 	} else if (isDisplayedPrimitive(virtualNode)) {
 		// String() needs here to prevent Uncaught TypeError with symbol type values

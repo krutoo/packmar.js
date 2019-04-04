@@ -1,3 +1,4 @@
+import { insert } from './utils.js';
 import { registry } from './define-component.js';
 import { hasAnchors, replaceAnchors } from './pack.js';
 import createVirtualNode, { isVirtualNode } from './create-virtual-node.js';
@@ -32,7 +33,7 @@ export function getTemplate (html) {
  * @return {Node} Mutated input node.
  */
 export function prepareAnchors ($node) {
-	if ($node instanceof Element) {
+	if ($node instanceof HTMLElement) {
 		if ($node.childNodes.length > 0) {
 			Array.from($node.childNodes).forEach($child => prepareAnchors($child));
 		}
@@ -148,14 +149,8 @@ export function cloneVirtualNode (virtualNode) {
  */
 export function passValues (virtualNode, values) {
 	if (isVirtualNode(virtualNode) && values) {
-		/**
-		 * Bound passValues().
-		 * @param {*} item Item of list.
-		 * @param {*} index Index in list.
-		 * @return {*} Mutated virtual DOM node.
-		 */
-		const boundPassValues = item => passValues(item, values);
-		const { props, children } = virtualNode;
+		const { props } = virtualNode;
+		let { children } = virtualNode;
 		for (const propName in props) {
 			const propValue = props[propName];
 			if (hasAnchors(propValue)) {
@@ -169,9 +164,14 @@ export function passValues (virtualNode, values) {
 			} else if (hasAnchors(child)) {
 				const value = values[child.trim()];
 				if (Array.isArray(value)) {
-					// @todo replace on for loop (for speed up)
-					const childrenPart = value.filter(Boolean).map(boundPassValues);
-					children.splice(index, 1, ...childrenPart);
+					const childrenPart = [];
+					for (let partIndex = 0; partIndex < value.length; partIndex++) {
+						const listItem = value[partIndex];
+						if (listItem) {
+							childrenPart.push(passValues(listItem, values));
+						}
+					}
+					children = insert(children, childrenPart, index, true);
 					index += childrenPart.length;
 				} else if (value) {
 					children.splice(index, 1, value);
@@ -181,6 +181,7 @@ export function passValues (virtualNode, values) {
 				}
 			}
 		}
+		virtualNode.children = children;
 	}
 	return virtualNode;
 }
