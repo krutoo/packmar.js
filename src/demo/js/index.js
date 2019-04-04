@@ -1,5 +1,5 @@
 import { html, render } from 'packmar';
-import './components/App.js';
+import './components/app.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 	render(

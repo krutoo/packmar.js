@@ -1,7 +1,7 @@
 import { html, Component, define } from 'packmar';
-import Field from './Field.js';
-import Note from './Note.js';
-import Filters from './Filters.js';
+import Field from './field.js';
+import Note from './note.js';
+import Filters from './filters.js';
 
 const FILTERS = Object.freeze([
 	{ name: 'All', check: () => true },
