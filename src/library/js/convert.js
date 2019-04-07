@@ -171,13 +171,13 @@ export function passValues (virtualNode, values) {
 					const childrenPart = [];
 					for (let partIndex = 0; partIndex < value.length; partIndex++) {
 						const listItem = value[partIndex];
-						if (listItem) {
+						if (listItem) { // @todo isDisplayedPrimitive(value)
 							childrenPart.push(passValues(listItem, values));
 						}
 					}
 					children = insert(children, childrenPart, index, true);
 					index += childrenPart.length;
-				} else if (value) {
+				} else if (value) { // @todo isDisplayedPrimitive(value)
 					children.splice(index, 1, value);
 				} else {
 					children.splice(index, 1);
