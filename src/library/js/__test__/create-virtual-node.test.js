@@ -11,7 +11,7 @@ describe('createVirtualNode()', () => {
 		});
 	});
 	it('should return new virtual p with text content', () => {
-		expect(createVirtualNode('p', null, 'With great power', 'comes great responsibility')).toEqual({
+		expect(createVirtualNode('p', null, ['With great power', 'comes great responsibility'])).toEqual({
 			[Symbol.toStringTag]: TAG_NAME,
 			type: 'p',
 			props: {},
@@ -35,7 +35,7 @@ describe('isVirtualNode()', () => {
 		expect(isVirtualNode(createVirtualNode('h1'))).toBe(true);
 	});
 	it('should return false for non virtual nodes', () => {
-		[false, 1, '1', null, undefined, {}, [], () => {}].forEach(value => {
+		[false, 1, 'foo', null, undefined, {}, [], () => {}].forEach(value => {
 			expect(isVirtualNode(value)).toBe(false);
 		});
 	});

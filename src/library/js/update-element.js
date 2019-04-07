@@ -4,7 +4,7 @@ import { isVirtualNode } from './create-virtual-node.js';
 
 /**
  * Updates a real DOM element according to old and new versions of it virtual copy.
- * @param {Element} $parent Parent DOM element.
+ * @param {HTMLElement} $parent Parent DOM element.
  * @param {VirtualNode} newNode New version of virtual DOM node.
  * @param {VirtualNode} [oldNode] Old version of virtual DOM node.
  * @param {number} [$children] List of $parent children.
@@ -55,7 +55,7 @@ export default function updateElement ($parent, newNode, oldNode, $children, ind
 
 /**
  * Updates changed properties of real DOM element by old and new versions of virtual node props.
- * @param {Element} $target Target element.
+ * @param {HTMLElement} $target Target element.
  * @param {Object} newProps Old properties.
  * @param {Object} oldProps New properties.
  */

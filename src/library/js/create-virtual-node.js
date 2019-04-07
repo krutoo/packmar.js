@@ -18,15 +18,15 @@ export const TAG_NAME = 'PackmarVirtualNode';
  * Returns a new virtual DOM node.
  * @param {(string|Function)} type Type.
  * @param {Object} [props] Properties.
- * @param  {...*} children Children.
+ * @param  {Array} children Children.
  * @return {VirtualNode} New virtual DOM node.
  */
-export default function createVirtualNode (type, props, ...children) {
+export default function createVirtualNode (type, props, children) {
 	return {
 		[Symbol.toStringTag]: TAG_NAME,
 		type: isFunction(type) ? type : String(type),
-		props: { ...props },
-		children,
+		props: props ? props : {},
+		children: Array.isArray(children) ? children : [],
 		component: null,
 	};
 }

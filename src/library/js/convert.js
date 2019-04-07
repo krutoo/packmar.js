@@ -135,8 +135,11 @@ export function cloneVirtualNode (virtualNode) {
 	let clone = virtualNode;
 	if (isVirtualNode(virtualNode)) {
 		const { type, props, children } = virtualNode;
-		const newNode = createVirtualNode(type, props, ...children.map(cloneVirtualNode));
-		clone = newNode;
+		const clonedChildren = [];
+		for (let index = 0; index < children.length; index++) {
+			clonedChildren.push(cloneVirtualNode(children[index]));
+		}
+		clone = createVirtualNode(type, { ...props }, clonedChildren);
 	}
 	return clone;
 }
@@ -158,6 +161,7 @@ export function passValues (virtualNode, values) {
 			}
 		}
 		for (let index = 0; index < children.length; index++) {
+			// @todo maybe create new array and push() faster than splice()
 			const child = children[index];
 			if (isVirtualNode(child)) {
 				passValues(child, values);
