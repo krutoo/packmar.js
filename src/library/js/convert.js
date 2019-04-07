@@ -53,7 +53,7 @@ export function prepareAnchors ($node) {
 }
 
 /**
- * Returns comment HTML markup string.
+ * Returns comment HTML string.
  * @param {string} content Comment text.
  * @return {string} Comment HTML markup string.
  */

@@ -41,6 +41,7 @@
 		"space-infix-ops": "error",
 		"brace-style": "error",
 		"no-param-reassign": "error",
+		"no-duplicate-imports": "error",
 		"eol-last": [
 			"error",
 			"always"

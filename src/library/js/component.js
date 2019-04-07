@@ -19,7 +19,7 @@ export default class Component {
 	 */
 	constructor (props = {}) {
 		this.state = {};
-		this.props = { ...props };
+		this.props = props ? props : {};
 	}
 
 	/** @inheritDoc */
@@ -41,8 +41,10 @@ export default class Component {
 	 * @param {number} index Index in parent child nodes list.
 	 */
 	bound (parent, index = 0) {
-		this.parent = parent;
-		this.index = index;
+		if (parent instanceof HTMLElement) {
+			this.parent = parent;
+			this.index = index;
+		}
 	}
 
 	/**
@@ -69,7 +71,7 @@ export default class Component {
  */
 export function updateComponentElement () {
 	const previousVNode = this.previousVNode;
-	const currentVNode = this.render();
+	const currentVNode = this.render(this.props, this.state);
 	updateElement(
 		this.parent,
 		currentVNode,

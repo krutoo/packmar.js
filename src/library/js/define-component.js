@@ -1,11 +1,17 @@
 import { isFunction } from './utils.js';
+import createVirtualNode from './create-virtual-node.js';
 
+/**
+ * Component types registry.
+ * @type {Map}
+ */
 export const registry = new Map();
 
 /**
  * Defines component creator function or class for use in html().
  * @param {string} name Name of component to use.
  * @param {Function} creator Component creator function or class.
+ * @return {Function} Function that returns virtual node.
  */
 export default function defineComponent (name, creator) {
 	const readyName = String(name).toUpperCase();
@@ -14,7 +20,7 @@ export default function defineComponent (name, creator) {
 		error = Error('Component name must contain "-" character');
 	}
 	if (!isFunction(creator)) {
-		error = Error(`Component "${name}" must be a function`);
+		error = TypeError(`Component "${name}" must be a function`);
 	}
 	if (registry.has(readyName)) {
 		error = Error(`Component "${name}" already defined`);
@@ -23,5 +29,6 @@ export default function defineComponent (name, creator) {
 		throw error;
 	} else {
 		registry.set(readyName, creator);
+		return props => createVirtualNode(creator, props);
 	}
 }
