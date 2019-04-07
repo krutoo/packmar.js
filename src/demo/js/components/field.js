@@ -1,6 +1,6 @@
-import { html } from 'packmar';
+import { html, define } from 'packmar';
 
-export default function Field ({ value, placeholder, onInput }) {
+export default define('todo-field', function Field ({ value, placeholder, onInput }) {
 	return html`
 		<textarea
 			rows="5"
@@ -9,4 +9,4 @@ export default function Field ({ value, placeholder, onInput }) {
 			oninput=${onInput}
 		>${value}</textarea>
 	`;
-}
+});

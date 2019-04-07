@@ -1,6 +1,6 @@
-import { html } from 'packmar';
+import { html, define } from 'packmar';
 
-export default function Filters ({ filters, selectFilter, currentFilter }) {
+export default define('todo-filters', function Filters ({ filters, selectFilter, currentFilter }) {
 	return html`
 		<div class="filters display--flex">
 			${filters.map(filter => {
@@ -16,4 +16,4 @@ export default function Filters ({ filters, selectFilter, currentFilter }) {
 			})}
 		</div>
 	`;
-}
+});

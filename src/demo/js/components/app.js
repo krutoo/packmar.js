@@ -91,7 +91,7 @@ export default define('todo-list', class TodoList extends Component {
 		const needShowNote = currentFilter.check || defaultCheck;
 		return html`
 			<div class="app-wrapper display--flex width--100percent">
-				<div class="main-content" debug>
+				<div class="main-content">
 					<h1 class="main-title">${title}</h1>
 					${Field({
 						placeholder: 'Just start typing...',

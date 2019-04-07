@@ -1,6 +1,6 @@
-import { html } from 'packmar';
+import { html, define } from 'packmar';
 
-export default function Note ({ noteText, isCompleted, onRemove, onCheck }) {
+export default define('todo-note', function Note ({ noteText, isCompleted, onRemove, onCheck }) {
 	const textClasses = `text ${isCompleted ? 'text-decoration--line-through' : ''}`;
 	const formattedText = html`
 		<div class="formatted">
@@ -20,4 +20,4 @@ export default function Note ({ noteText, isCompleted, onRemove, onCheck }) {
 			</button>
 		</div>
 	`;
-}
+});
