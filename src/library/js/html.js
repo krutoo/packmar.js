@@ -1,4 +1,5 @@
 import pack from './pack.js';
+import { clearString } from './utils.js';
 import {
 	passValues,
 	getTemplate,
@@ -25,7 +26,12 @@ export default function html (...args) {
 		virtualNode = virtualNodes.get(key);
 	} else {
 		virtualNode = convertToVirtualNode(getTemplate(key).firstElementChild);
-		virtualNodes.set(key, virtualNode);
+
+		/**
+		 * Do not remove clearString. It is for remove parent string pointers.
+		 * @see {@link https://m.habr.com/ru/post/449368/}
+		 */
+		virtualNodes.set(clearString(key), virtualNode);
 	}
 	return passValues(cloneVirtualNode(virtualNode), values);
 }

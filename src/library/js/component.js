@@ -5,7 +5,7 @@ import updateElement from './update-element.js';
  * Component tag name.
  * @type {string}
  */
-export const TAG_NAME = 'PackmarComponent';
+export const TAG_NAME = 'Packmar.Component';
 
 /**
  * Base component class.
@@ -14,8 +14,6 @@ export default class Component {
 	/**
 	 * Creates a components.
 	 * @param {Object} props Properties.
-	 * @param {HTMLElement} parent Parent DOM element.
-	 * @param {number} index Index in parent.childNodes.
 	 */
 	constructor (props = {}) {
 		this.state = {};

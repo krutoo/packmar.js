@@ -64,3 +64,13 @@ export function insert (target = [], part = [], position = 0, withReplace = fals
 	}
 	return result;
 }
+
+/**
+ * Removes pointers on parent strings from input string.
+ * @see https://m.habr.com/ru/post/449368/
+ * @param {string} string String to remove pointers.
+ * @return {string} Clear input string.
+ */
+export function clearString (string) {
+	return (' ' + string).slice(1); // eslint-disable-line prefer-template
+}

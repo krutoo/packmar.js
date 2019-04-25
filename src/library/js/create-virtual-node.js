@@ -12,7 +12,7 @@ import { getTag, isFunction } from './utils.js';
  * Tag of virtual DOM nodes.
  * @type {string}
  */
-export const TAG_NAME = 'PackmarVirtualNode';
+export const TAG_NAME = 'Packmar.VirtualNode';
 
 /**
  * Returns a new virtual DOM node.
