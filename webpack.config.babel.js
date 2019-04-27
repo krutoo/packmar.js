@@ -48,14 +48,14 @@ export default function getConfiguration (env, options = {}) {
 				packmar: path.join(__dirname, '/src/library/js/index.js'),
 			},
 		},
-		devtool: 'eval-source-map',
+		devtool: isProduction ? false : 'eval-source-map',
 		optimization: {
 			minimize: isProduction,
 			minimizer: [
 				new UglifyJsPlugin({
 					cache: true,
 					parallel: true,
-					sourceMap: true,
+					sourceMap: !isProduction,
 				}),
 			],
 			splitChunks: {
