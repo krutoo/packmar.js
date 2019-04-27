@@ -11,7 +11,7 @@ describe('createVirtualNode()', () => {
 		});
 	});
 	it('should return new virtual p with text content', () => {
-		expect(createVirtualNode('p', null, ['With great power', 'comes great responsibility'])).toEqual({
+		expect(createVirtualNode('p', null, 'With great power', 'comes great responsibility')).toEqual({
 			[Symbol.toStringTag]: TAG_NAME,
 			type: 'p',
 			props: {},

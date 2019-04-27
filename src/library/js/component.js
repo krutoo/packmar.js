@@ -95,5 +95,7 @@ export function isComponent (value) {
  * @return {boolean} Is it component class?
  */
 export function isComponentClass (value) {
-	return value && value.prototype && value.prototype.render;
+	return value
+		&& value.prototype
+		&& value.prototype instanceof Component;
 }

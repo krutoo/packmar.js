@@ -139,7 +139,7 @@ export function cloneVirtualNode (virtualNode) {
 		for (let index = 0; index < children.length; index++) {
 			clonedChildren.push(cloneVirtualNode(children[index]));
 		}
-		clone = createVirtualNode(type, { ...props }, clonedChildren);
+		clone = createVirtualNode(type, { ...props }, ...clonedChildren);
 	}
 	return clone;
 }
