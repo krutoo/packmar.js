@@ -30,7 +30,7 @@ import { pack, render } from 'packmar';
 
 /**
  * Return the packed element of heading.
- * @param {String} options.text Heading text.
+ * @param {string} options.text Heading text.
  * @param {Function} options.onClick Click callback.
  * @return {Object} Packed element.
  */
