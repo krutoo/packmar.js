@@ -19,9 +19,6 @@ export default function getConfiguration (env, options = {}) {
         './src/demo/js/index.js',
         './src/demo/scss/index.scss',
       ],
-      landing: [
-        './src/landing/scss/index.scss',
-      ],
     },
     output: {
       path: path.resolve(__dirname, 'build'),
@@ -71,12 +68,6 @@ export default function getConfiguration (env, options = {}) {
     plugins: [
       new ExtractTextPlugin('css/[name].css', {
         allChunks: true,
-      }),
-      new HTMLPlugin({
-        template: './src/landing/index.html',
-        minify: isProduction,
-        excludeChunks: ['packmar'],
-        filename: 'index.html',
       }),
       new HTMLPlugin({
         template: './src/demo/index.html',
