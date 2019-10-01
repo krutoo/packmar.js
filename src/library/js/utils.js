@@ -56,6 +56,7 @@ export function getTag (value) {
 export function insert (target = [], part = [], position = 0, withReplace = false) {
   const readyPosition = Number(position) || 0;
   let result = [];
+
   if (Array.isArray(target) && Array.isArray(part)) {
     result = target.slice(0, readyPosition).concat(
       part,

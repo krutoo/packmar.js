@@ -80,6 +80,7 @@ export function createTemplate (html) {
  */
 export function convertToVirtualNode ($node) {
   let result = '';
+
   if ($node instanceof HTMLElement) {
     const virtualNode = createVirtualNode(getVirtualType($node.nodeName));
     if ($node.childNodes.length > 0) {
@@ -110,6 +111,7 @@ export function convertToVirtualNode ($node) {
   } else if ($node instanceof Node) {
     result = $node.nodeValue;
   }
+
   return result;
 }
 
@@ -120,9 +122,11 @@ export function convertToVirtualNode ($node) {
  */
 export function getVirtualType (typeName) {
   let result = typeName;
+
   if (registry.has(typeName)) {
     result = registry.get(typeName);
   }
+
   return result;
 }
 
@@ -133,14 +137,18 @@ export function getVirtualType (typeName) {
  */
 export function cloneVirtualNode (virtualNode) {
   let clone = virtualNode;
+
   if (isVirtualNode(virtualNode)) {
     const { type, props, children } = virtualNode;
     const clonedChildren = [];
+
     for (let index = 0; index < children.length; index++) {
       clonedChildren.push(cloneVirtualNode(children[index]));
     }
+
     clone = createVirtualNode(type, { ...props }, ...clonedChildren);
   }
+
   return clone;
 }
 
@@ -154,12 +162,14 @@ export function passValues (virtualNode, values) {
   if (isVirtualNode(virtualNode) && values) {
     const { props } = virtualNode;
     let { children } = virtualNode;
+
     for (const propName in props) {
       const propValue = props[propName];
       if (hasAnchors(propValue)) {
         props[propName] = values[propValue];
       }
     }
+
     for (let index = 0; index < children.length; index++) {
       // @todo maybe create new array and push() faster than splice()
       const child = children[index];
@@ -187,5 +197,6 @@ export function passValues (virtualNode, values) {
     }
     virtualNode.children = children;
   }
+
   return virtualNode;
 }

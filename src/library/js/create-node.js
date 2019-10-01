@@ -11,17 +11,23 @@ import { isFunction, isPrimitive, isBoolean } from './utils.js';
  */
 export default function createNode (virtualNode, $parent, index = 0) {
   let $node;
+
   if (isVirtualNode(virtualNode)) {
     const { type, props, children } = virtualNode;
+
     if (isFunction(type)) {
       // @todo need refactoring here
       const { component: instance } = instantiate(virtualNode);
+
       instance.bound($parent, index);
+
       instance.previousVNode = instance.render(props);
       $node = createNode(instance.previousVNode, $parent, index);
     } else {
       $node = document.createElement(type);
+
       setProps($node, virtualNode);
+
       for (let childIndex = 0, realIndex = 0; childIndex < children.length; childIndex++) {
         const virtualChild = children[childIndex];
         if (virtualChild) {
@@ -36,6 +42,7 @@ export default function createNode (virtualNode, $parent, index = 0) {
   } else {
     $node = document.createComment('empty');
   }
+
   return $node;
 }
 

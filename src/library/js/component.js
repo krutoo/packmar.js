@@ -70,6 +70,7 @@ export default class Component {
 export function updateComponentElement () {
   const previousVNode = this.previousVNode;
   const currentVNode = this.render(this.props, this.state);
+
   updateElement(
     this.parent,
     currentVNode,
@@ -77,6 +78,7 @@ export function updateComponentElement () {
     null,
     this.index,
   );
+
   this.previousVNode = currentVNode;
 }
 

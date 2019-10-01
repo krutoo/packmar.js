@@ -21,11 +21,13 @@ const virtualNodes = new Map();
 export default function html (...args) {
   const { template: key, values } = pack(...args);
   let virtualNode;
+
   if (virtualNodes.has(key)) {
     virtualNode = virtualNodes.get(key);
   } else {
     virtualNode = convertToVirtualNode(getTemplate(key).firstElementChild);
     virtualNodes.set(key, virtualNode);
   }
+
   return passValues(cloneVirtualNode(virtualNode), values);
 }

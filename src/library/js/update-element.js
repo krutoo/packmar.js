@@ -80,6 +80,7 @@ export function updateProps ($target, newProps = {}, oldProps = {}) {
     for (const propName in props) {
       const newValue = newProps[propName];
       const oldValue = oldProps[propName];
+
       updateProp($target, propName, newValue, oldValue);
     }
   }

@@ -16,15 +16,15 @@ export const registry = new Map();
 export default function defineComponent (name, creator) {
   const readyName = String(name).toUpperCase();
   let error = null;
+
   if (!readyName.includes('-')) {
     error = Error('Component name must contain "-" character');
-  }
-  if (!isFunction(creator)) {
+  } else if (!isFunction(creator)) {
     error = TypeError(`Component "${name}" must be a function`);
-  }
-  if (registry.has(readyName)) {
+  } else if (registry.has(readyName)) {
     error = Error(`Component "${name}" already defined`);
   }
+
   if (error) {
     throw error;
   } else {
