@@ -14,21 +14,21 @@ export const registry = new Map();
  * @return {Function} Function that returns virtual node.
  */
 export default function defineComponent (name, creator) {
-	const readyName = String(name).toUpperCase();
-	let error = null;
-	if (!readyName.includes('-')) {
-		error = Error('Component name must contain "-" character');
-	}
-	if (!isFunction(creator)) {
-		error = TypeError(`Component "${name}" must be a function`);
-	}
-	if (registry.has(readyName)) {
-		error = Error(`Component "${name}" already defined`);
-	}
-	if (error) {
-		throw error;
-	} else {
-		registry.set(readyName, creator);
-		return props => createVirtualNode(creator, props);
-	}
+  const readyName = String(name).toUpperCase();
+  let error = null;
+  if (!readyName.includes('-')) {
+    error = Error('Component name must contain "-" character');
+  }
+  if (!isFunction(creator)) {
+    error = TypeError(`Component "${name}" must be a function`);
+  }
+  if (registry.has(readyName)) {
+    error = Error(`Component "${name}" already defined`);
+  }
+  if (error) {
+    throw error;
+  } else {
+    registry.set(readyName, creator);
+    return props => createVirtualNode(creator, props);
+  }
 }

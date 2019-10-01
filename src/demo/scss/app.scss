@@ -1,76 +1,76 @@
 .app-wrapper {
-	flex-direction: column;
-	min-height: 100%;
-	max-width: 720px;
-	margin: auto;
-	padding: 1rem;
-	.main-content {
-		flex-grow: 1;
-		.main-title {
-			font-size: 2rem;
-		}
-		.main-field {
-			padding: 1rem;
-			margin-bottom: 1rem;
-		}
-		.create-note-button {
-			padding: 1rem;
-		}
-		.filters {
-			margin: 1rem -.5rem;
-			flex-wrap: wrap;
-			.filter-button {
-				font-size: .8rem;
-				flex-basis: calc(33.33% - 1rem);
-				flex-shrink: 1;
-				margin: 0 .5rem;
-				&:not(.active) {
-					background-color: $color-gray;
-					border-color: $color-gray;
-					color: #323232;
-				}
-				@media screen and (max-width: 480px) {
-					flex-basis: 100%;
-					margin: .25rem .5rem;
-				}
-			}
-		}
-		.notes-list {
-			.note {
-				display: flex;
-				padding: 1rem;
-				border: $main-border-width solid $color-gray;
-				border-radius: $main-border-radius;
-				margin-top: 1rem;
-				.text {
-					padding: 0 1rem;
-					display: flex;
-					align-items: center;
-					flex-grow: 1;
-					flex-shrink: 1;
-					flex-basis: auto;
-				}
-				.button {
-					flex-basis: 2rem;
-					flex-shrink: 0;
-					width: 2rem;
-					height: 2rem;
-					padding: 0;
-					vertical-align: middle;
-					background-color: transparent;
-					border-color: $color-gray;
-					color: inherit;
-					&:hover,
-					&:focus {
-						border-color: $main-color;
-					}
-				}
-			}
-		}
-	}
-	.main-footer {
-		margin-top: 1rem;
-		font-size: .8rem;
-		color: #aaa;
-	}
+  flex-direction: column;
+  min-height: 100%;
+  max-width: 720px;
+  margin: auto;
+  padding: 1rem;
+  .main-content {
+    flex-grow: 1;
+    .main-title {
+      font-size: 2rem;
+    }
+    .main-field {
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .create-note-button {
+      padding: 1rem;
+    }
+    .filters {
+      margin: 1rem -.5rem;
+      flex-wrap: wrap;
+      .filter-button {
+        font-size: .8rem;
+        flex-basis: calc(33.33% - 1rem);
+        flex-shrink: 1;
+        margin: 0 .5rem;
+        &:not(.active) {
+          background-color: $color-gray;
+          border-color: $color-gray;
+          color: #323232;
+        }
+        @media screen and (max-width: 480px) {
+          flex-basis: 100%;
+          margin: .25rem .5rem;
+        }
+      }
+    }
+    .notes-list {
+      .note {
+        display: flex;
+        padding: 1rem;
+        border: $main-border-width solid $color-gray;
+        border-radius: $main-border-radius;
+        margin-top: 1rem;
+        .text {
+          padding: 0 1rem;
+          display: flex;
+          align-items: center;
+          flex-grow: 1;
+          flex-shrink: 1;
+          flex-basis: auto;
+        }
+        .button {
+          flex-basis: 2rem;
+          flex-shrink: 0;
+          width: 2rem;
+          height: 2rem;
+          padding: 0;
+          vertical-align: middle;
+          background-color: transparent;
+          border-color: $color-gray;
+          color: inherit;
+          &:hover,
+          &:focus {
+            border-color: $main-color;
+          }
+        }
+      }
+    }
+  }
+  .main-footer {
+    margin-top: 1rem;
+    font-size: .8rem;
+    color: #aaa;
+  }
 }

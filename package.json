@@ -5,9 +5,8 @@
   "main": "src/library/js/index.js",
   "scripts": {
     "test": "jest --config ./jest.config.json",
-    "lint": "npm run lint-scripts && npm run lint-json && npm run lint-styles",
+    "lint": "npm run lint-scripts && npm run lint-styles",
     "lint-scripts": "eslint . --ext .js",
-    "lint-json": "eslint . --ext .json --config .eslintrc-json.json",
     "lint-styles": "stylelint ./src/**/*.scss --config=.stylelintrc.json",
     "build": "webpack --mode=production",
     "watch": "webpack --watch --mode=development"

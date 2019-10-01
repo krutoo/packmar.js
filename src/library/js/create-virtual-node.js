@@ -22,13 +22,13 @@ export const TAG_NAME = 'Packmar.VirtualNode';
  * @return {VirtualNode} New virtual DOM node.
  */
 export default function createVirtualNode (type, props, ...children) {
-	return {
-		[Symbol.toStringTag]: TAG_NAME,
-		type: isFunction(type) ? type : String(type),
-		props: props ? props : {},
-		children,
-		component: null,
-	};
+  return {
+    [Symbol.toStringTag]: TAG_NAME,
+    type: isFunction(type) ? type : String(type),
+    props: props ? props : {},
+    children,
+    component: null,
+  };
 }
 
 /**
@@ -37,5 +37,5 @@ export default function createVirtualNode (type, props, ...children) {
  * @return {boolean} Is it a virtual node?
  */
 export function isVirtualNode (value) {
-	return getTag(value) === TAG_NAME;
+  return getTag(value) === TAG_NAME;
 }

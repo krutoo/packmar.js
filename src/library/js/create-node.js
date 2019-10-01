@@ -10,33 +10,33 @@ import { isFunction, isPrimitive, isBoolean } from './utils.js';
  * @return {Node} Real DOM node.
  */
 export default function createNode (virtualNode, $parent, index = 0) {
-	let $node;
-	if (isVirtualNode(virtualNode)) {
-		const { type, props, children } = virtualNode;
-		if (isFunction(type)) {
-			// @todo need refactoring here
-			const { component: instance } = instantiate(virtualNode);
-			instance.bound($parent, index);
-			instance.previousVNode = instance.render(props);
-			$node = createNode(instance.previousVNode, $parent, index);
-		} else {
-			$node = document.createElement(type);
-			setProps($node, virtualNode);
-			for (let childIndex = 0, realIndex = 0; childIndex < children.length; childIndex++) {
-				const virtualChild = children[childIndex];
-				if (virtualChild) {
-					$node.appendChild(createNode(virtualChild, $node, realIndex));
-					realIndex++;
-				}
-			}
-		}
-	} else if (isDisplayedPrimitive(virtualNode)) {
-		// String() needs here to prevent Uncaught TypeError with symbol type values
-		$node = document.createTextNode(String(virtualNode));
-	} else {
-		$node = document.createComment('empty');
-	}
-	return $node;
+  let $node;
+  if (isVirtualNode(virtualNode)) {
+    const { type, props, children } = virtualNode;
+    if (isFunction(type)) {
+      // @todo need refactoring here
+      const { component: instance } = instantiate(virtualNode);
+      instance.bound($parent, index);
+      instance.previousVNode = instance.render(props);
+      $node = createNode(instance.previousVNode, $parent, index);
+    } else {
+      $node = document.createElement(type);
+      setProps($node, virtualNode);
+      for (let childIndex = 0, realIndex = 0; childIndex < children.length; childIndex++) {
+        const virtualChild = children[childIndex];
+        if (virtualChild) {
+          $node.appendChild(createNode(virtualChild, $node, realIndex));
+          realIndex++;
+        }
+      }
+    }
+  } else if (isDisplayedPrimitive(virtualNode)) {
+    // String() needs here to prevent Uncaught TypeError with symbol type values
+    $node = document.createTextNode(String(virtualNode));
+  } else {
+    $node = document.createComment('empty');
+  }
+  return $node;
 }
 
 /**
@@ -45,20 +45,20 @@ export default function createNode (virtualNode, $parent, index = 0) {
  * @return {VirtualNode} Mutated input virtual DOM node with instance.
  */
 export function instantiate (virtualNode) {
-	if (isVirtualNode(virtualNode)) {
-		const { type, props } = virtualNode;
-		let instance;
-		if (isComponentClass(type)) {
-			instance = new type(props);
-		} else if (isFunction(type)) {
-			instance = new Component(props);
-			instance.render = type;
-		}
-		if (instance) {
-			virtualNode.component = instance;
-		}
-	}
-	return virtualNode;
+  if (isVirtualNode(virtualNode)) {
+    const { type, props } = virtualNode;
+    let instance;
+    if (isComponentClass(type)) {
+      instance = new type(props);
+    } else if (isFunction(type)) {
+      instance = new Component(props);
+      instance.render = type;
+    }
+    if (instance) {
+      virtualNode.component = instance;
+    }
+  }
+  return virtualNode;
 }
 
 /**
@@ -67,10 +67,10 @@ export function instantiate (virtualNode) {
  * @return {boolean} Is it a displayed primitive?
  */
 export function isDisplayedPrimitive (value) {
-	return isPrimitive(value)
-		&& value !== null
-		&& value !== false
-		&& value !== undefined;
+  return isPrimitive(value)
+    && value !== null
+    && value !== false
+    && value !== undefined;
 }
 
 /**
@@ -79,13 +79,13 @@ export function isDisplayedPrimitive (value) {
  * @param {VirtualNode} virtualNode Virtual DOM node.
  */
 export function setProps ($target, virtualNode) {
-	if (isVirtualNode(virtualNode)) {
-		const { props } = virtualNode;
-		for (const name in props) {
-			const value = props[name];
-			setProp($target, name, value);
-		}
-	}
+  if (isVirtualNode(virtualNode)) {
+    const { props } = virtualNode;
+    for (const name in props) {
+      const value = props[name];
+      setProp($target, name, value);
+    }
+  }
 }
 
 /**
@@ -95,22 +95,22 @@ export function setProps ($target, virtualNode) {
  * @param {*} value Property value.
  */
 export function setProp ($target, name, value) {
-	if ($target instanceof HTMLElement) {
-		if (isFunction(value)) {
-			$target[name] = value;
-		} else if (isBoolean(value)) {
-			if (value) {
-				$target.setAttribute(name, '');
-				$target[name] = true;
-			} else {
-				removeProp($target, name, value);
-				$target[name] = false;
-			}
-		} else {
-			$target.setAttribute(name, value);
-			$target[name] = value;
-		}
-	}
+  if ($target instanceof HTMLElement) {
+    if (isFunction(value)) {
+      $target[name] = value;
+    } else if (isBoolean(value)) {
+      if (value) {
+        $target.setAttribute(name, '');
+        $target[name] = true;
+      } else {
+        removeProp($target, name, value);
+        $target[name] = false;
+      }
+    } else {
+      $target.setAttribute(name, value);
+      $target[name] = value;
+    }
+  }
 }
 
 /**
@@ -120,11 +120,11 @@ export function setProp ($target, name, value) {
  * @param {*} value Removed value.
  */
 export function removeProp ($target, propName, value) {
-	if ($target instanceof HTMLElement) {
-		if (isFunction(value)) {
-			$target[propName] = null;
-		} else {
-			$target.removeAttribute(propName);
-		}
-	}
+  if ($target instanceof HTMLElement) {
+    if (isFunction(value)) {
+      $target[propName] = null;
+    } else {
+      $target.removeAttribute(propName);
+    }
+  }
 }

@@ -16,14 +16,14 @@ export default function updateElement (
   newNode,
   oldNode,
   $children,
-  index = 0
+  index = 0,
 ) {
   if ($parent instanceof HTMLElement) {
     /** @inheritDoc */
     const createRealNode = () => createNode(
       newNode,
       $parent,
-      index
+      index,
     );
     const $target = $children
       ? $children[index]

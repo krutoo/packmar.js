@@ -1,9 +1,9 @@
 import pack from './pack.js';
 import {
-	passValues,
-	getTemplate,
-	cloneVirtualNode,
-	convertToVirtualNode,
+  passValues,
+  getTemplate,
+  cloneVirtualNode,
+  convertToVirtualNode,
 } from './convert.js';
 
 /**
@@ -19,13 +19,13 @@ const virtualNodes = new Map();
  * @return {VirtualNode} Virtual DOM node.
  */
 export default function html (...args) {
-	const { template: key, values } = pack(...args);
-	let virtualNode;
-	if (virtualNodes.has(key)) {
-		virtualNode = virtualNodes.get(key);
-	} else {
-		virtualNode = convertToVirtualNode(getTemplate(key).firstElementChild);
-		virtualNodes.set(key, virtualNode);
-	}
-	return passValues(cloneVirtualNode(virtualNode), values);
+  const { template: key, values } = pack(...args);
+  let virtualNode;
+  if (virtualNodes.has(key)) {
+    virtualNode = virtualNodes.get(key);
+  } else {
+    virtualNode = convertToVirtualNode(getTemplate(key).firstElementChild);
+    virtualNodes.set(key, virtualNode);
+  }
+  return passValues(cloneVirtualNode(virtualNode), values);
 }
