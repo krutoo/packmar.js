@@ -11,47 +11,60 @@ import createNode, { setProp, removeProp } from './create-node.js';
  * @param {number} [$children] List of $parent children.
  * @param {number} [index=0] Index of target node in parent list of child nodes.
  */
-export default function updateElement ($parent, newNode, oldNode, $children, index = 0) {
-	if ($parent instanceof HTMLElement) {
-		/** @inheritDoc */
-		const createRealNode = () => createNode(newNode, $parent, index);
-		const $target = $children ? $children[index] : $parent.childNodes[index];
-		if (!oldNode && newNode) {
-			if ($target) { // update real dom for non actual virtual dom version
-				$parent.replaceChild(createRealNode(), $target);
-			} else {
-				$parent.appendChild(createRealNode());
-			}
-		} else if (!newNode && oldNode) {
-			if ($target) {
-				$parent.removeChild($target);
+export default function updateElement (
+  $parent,
+  newNode,
+  oldNode,
+  $children,
+  index = 0
+) {
+  if ($parent instanceof HTMLElement) {
+    /** @inheritDoc */
+    const createRealNode = () => createNode(
+      newNode,
+      $parent,
+      index
+    );
+    const $target = $children
+      ? $children[index]
+      : $parent.childNodes[index];
 
-				// also for <textarea> need to remove value
-				if ($parent instanceof HTMLTextAreaElement) {
-					$parent.value = '';
-				}
-			}
-		} else if (!isSameVirtualNodes(newNode, oldNode)) {
-			if ($target) {
-				$parent.replaceChild(createRealNode(), $target);
-			} else { // update real dom for non actual virtual dom version
-				$parent.appendChild(createRealNode());
-			}
-		} else if (isVirtualNode(newNode)) {
-			if (!$target) { // update real dom for non actual virtual dom version
-				$parent.appendChild(createRealNode());
-			} else {
-				if (isComponent(oldNode.component)) {
-					// move component link into new virtual node version and update props
-					newNode.component = oldNode.component;
-					newNode.component.setProps(newNode.props);
-				} else {
-					updateProps($target, newNode.props, oldNode.props);
-					updateChildren($target, newNode.children, oldNode.children);
-				}
-			}
-		}
-	}
+    if (!oldNode && newNode) {
+      if ($target) { // update real dom for non actual virtual dom version
+        $parent.replaceChild(createRealNode(), $target);
+      } else {
+        $parent.appendChild(createRealNode());
+      }
+    } else if (!newNode && oldNode) {
+      if ($target) {
+        $parent.removeChild($target);
+
+        // also for <textarea> need to remove value
+        if ($parent instanceof HTMLTextAreaElement) {
+          $parent.value = '';
+        }
+      }
+    } else if (!isSameVirtualNodes(newNode, oldNode)) {
+      if ($target) {
+        $parent.replaceChild(createRealNode(), $target);
+      } else { // update real dom for non actual virtual dom version
+        $parent.appendChild(createRealNode());
+      }
+    } else if (isVirtualNode(newNode)) {
+      if (!$target) { // update real dom for non actual virtual dom version
+        $parent.appendChild(createRealNode());
+      } else {
+        if (isComponent(oldNode.component)) {
+          // move component link into new virtual node version and update props
+          newNode.component = oldNode.component;
+          newNode.component.setProps(newNode.props);
+        } else {
+          updateProps($target, newNode.props, oldNode.props);
+          updateChildren($target, newNode.children, oldNode.children);
+        }
+      }
+    }
+  }
 }
 
 /**
@@ -61,14 +74,15 @@ export default function updateElement ($parent, newNode, oldNode, $children, ind
  * @param {Object} oldProps New properties.
  */
 export function updateProps ($target, newProps = {}, oldProps = {}) {
-	if ($target instanceof HTMLElement && newProps && oldProps) {
-		const props = { ...oldProps, ...newProps };
-		for (const propName in props) {
-			const newValue = newProps[propName];
-			const oldValue = oldProps[propName];
-			updateProp($target, propName, newValue, oldValue);
-		}
-	}
+  if ($target instanceof HTMLElement && newProps && oldProps) {
+    const props = { ...oldProps, ...newProps };
+
+    for (const propName in props) {
+      const newValue = newProps[propName];
+      const oldValue = oldProps[propName];
+      updateProp($target, propName, newValue, oldValue);
+    }
+  }
 }
 
 /**
@@ -79,40 +93,42 @@ export function updateProps ($target, newProps = {}, oldProps = {}) {
  * @param {*} oldValue Old property version.
  */
 export function updateProp ($target, propName, newValue, oldValue) {
-	if (!oldValue || newValue !== oldValue) {
-		setProp($target, propName, newValue);
-	} else if (!newValue && oldValue) {
-		removeProp($target, propName, oldValue);
-	}
+  if (!oldValue || newValue !== oldValue) {
+    setProp($target, propName, newValue);
+  } else if (!newValue && oldValue) {
+    removeProp($target, propName, oldValue);
+  }
 }
 
 /**
- * Updates children of real DOM element by new and old versions of virtual node children.
- * @param {HTMLElement} $parent Parent element.
- * @param {Array} newChildren New version of virtual DOM node children.
- * @param {Array} oldChildren Old version of virtual DOM node children.
- */
+* Updates children of real DOM element by new and old versions of virtual node children.
+* @param {HTMLElement} $parent Parent element.
+* @param {Array} newChildren New version of virtual DOM node children.
+* @param {Array} oldChildren Old version of virtual DOM node children.
+*/
 export function updateChildren ($parent, newChildren, oldChildren) {
-	if (
-		$parent instanceof HTMLElement
-		&& Array.isArray(newChildren)
-		&& Array.isArray(oldChildren)
-	) {
-		const maxLength = Math.max(newChildren.length, oldChildren.length);
-		if (maxLength > 0) {
-			// need create array here, because operations with $parent mutates "childNodes"
-			const $children = [...$parent.childNodes];
-			for (let childIndex = 0; childIndex < maxLength; childIndex++) {
-				updateElement(
-					$parent,
-					newChildren[childIndex],
-					oldChildren[childIndex],
-					$children,
-					childIndex,
-				);
-			}
-		}
-	}
+  if (
+    $parent instanceof HTMLElement
+    && Array.isArray(newChildren)
+    && Array.isArray(oldChildren)
+  ) {
+    const maxLength = Math.max(newChildren.length, oldChildren.length);
+
+    if (maxLength > 0) {
+      // need create array here, because operations with $parent mutates "childNodes"
+      const $children = [...$parent.childNodes];
+
+      for (let childIndex = 0; childIndex < maxLength; childIndex++) {
+        updateElement(
+          $parent,
+          newChildren[childIndex],
+          oldChildren[childIndex],
+          $children,
+          childIndex,
+        );
+      }
+    }
+  }
 }
 
 /**
@@ -122,7 +138,8 @@ export function updateChildren ($parent, newChildren, oldChildren) {
  * @return {boolean} Are they the same virtual nodes?
  */
 export function isSameVirtualNodes (first, second) {
-	const values = [first, second];
-	return (values.every(isVirtualNode) && first.type === second.type)
-		|| (values.every(isPrimitive) && String(first) === String(second));
+  const values = [first, second];
+
+  return (values.every(isVirtualNode) && first.type === second.type)
+  || (values.every(isPrimitive) && String(first) === String(second));
 }

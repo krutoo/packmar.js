@@ -17,20 +17,24 @@ const anchorsRegex = /{%\d*%}/g;
  * @return {Pack} Packed element.
  */
 export default function pack (strings, ...values) {
-	const parts = [];
-	const valuesMap = {};
-	let valuesMapLength = 0;
-	for (let index = 0; index < strings.length; index++) {
-		parts.push(strings[index]);
-		if (index < values.length) {
-			const anchor = `{%${valuesMapLength}%}`;
-			valuesMapLength += 1;
-			valuesMap[anchor] = values[index];
-			parts.push(anchor);
-		}
-	}
-	const template = parts.join('').trim().replace(/\s+/g, ' ');
-	return { template, values: valuesMap };
+  const parts = [];
+  const valuesMap = {};
+  let valuesMapLength = 0;
+
+  for (let index = 0; index < strings.length; index++) {
+    parts.push(strings[index]);
+    if (index < values.length) {
+      const anchor = `{%${valuesMapLength}%}`;
+      valuesMapLength += 1;
+      valuesMap[anchor] = values[index];
+      parts.push(anchor);
+    }
+  }
+
+  return {
+    template: parts.join('').trim().replace(/\s+/g, ' '),
+    values: valuesMap,
+  };
 }
 
 /**
@@ -40,7 +44,7 @@ export default function pack (strings, ...values) {
  * @return {string} String with replaced anchors.
  */
 export function replaceAnchors (string, replacer) {
-	return String(string).replace(anchorsRegex, replacer);
+  return String(string).replace(anchorsRegex, replacer);
 }
 
 /**
@@ -49,6 +53,6 @@ export function replaceAnchors (string, replacer) {
  * @return {boolean} True if string contains anchors.
  */
 export function hasAnchors (value) {
-	// do not use anchorsRegex.test here (because with global search it save lastIndex)
-	return Boolean(String(value).match(anchorsRegex));
+  // do not use anchorsRegex.test here (because with global search it save lastIndex)
+  return Boolean(String(value).match(anchorsRegex));
 }

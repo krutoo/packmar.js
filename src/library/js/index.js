@@ -10,16 +10,16 @@ import createVirtualNode from './create-virtual-node.js';
  * @param {HTMLElement} parent Parent HTML element.
  */
 function render (virtualNode, parent) {
-	if (parent instanceof HTMLElement) {
-		parent.innerHTML = '';
-		updateElement(parent, virtualNode);
-	}
+  if (parent instanceof HTMLElement) {
+    parent.innerHTML = '';
+    updateElement(parent, virtualNode);
+  }
 }
 
 export {
-	html,
-	render,
-	Component,
-	defineComponent as define,
-	createVirtualNode,
+  html,
+  render,
+  Component,
+  defineComponent as define,
+  createVirtualNode,
 };
