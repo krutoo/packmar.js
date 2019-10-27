@@ -1,6 +1,6 @@
 import { html, Component, define } from 'packmar';
-import Field from './field.js';
 import Note from './note.js';
+import Field from './field.js';
 import Filters from './filters.js';
 
 const FILTERS = Object.freeze([
@@ -16,7 +16,7 @@ const DEFAULT_NOTES = [
   { id: 4, text: 'Delete any note', checked: false },
 ];
 
-export default define('todo-list', class TodoList extends Component {
+export default define('todo-list', class TodoApp extends Component {
   constructor (props) {
     super(props);
     this.state = {
