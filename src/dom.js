@@ -1,4 +1,4 @@
-import { isVirtualNode } from './create-virtual-node.js';
+import { isVirtualNode } from './createVirtualNode.js';
 import Component, { isComponentClass } from './component.js';
 import { isFunction, isPrimitive, isBoolean } from './utils.js';
 

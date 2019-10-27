@@ -1,5 +1,5 @@
 import { getTag } from './utils.js';
-import updateElement from './update-element.js';
+import updateElement from './updateElement.js';
 
 /**
  * Component tag name.

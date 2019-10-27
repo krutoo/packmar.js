@@ -1,8 +1,8 @@
 import html from './html.js';
 import Component from './component.js';
-import updateElement from './update-element.js';
-import defineComponent from './define-component.js';
-import createVirtualNode from './create-virtual-node.js';
+import updateElement from './updateElement.js';
+import defineComponent from './defineComponent.js';
+import createVirtualNode from './createVirtualNode.js';
 
 /**
  * Renders a virtual node into DOM element.

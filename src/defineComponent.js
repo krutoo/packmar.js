@@ -1,5 +1,5 @@
 import { isFunction } from './utils.js';
-import createVirtualNode from './create-virtual-node.js';
+import createVirtualNode from './createVirtualNode.js';
 
 /**
  * Component types registry.

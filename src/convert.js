@@ -1,7 +1,7 @@
 import { insert } from './utils.js';
 import { registry } from './define-component.js';
 import { hasAnchors, replaceAnchors } from './pack.js';
-import createVirtualNode, { isVirtualNode } from './create-virtual-node.js';
+import createVirtualNode, { isVirtualNode } from './createVirtualNode.js';
 
 /**
  * Cache of created DOM elements. Map keys is html markup.

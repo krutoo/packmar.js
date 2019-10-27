@@ -1,5 +1,5 @@
-import createVirtualNode from '../create-virtual-node.js';
-import { isSameVirtualNodes } from '../update-element.js';
+import createVirtualNode from '../createVirtualNode.js';
+import { isSameVirtualNodes } from '../updateElement.js';
 
 describe('isSameVirtualNodes()', () => {
   it('should return true for same primitives', () => {

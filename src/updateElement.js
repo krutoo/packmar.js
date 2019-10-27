@@ -1,6 +1,6 @@
 import { isPrimitive } from './utils.js';
 import { isComponent } from './component.js';
-import { isVirtualNode } from './create-virtual-node.js';
+import { isVirtualNode } from './createVirtualNode.js';
 import { createNode, setProp, removeProp } from './dom.js';
 
 /**

@@ -1,4 +1,4 @@
-import defineComponent, { registry } from '../define-component.js';
+import defineComponent, { registry } from '../defineComponent.js';
 
 describe('defineComponent()', () => {
   /**

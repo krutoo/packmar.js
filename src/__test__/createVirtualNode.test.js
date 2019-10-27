@@ -1,4 +1,4 @@
-import createVirtualNode, { isVirtualNode, TAG_NAME } from '../create-virtual-node.js';
+import createVirtualNode, { isVirtualNode, TAG_NAME } from '../createVirtualNode.js';
 
 describe('createVirtualNode()', () => {
   it('should return new empty virtual div', () => {
