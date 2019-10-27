@@ -9,7 +9,7 @@
     "lint-scripts": "eslint . --ext .js",
     "lint-styles": "stylelint ./src/**/*.scss --config=.stylelintrc.json",
     "example": "parcel example/index.html",
-    "build-example": "parcel build- example/index.html"
+    "build-example": "parcel build example/index.html"
   },
   "husky": {
     "hooks": {
