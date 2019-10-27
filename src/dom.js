@@ -65,6 +65,7 @@ export function instantiate (virtualNode) {
       virtualNode.component = instance;
     }
   }
+
   return virtualNode;
 }
 

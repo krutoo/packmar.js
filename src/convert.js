@@ -1,5 +1,5 @@
 import { insert } from './utils.js';
-import { registry } from './define-component.js';
+import { registry } from './defineComponent.js';
 import { hasAnchors, replaceAnchors } from './pack.js';
 import createVirtualNode, { isVirtualNode } from './createVirtualNode.js';
 
@@ -71,7 +71,9 @@ export function makeCommentHTML (content) {
 export function createTemplate (html) {
   const readyHTML = String(html || '').trim().replace(/\s+/g, ' ');
   const template = document.createElement('div');
+
   template.insertAdjacentHTML('afterBegin', readyHTML);
+
   return template;
 }
 
@@ -88,6 +90,7 @@ export function convertToVirtualNode ($node) {
     if ($node.childNodes.length > 0) {
       for (let childIndex = 0; childIndex < $node.childNodes.length; childIndex++) {
         const $child = $node.childNodes[childIndex];
+
         if ($child instanceof HTMLElement) {
           virtualNode.children.push(convertToVirtualNode($child));
         } else if ($child instanceof Node) {
@@ -95,6 +98,7 @@ export function convertToVirtualNode ($node) {
           const isFirstChild = childIndex === 0;
           const isLastChild = childIndex === $node.childNodes.length - 1;
           const isEmptyChild = !$child.nodeValue.trim();
+
           if (!isEmptyChild || isFirstChild || isLastChild) {
             virtualNode.children.push($child.nodeValue);
           }
