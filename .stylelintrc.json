@@ -3,6 +3,10 @@
 		"stylelint-config-standard",
 		"stylelint-config-recommended-scss"
 	],
+  "ignoreFiles": [
+    "**/*.js",
+		"dist/**/*"
+  ],
 	"rules": {
 		"indentation": [
 			2,
