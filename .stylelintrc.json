@@ -1,0 +1,33 @@
+{
+	"extends": [
+		"stylelint-config-standard",
+		"stylelint-config-recommended-scss"
+	],
+  "ignoreFiles": [
+    "**/*.js",
+		"dist/**/*"
+  ],
+	"rules": {
+		"indentation": [
+			2,
+			{
+				"except": [
+					"value"
+				]
+			}
+		],
+		"selector-class-pattern": "^[a-z0-9,-]+$",
+		"max-empty-lines": 1,
+		"number-leading-zero": "never",
+		"at-rule-empty-line-before": "never",
+		"declaration-bang-space-before": "never",
+		"rule-empty-line-before": [
+			"always",
+			{
+				"except": [
+					"inside-block"
+				]
+			}
+		]
+	}
+}

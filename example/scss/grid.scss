@@ -1,0 +1,30 @@
+.row {
+  display: flex;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-left: -.5rem;
+  margin-right: -.5rem;
+  & + .row {
+    margin-top: 1rem;
+  }
+  @for $i from 1 through 12 {
+    .col-#{$i} {
+      padding-left: .5rem;
+      padding-right: .5rem;
+      width: ($i / 12) * 100%;
+      @for $j from 1 through 12 {
+        &.md-#{$j} {
+          @media screen and (max-width: 720px) {
+            width: ($j / 12) * 100%;
+          }
+        }
+        &.sm-#{$j} {
+          @media screen and (max-width: 360px) {
+            width: ($j / 12) * 100%;
+          }
+        }
+      }
+    }
+  }
+}

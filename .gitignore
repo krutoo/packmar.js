@@ -1,2 +1,6 @@
 .DS_Store
+.cache
+/dist/
+/build/
 /node_modules/
+/coverage/
