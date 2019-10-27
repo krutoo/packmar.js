@@ -1,4 +1,4 @@
-import { isDisplayedPrimitive } from '../create-node.js';
+import { isDisplayedPrimitive } from '../dom.js';
 
 describe('isDisplayedPrimitive()', () => {
   it('should return true for strings, numbers, true, symbols', () => {

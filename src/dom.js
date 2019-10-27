@@ -9,7 +9,7 @@ import { isFunction, isPrimitive, isBoolean } from './utils.js';
  * @param {number} index Position in parent to save in component.
  * @return {Node} Real DOM node.
  */
-export default function createNode (virtualNode, $parent, index = 0) {
+export function createNode (virtualNode, $parent, index = 0) {
   let $node;
 
   if (isVirtualNode(virtualNode)) {
