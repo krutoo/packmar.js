@@ -17,6 +17,7 @@ const templates = new Map();
 export function getTemplate (html) {
   const cacheKey = String(html).trim();
   let template;
+
   if (templates.has(cacheKey)) {
     template = templates.get(cacheKey);
   } else {
@@ -24,6 +25,7 @@ export function getTemplate (html) {
     template = prepareAnchors(createTemplate(cacheKey));
     templates.set(cacheKey, template);
   }
+
   return template;
 }
 
@@ -173,18 +175,22 @@ export function passValues (virtualNode, values) {
     for (let index = 0; index < children.length; index++) {
       // @todo maybe create new array and push() faster than splice()
       const child = children[index];
+
       if (isVirtualNode(child)) {
         passValues(child, values);
       } else if (hasAnchors(child)) {
         const value = values[child.trim()];
+
         if (Array.isArray(value)) {
           const childrenPart = [];
+
           for (let partIndex = 0; partIndex < value.length; partIndex++) {
             const listItem = value[partIndex];
             if (listItem) { // @todo isDisplayedPrimitive(value)
               childrenPart.push(passValues(listItem, values));
             }
           }
+
           children = insert(children, childrenPart, index, true);
           index += childrenPart.length;
         } else if (value) { // @todo isDisplayedPrimitive(value)

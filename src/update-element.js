@@ -1,7 +1,7 @@
 import { isPrimitive } from './utils.js';
 import { isComponent } from './component.js';
 import { isVirtualNode } from './create-virtual-node.js';
-import createNode, { setProp, removeProp } from './create-node.js';
+import createNode, { setProp, removeProp } from './dom.js';
 
 /**
  * Updates a real DOM element according to old and new versions of it virtual copy.
