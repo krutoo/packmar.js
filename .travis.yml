@@ -4,7 +4,7 @@ node_js:
 
 script:
   - npm run test
-  - npm run build-page
+  - npm run build-example
 
 deploy:
   target-branch: gh-pages
