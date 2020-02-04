@@ -1,0 +1,47 @@
+name: Test, lint, build and deploy example
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 10
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10
+
+    - name: Cache node modules
+      uses: actions/cache@v1
+      id: node_modules-cache
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-deps-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-deps-
+
+    - name: get deps
+      if: steps.node_modules-cache.outputs.cache-hit != 'true'
+      run:  npm ci
+
+    - name: test
+      run: npm run test
+
+    - name: lint
+      run: npm run lint
+
+    - name: build
+      run: npm run build-example
+
+    - name: deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: example
+
+      env:
+        CI: true
